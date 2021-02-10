@@ -18,6 +18,8 @@ namespace Items
 		public void ONUpdate(PlayerAttachSub playerAttachMenu)
 		{
 			if (GetComponent<BoxCollider>() != null) GetComponent<BoxCollider>().enabled = false;
+			Animation anim = GetComponentInChildren<Animation>();
+			anim.Play("PickaxeSwinging");
 		}
 	}
 }
