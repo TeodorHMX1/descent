@@ -29263,6 +29263,11 @@ PrefabInstance:
       propertyPath: updatetext
       value: 
       objectReference: {fileID: 1830564248}
+    - target: {fileID: 5914844958613702666, guid: 0b529b61276858445a231b627fc1fef8,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6711272801172727909, guid: 0b529b61276858445a231b627fc1fef8,
         type: 3}
       propertyPath: m_LocalPosition.x

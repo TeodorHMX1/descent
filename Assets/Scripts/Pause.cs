@@ -39,7 +39,6 @@ public class Pause : MonoBehaviour
 
 	public void OnResume()
 	{
-		Debug.Log("fgdfh");
 		isPaused = false;
 		if (_isCanvasOverrideNotNull)
 		{
@@ -49,8 +48,8 @@ public class Pause : MonoBehaviour
 
 	private void Resume()
 	{
-		Cursor.lockState = CursorLockMode.Locked;
-		Cursor.visible = false;
+		// Cursor.lockState = CursorLockMode.Locked;
+		// Cursor.visible = false;
 		pauseMenu.SetActive(false);
 		Time.timeScale = 1f;
 	}

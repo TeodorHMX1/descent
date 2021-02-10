@@ -34,9 +34,15 @@ namespace ZeoFlow.PlayerMovement
 			}
 			else if (Input.GetKeyDown(lockKeyCode))
 			{
-				Cursor.lockState = CursorLockMode.Locked;
+				
 				Cursor.visible = false;
+				Invoke(nameof(LockMouse), 0.1f);
 			}
+		}
+
+		private void LockMouse()
+		{
+			Cursor.lockState = CursorLockMode.Locked;
 		}
 	}
 }

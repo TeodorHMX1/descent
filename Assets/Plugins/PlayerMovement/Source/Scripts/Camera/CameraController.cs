@@ -1,9 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace ZeoFlow.PlayerMovement
 {
+	
 	//This script rotates a gameobject based on user input.
 	//Rotation around the x-axis (vertical) can be clamped/limited by setting 'upperVerticalLimit' and 'lowerVerticalLimit'.
 	public class CameraController : MonoBehaviour
@@ -17,6 +18,8 @@ namespace ZeoFlow.PlayerMovement
 		[Range(0f, 90f)] public float lowerVerticalLimit = 60f;
 		[Range(0.01f, 3f)] public float sensivityVertical = 1.0f;
 		[Range(0.01f, 3f)] public float sensivityHorizontal = 1.0f;
+		
+		private Scene _runtimeScene;
 
 		//Variables to store old rotation values for interpolation purposes;
 		float oldHorizontalInput = 0f;
@@ -70,6 +73,11 @@ namespace ZeoFlow.PlayerMovement
 		//This function is called right after Awake(); It can be overridden by inheriting scripts;
 		protected virtual void Setup()
 		{
+		}
+
+		private void Start()
+		{
+			_runtimeScene = SceneManager.GetActiveScene();
 		}
 
 		void Update()
@@ -126,6 +134,10 @@ namespace ZeoFlow.PlayerMovement
 			facingDirection = tr.forward;
 			upwardsDirection = tr.up;
 
+			if (_runtimeScene.name != SceneManager.GetActiveScene().name) return;
+
+			if (float.IsNaN(currentXAngle) || float.IsNaN(currentYAngle)) return;
+			
 			var localRotation = Quaternion.Euler(new Vector3(currentXAngle, currentYAngle, 0));
 			tr.localRotation = localRotation;
 		}
