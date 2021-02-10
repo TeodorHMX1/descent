@@ -1,0 +1,134 @@
+﻿using System.Collections.Generic;
+using Filters;
+using UnityEngine;
+
+namespace Paranoia
+{
+	public class ParanoiaSystem : MonoBehaviour
+	{
+		public GameObject player;
+		public ParanoiaEntrances numberOfEntrances = ParanoiaEntrances.Two;
+		public List<ParanoiaTrigger> paranoiaTriggers = new List<ParanoiaTrigger>();
+		public EffectSub effectSub = new EffectSub();
+
+		private ParanoiaState _paranoiaBoxState = ParanoiaState.Outside;
+		private float _saturationAlpha;
+		private float _fadeAlpha;
+		private float _darkAlpha;
+		private AudioSource _audioSource;
+		private FilterParanoia _filterParanoia;
+		private FilterParanoiaDark _filterParanoiaDark;
+		private FilterIllusions _filterIllusions;
+
+		private void Start()
+		{
+			_audioSource = GetComponent<AudioSource>();
+			if (effectSub.camera == null) return;
+
+			_filterParanoia = effectSub.camera.AddComponent<FilterParanoia>();
+			_filterParanoia.brightness = 1.0f;
+			_filterParanoia.contrast = 1.0f;
+			_filterParanoia.saturation = 1.0f;
+
+			_filterParanoiaDark = effectSub.camera.AddComponent<FilterParanoiaDark>();
+			_filterParanoiaDark.alpha = 0f;
+			
+			_filterIllusions = effectSub.camera.AddComponent<FilterIllusions>();
+			_filterIllusions.fade = _fadeAlpha;
+			_filterIllusions.enabled = false;
+		}
+		
+		private void Update()
+		{
+			if (player == null) return;
+
+			switch (numberOfEntrances)
+			{
+				// 2 entries
+				case ParanoiaEntrances.Two:
+				{
+					var trigger1 = paranoiaTriggers[0];
+					var trigger2 = paranoiaTriggers[1];
+
+					if (trigger1.GETWasCollided() && !trigger2.GETWasCollided())
+						_paranoiaBoxState = ParanoiaState.Inside;
+					else
+						_paranoiaBoxState = ParanoiaState.Outside;
+
+					break;
+				}
+				case ParanoiaEntrances.Three:
+					_paranoiaBoxState = ParanoiaState.Outside;
+					break;
+				case ParanoiaEntrances.Four:
+					_paranoiaBoxState = ParanoiaState.Outside;
+					break;
+				case ParanoiaEntrances.Five:
+					_paranoiaBoxState = ParanoiaState.Outside;
+					break;
+				default:
+					_paranoiaBoxState = ParanoiaState.Outside;
+					break;
+			}
+
+			switch (_paranoiaBoxState)
+			{
+				case ParanoiaState.Inside:
+					OnParanoiaEffect();
+					break;
+				case ParanoiaState.Outside:
+					OnCancelEffect();
+					break;
+				default:
+					OnCancelEffect();
+					break;
+			}
+		}
+
+		private void OnCancelEffect()
+		{
+			if (_darkAlpha > 0f)
+				_darkAlpha -= 0.006f;
+			else
+				_darkAlpha = 0.0f;
+			if (_saturationAlpha > 1.0f)
+				_saturationAlpha -= 0.006f;
+			else
+				_saturationAlpha = 1.0f;
+			if (_fadeAlpha > 0.0f)
+				_fadeAlpha -= 0.006f;
+			else
+			{
+				_fadeAlpha = 0.0f;
+				_filterIllusions.enabled = false;
+			}
+			
+			_filterParanoia.brightness = 1.0f;
+			_filterParanoia.contrast = 1.0f;
+			_filterParanoia.saturation = _saturationAlpha;
+			_filterParanoiaDark.alpha = _darkAlpha;
+			_filterIllusions.fade = _fadeAlpha;
+		}
+
+		private void OnParanoiaEffect()
+		{
+			if (!effectSub.enabled) return;
+
+			if (effectSub.musicEnabled)
+				if (_audioSource != null)
+					foreach (var audioClip in effectSub.audioClips)
+						_audioSource.PlayOneShot(audioClip, effectSub.audioClipVolume);
+
+			if (effectSub.cameraEffectEnabled)
+			{
+				if (_darkAlpha < 1.75f) _darkAlpha += 0.002f;
+				if (_saturationAlpha < 1.2f) _saturationAlpha += 0.0025f;
+				if (_fadeAlpha < 0.2f) _fadeAlpha += 0.001f;
+				_filterParanoiaDark.alpha = _darkAlpha;
+				_filterParanoia.saturation = _saturationAlpha;
+				_filterIllusions.fade = _fadeAlpha;
+				_filterIllusions.enabled = true;
+			}
+		}
+	}
+}
