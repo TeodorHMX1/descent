@@ -4,14 +4,21 @@ using UnityEngine;
 
 namespace Puzzle
 {
+	/// <summary>
+	///     <para> PyramidPuzzle </para>
+	///     <author> @TeodorHMX1 </author>
+	/// </summary>
 	public class PyramidPuzzle : MonoBehaviour
 	{
 		public List<PyramidController> pyramids = new List<PyramidController>();
 
+		/// <summary>
+		///     <para> Update </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		private void Update()
 		{
-			var winStates = pyramids.Count(pyramid => pyramid.IsWinState());
-			if (winStates < pyramids.Count) return;
+			if (pyramids.Count(pyramid => pyramid.IsWinState()) < pyramids.Count) return;
 
 			Debug.Log("puzzleCompleted");
 		}

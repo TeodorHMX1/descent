@@ -4,22 +4,30 @@ using UnityEngine;
 
 namespace Paranoia
 {
+	/// <summary>
+	///     <para> ParanoiaSystem </para>
+	///     <author> @TeodorHMX1 </author>
+	/// </summary>
 	public class ParanoiaSystem : MonoBehaviour
 	{
 		public GameObject player;
 		public ParanoiaEntrances numberOfEntrances = ParanoiaEntrances.Two;
 		public List<ParanoiaTrigger> paranoiaTriggers = new List<ParanoiaTrigger>();
 		public EffectSub effectSub = new EffectSub();
+		private AudioSource _audioSource;
+		private float _darkAlpha;
+		private float _fadeAlpha;
+		private FilterIllusions _filterIllusions;
+		private FilterParanoia _filterParanoia;
+		private FilterParanoiaDark _filterParanoiaDark;
 
 		private ParanoiaState _paranoiaBoxState = ParanoiaState.Outside;
 		private float _saturationAlpha;
-		private float _fadeAlpha;
-		private float _darkAlpha;
-		private AudioSource _audioSource;
-		private FilterParanoia _filterParanoia;
-		private FilterParanoiaDark _filterParanoiaDark;
-		private FilterIllusions _filterIllusions;
 
+		/// <summary>
+		///     <para> Start </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		private void Start()
 		{
 			_audioSource = GetComponent<AudioSource>();
@@ -32,12 +40,16 @@ namespace Paranoia
 
 			_filterParanoiaDark = effectSub.camera.AddComponent<FilterParanoiaDark>();
 			_filterParanoiaDark.alpha = 0f;
-			
+
 			_filterIllusions = effectSub.camera.AddComponent<FilterIllusions>();
 			_filterIllusions.fade = _fadeAlpha;
 			_filterIllusions.enabled = false;
 		}
-		
+
+		/// <summary>
+		///     <para> Update </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		private void Update()
 		{
 			if (player == null) return;
@@ -85,6 +97,10 @@ namespace Paranoia
 			}
 		}
 
+		/// <summary>
+		///     <para> OnCancelEffect </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		private void OnCancelEffect()
 		{
 			if (_darkAlpha > 0f)
@@ -96,13 +112,15 @@ namespace Paranoia
 			else
 				_saturationAlpha = 1.0f;
 			if (_fadeAlpha > 0.0f)
+			{
 				_fadeAlpha -= 0.006f;
+			}
 			else
 			{
 				_fadeAlpha = 0.0f;
 				_filterIllusions.enabled = false;
 			}
-			
+
 			_filterParanoia.brightness = 1.0f;
 			_filterParanoia.contrast = 1.0f;
 			_filterParanoia.saturation = _saturationAlpha;
@@ -110,6 +128,10 @@ namespace Paranoia
 			_filterIllusions.fade = _fadeAlpha;
 		}
 
+		/// <summary>
+		///     <para> OnParanoiaEffect </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		private void OnParanoiaEffect()
 		{
 			if (!effectSub.enabled) return;

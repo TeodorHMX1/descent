@@ -4,19 +4,20 @@ using ZeoFlow.Pickup.Interfaces;
 
 namespace Items
 {
+	/// <summary>
+	///     <para> PickaxeManage </para>
+	///     <author> @TeodorHMX1 </author>
+	/// </summary>
 	public class PickaxeManage : MonoBehaviour, IOnAttached
 	{
-
 		/// <summary>
-		/// ONUpdate
+		///     <para> ONUpdate </para>
+		///     <author> @TeodorHMX1 </author>
 		/// </summary>
 		/// <param name="playerAttachMenu"></param>
 		public void ONUpdate(PlayerAttachSub playerAttachMenu)
 		{
-			if (GetComponent<BoxCollider>() != null)
-			{
-				GetComponent<BoxCollider>().enabled = false;
-			}
+			if (GetComponent<BoxCollider>() != null) GetComponent<BoxCollider>().enabled = false;
 		}
 	}
 }

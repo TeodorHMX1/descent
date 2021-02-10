@@ -3,17 +3,20 @@ using UnityEngine;
 
 namespace Filters
 {
+	/// <summary>
+	///     <para> FilterParanoia </para>
+	///     <author> @TeodorHMX1 </author>
+	/// </summary>
 	[ExecuteInEditMode]
 	[AddComponentMenu("Filters/Paranoia Filter Dark")]
 	public class FilterParanoiaDark : MonoBehaviour
 	{
 		#region Properties
 
-		/**
-		 * @object: material
-		 * @description: material type object
-		 * @author: teodorhmx1
-		 */
+		/// <summary>
+		///     <para> material type object </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		private Material Material
 		{
 			get
@@ -30,6 +33,10 @@ namespace Filters
 
 		#endregion
 
+		/// <summary>
+		///     <para> Start </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		private void Start()
 		{
 			scShader = Shader.Find("Filter_ParanoiaDark");
@@ -52,6 +59,12 @@ namespace Filters
 
 		#endregion
 
+		/// <summary>
+		///     <para> OnRenderImage </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
+		/// <param name="sourceTexture"></param>
+		/// <param name="destTexture"></param>
 		[SuppressMessage("ReSharper", "Unity.PreferAddressByIdToGraphicsParams")]
 		private void OnRenderImage(RenderTexture sourceTexture, RenderTexture destTexture)
 		{
@@ -74,6 +87,10 @@ namespace Filters
 			}
 		}
 
+		/// <summary>
+		///     <para> Update </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		private void Update()
 		{
 			#if UNITY_EDITOR
@@ -81,6 +98,10 @@ namespace Filters
 			#endif
 		}
 
+		/// <summary>
+		///     <para> OnDisable </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		private void OnDisable()
 		{
 			if (_scMaterial) DestroyImmediate(_scMaterial);

@@ -2,18 +2,23 @@
 
 namespace Map
 {
+	/// <summary>
+	///     <para> MapScript2 </para>
+	/// </summary>
 	public class MapScript2 : MonoBehaviour
 	{
-		public bool mapOpen;
 		public static bool ColArea1;
 		public static bool ColArea2;
 		public static bool ColArea3;
+		public bool mapOpen;
 		public GameObject map;
 		public GameObject area1;
 		public GameObject area2;
 		public GameObject area3;
 
-		// Start is called before the first frame update
+		/// <summary>
+		///     <para> Start </para>
+		/// </summary>
 		private void Start()
 		{
 			mapOpen = false;
@@ -25,7 +30,9 @@ namespace Map
 			area3.SetActive(false);
 		}
 
-		// Update is called once per frame
+		/// <summary>
+		///     <para> Update </para>
+		/// </summary>
 		private void Update()
 		{
 			area1.SetActive(ColArea1);
@@ -34,10 +41,7 @@ namespace Map
 
 			area3.SetActive(ColArea3);
 
-			if (Input.GetKeyDown(KeyCode.M))
-			{
-				mapOpen = !mapOpen;
-			}
+			if (Input.GetKeyDown(KeyCode.M)) mapOpen = !mapOpen;
 
 			if (mapOpen)
 			{
@@ -52,14 +56,21 @@ namespace Map
 			}
 		}
 
-		//public void OnTriggerEnter(Collision collision)
+		/// <summary>
+		///		<para> OnTriggerEnter </para>
+		/// </summary>
+		/// <param name="collision"></param>
+		// public void OnTriggerEnter(Collision collision)
 		// {
-		//if (collision.gameObject.name == "Area1")
-		// {
-		// Debug.Log("Collision Detected");
-		// }
+		// 	if (collision.gameObject.name == "Area1")
+		// 	{
+		// 		Debug.Log("Collision Detected");
+		// 	}
 		// }
 
+		/// <summary>
+		///     <para> Exit_Map </para>
+		/// </summary>
 		private void Exit_Map()
 		{
 			map.SetActive(false);
@@ -67,6 +78,9 @@ namespace Map
 			// Debug.Log("Exiting map");
 		}
 
+		/// <summary>
+		///     <para> Open_Map </para>
+		/// </summary>
 		private void Open_Map()
 		{
 			map.SetActive(true);

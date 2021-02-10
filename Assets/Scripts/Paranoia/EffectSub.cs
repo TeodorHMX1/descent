@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace Paranoia
 {
+	/// <summary>
+	///     <para> EffectSub </para>
+	///     <author> @TeodorHMX1 </author>
+	/// </summary>
 	[Serializable]
 	public class EffectSub
 	{

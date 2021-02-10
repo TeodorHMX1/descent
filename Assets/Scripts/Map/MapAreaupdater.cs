@@ -2,21 +2,30 @@
 
 namespace Map
 {
+	/// <summary>
+	///     <para> MapAreaupdater </para>
+	/// </summary>
 	public class MapAreaupdater : MonoBehaviour
 	{
-		private float _currentTime = 0f;
 		private const float StartTime = 10f;
 		public GameObject area1;
 		public GameObject area2;
 		public GameObject area3;
 		public GameObject updatetext;
 		public AudioClip scribble;
+		private float _currentTime;
 
+		/// <summary>
+		///     <para> Start </para>
+		/// </summary>
 		private void Start() //sets timer
 		{
 			_currentTime = 0;
 		}
 
+		/// <summary>
+		///     <para> Update </para>
+		/// </summary>
 		private void Update() //starts and finishes timer
 		{
 			_currentTime -= 1 * Time.deltaTime;
@@ -27,13 +36,13 @@ namespace Map
 				updatetext.SetActive(false);
 			}
 
-			if (_currentTime >= 1)
-			{
-				updatetext.SetActive(true);
-			}
+			if (_currentTime >= 1) updatetext.SetActive(true);
 		}
 
-
+		/// <summary>
+		///     <para> OnTriggerEnter </para>
+		/// </summary>
+		/// <param name="collisionInfo"></param>
 		private void OnTriggerEnter(Collider collisionInfo) //Creates popup baised on area entered
 		{
 			switch (collisionInfo.name)
