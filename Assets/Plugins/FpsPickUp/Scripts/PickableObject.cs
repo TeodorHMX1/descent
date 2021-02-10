@@ -10,17 +10,18 @@ namespace ZeoFlow.Pickup
 		public ThrowingSystemMenu throwingSystem = new ThrowingSystemMenu();
 		public PlayerAttachSub playerAttachMenu = new PlayerAttachSub();
 		public OutlinerSub outlinerMenu = new OutlinerSub();
+		public PuzzleSub puzzleSub = new PuzzleSub();
 		private bool _isAttached;
 
 		private void Update()
 		{
 			if (!_isAttached) return;
-			
+
 			if (gameObject.GetComponent<IOnAttached>() != null)
 			{
 				gameObject.GetComponent<IOnAttached>().ONUpdate(playerAttachMenu);
 			}
-			
+
 			var position = playerAttachMenu.playerObject.transform.position;
 			var positionOffset = playerAttachMenu.position;
 			gameObject.transform.position = new Vector3(
@@ -35,6 +36,19 @@ namespace ZeoFlow.Pickup
 				eulerAngles.y + rotationOffset.y,
 				eulerAngles.z + rotationOffset.z
 			);
+		}
+
+		public void OnMovement(bool isRight)
+		{
+			if (gameObject.GetComponent<IOnPuzzle>() != null)
+			{
+				gameObject.GetComponent<IOnPuzzle>().ONMovement(isRight);
+			}
+		}
+
+		public bool IsPuzzleMoving()
+		{
+			return gameObject.GetComponent<IOnPuzzle>() != null && gameObject.GetComponent<IOnPuzzle>().ONIsMoving();
 		}
 
 		public void OnAttach()

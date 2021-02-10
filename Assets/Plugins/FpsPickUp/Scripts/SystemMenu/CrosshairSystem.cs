@@ -11,5 +11,6 @@ namespace ZeoFlow.Pickup
 		public Texture2D onDefault;
 		public Texture2D onAble;
 		public Texture2D onGrab;
+		public Texture2D onPuzzle;
 	}
 }
