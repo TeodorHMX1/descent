@@ -11,6 +11,19 @@ namespace Items
 	public class HelmetManage : MonoBehaviour, IOnAttached
 	{
 		public Light helmetLight;
+		
+		private bool _isBoxColliderNotNull;
+		private BoxCollider _boxCollider;
+		
+		/// <summary>
+		///     <para> Start </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
+		private void Start()
+		{
+			_boxCollider = GetComponent<BoxCollider>();
+			_isBoxColliderNotNull = _boxCollider != null;
+		}
 
 		/// <summary>
 		///     <para> ONUpdate </para>
@@ -19,6 +32,7 @@ namespace Items
 		/// <param name="playerAttachMenu"></param>
 		public void ONUpdate(PlayerAttachSub playerAttachMenu)
 		{
+			if (_isBoxColliderNotNull) _boxCollider.enabled = false;
 			if (Input.GetKeyDown(KeyCode.F)) helmetLight.enabled = !helmetLight.enabled;
 		}
 	}

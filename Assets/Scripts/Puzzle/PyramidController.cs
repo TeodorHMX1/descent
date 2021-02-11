@@ -13,7 +13,7 @@ namespace Puzzle
 		[Range(3, 8)] public int pyramidSides = 4;
 		public PyramidState startSide = PyramidState.Side1;
 		public PyramidState winState = PyramidState.Side1;
-		[Range(0.5f, 10.0f)] public float rotateBy = 1.0f;
+		[Range(0.5f, 10.0f)] public float rotationSpeed = 1.0f;
 
 		private int _currentProgress;
 		private PyramidState _currentState;
@@ -92,7 +92,7 @@ namespace Puzzle
 			if (_isMoving) return;
 			_isMoving = true;
 
-			_rotateByCurrent = !toRight ? rotateBy : rotateBy * -1;
+			_rotateByCurrent = !toRight ? rotationSpeed : rotationSpeed * -1;
 		}
 
 		/// <summary>

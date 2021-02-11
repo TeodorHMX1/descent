@@ -33968,6 +33968,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1849082948, guid: 0b529b61276858445a231b627fc1fef8, type: 3}
+      propertyPath: lineColors.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1853356149, guid: 0b529b61276858445a231b627fc1fef8, type: 3}
       propertyPath: Map
       value: 
