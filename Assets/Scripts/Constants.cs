@@ -53,4 +53,28 @@ public static class Constants
 		
 	}
 
+	/// <summary>
+	///     <para> Storage </para>
+	///     <author> @TeodorHMX1 </author>
+	/// </summary>
+	public static class Storage
+	{
+		
+		/// <summary>
+		///     <para> SensivityX </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
+		public const string SensivityX = "StorageSensivityX";
+		
+		/// <summary>
+		///     <para> SensivityY </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
+		public const string SensivityY = "StorageSensivityY";
+	
+		// PlayerPrefs.SetFloat(Constants.PlayPrefsSensivityX, _senX);
+		// PlayerPrefs.GetFloat(Constants.PlayPrefsSoundVolume);
+
+	}
+	
 }
