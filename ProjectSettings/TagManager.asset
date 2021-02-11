@@ -9,6 +9,7 @@ TagManager:
   - Terrain
   - HelmetLight
   - HudSelector
+  - ClingPoint
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - 
   - PostProcessing
   - FrozenChunks
-  - 
+  - DestroyItDebris
   - 
   - 
   - 
