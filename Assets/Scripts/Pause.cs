@@ -9,9 +9,7 @@ public class Pause : MonoBehaviour
 {
 	public bool isPaused;
 	public GameObject pauseMenu;
-	public GameObject canvasOverride;
 	public string newLevel;
-	private bool _isCanvasOverrideNotNull;
 
 	/// <summary>
 	///     <para> Start </para>
@@ -19,7 +17,6 @@ public class Pause : MonoBehaviour
 	/// </summary>
 	private void Start()
 	{
-		_isCanvasOverrideNotNull = canvasOverride != null;
 		pauseMenu.SetActive(false);
 	}
 
@@ -29,11 +26,7 @@ public class Pause : MonoBehaviour
 	/// </summary>
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Escape))
-		{
-			isPaused = !isPaused;
-			if (_isCanvasOverrideNotNull) canvasOverride.SetActive(isPaused);
-		}
+		if (Input.GetKeyDown(KeyCode.Escape)) isPaused = !isPaused;
 
 		if (isPaused)
 			Paused();
@@ -48,7 +41,6 @@ public class Pause : MonoBehaviour
 	public void OnResume()
 	{
 		isPaused = false;
-		if (_isCanvasOverrideNotNull) canvasOverride.SetActive(isPaused);
 	}
 
 	/// <summary>

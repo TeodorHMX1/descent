@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 
 namespace ZeoFlow.PlayerMovement
 {
-	
 	//This script rotates a gameobject based on user input.
 	//Rotation around the x-axis (vertical) can be clamped/limited by setting 'upperVerticalLimit' and 'lowerVerticalLimit'.
 	public class CameraController : MonoBehaviour
@@ -18,7 +17,7 @@ namespace ZeoFlow.PlayerMovement
 		[Range(0f, 90f)] public float lowerVerticalLimit = 60f;
 		[Range(0.01f, 3f)] public float sensivityVertical = 1.0f;
 		[Range(0.01f, 3f)] public float sensivityHorizontal = 1.0f;
-		
+
 		private Scene _runtimeScene;
 
 		//Variables to store old rotation values for interpolation purposes;
@@ -99,6 +98,10 @@ namespace ZeoFlow.PlayerMovement
 			RotateCamera(_inputHorizontal, _inputVertical);
 		}
 
+		private float _oldXAngle = 0;
+
+		private float _oldYAngle = 0;
+
 		//Rotate camera; 
 		protected void RotateCamera(float _newHorizontalInput, float _newVerticalInput)
 		{
@@ -117,12 +120,32 @@ namespace ZeoFlow.PlayerMovement
 				oldVerticalInput = _newVerticalInput;
 			}
 
+			if (float.IsNaN(currentXAngle))
+			{
+				currentXAngle = _oldXAngle;
+			}
+
+			if (float.IsNaN(currentYAngle))
+			{
+				currentYAngle = _oldYAngle;
+			}
+
 			//Add input to camera angles;
 			currentXAngle += oldVerticalInput * cameraSpeed * Time.deltaTime * sensivityVertical;
 			currentYAngle += oldHorizontalInput * cameraSpeed * Time.deltaTime * sensivityHorizontal;
 
 			//Clamp vertical rotation;
 			currentXAngle = Mathf.Clamp(currentXAngle, -upperVerticalLimit, lowerVerticalLimit);
+
+			if (!float.IsNaN(currentXAngle))
+			{
+				_oldXAngle = currentXAngle;
+			}
+
+			if (!float.IsNaN(currentYAngle))
+			{
+				_oldYAngle = currentYAngle;
+			}
 
 			UpdateRotation();
 		}
@@ -137,7 +160,7 @@ namespace ZeoFlow.PlayerMovement
 			if (_runtimeScene.name != SceneManager.GetActiveScene().name) return;
 
 			if (float.IsNaN(currentXAngle) || float.IsNaN(currentYAngle)) return;
-			
+
 			var localRotation = Quaternion.Euler(new Vector3(currentXAngle, currentYAngle, 0));
 			tr.localRotation = localRotation;
 		}
