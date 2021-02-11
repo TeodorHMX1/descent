@@ -14,12 +14,14 @@ namespace Map
 		public GameObject updatetext;
 		public AudioClip scribble;
 		private float _currentTime;
+		private bool _isupdatetextNull;
 
 		/// <summary>
 		///     <para> Start </para>
 		/// </summary>
 		private void Start() //sets timer
 		{
+			_isupdatetextNull = updatetext == null;
 			_currentTime = 0;
 		}
 
@@ -28,8 +30,10 @@ namespace Map
 		/// </summary>
 		private void Update() //starts and finishes timer
 		{
+			if (_isupdatetextNull) return;
+			
 			_currentTime -= 1 * Time.deltaTime;
-
+			
 			if (_currentTime <= 0)
 			{
 				_currentTime = 0;

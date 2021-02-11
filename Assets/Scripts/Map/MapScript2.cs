@@ -15,19 +15,34 @@ namespace Map
 		public GameObject area1;
 		public GameObject area2;
 		public GameObject area3;
+		private bool _isarea1Null;
+		private bool _isarea2Null;
+		private bool _isarea3Null;
 
 		/// <summary>
 		///     <para> Start </para>
 		/// </summary>
 		private void Start()
 		{
+			_isarea1Null = area1 == null;
+			_isarea2Null = area2 == null;
+			_isarea3Null = area3 == null;
 			mapOpen = false;
 			ColArea1 = false;
 			ColArea2 = false;
 			ColArea3 = false;
-			area1.SetActive(false);
-			area2.SetActive(false);
-			area3.SetActive(false);
+			if (!_isarea1Null)
+			{
+				area1.SetActive(false);
+			}
+			if (!_isarea2Null)
+			{
+				area2.SetActive(false);
+			}
+			if (!_isarea3Null)
+			{
+				area3.SetActive(false);
+			}
 		}
 
 		/// <summary>
@@ -35,6 +50,8 @@ namespace Map
 		/// </summary>
 		private void Update()
 		{
+			if (_isarea1Null || _isarea2Null || _isarea3Null) return;
+			
 			area1.SetActive(ColArea1);
 
 			area2.SetActive(ColArea2);
