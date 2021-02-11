@@ -1277,7 +1277,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 107432439}
-  - component: {fileID: 107432438}
   - component: {fileID: 107432437}
   - component: {fileID: 107432436}
   - component: {fileID: 107432435}
@@ -1285,7 +1284,7 @@ GameObject:
   - component: {fileID: 107432433}
   - component: {fileID: 107432432}
   m_Layer: 0
-  m_Name: _GameManager
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1495,19 +1494,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 117a70a4471544147b194fe2d4fcc39a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &107432438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 107432431}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3da395340588a1e4cbbecab69ae47adc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  showJointAnchors: 1
 --- !u!4 &107432439
 Transform:
   m_ObjectHideFlags: 0
@@ -33943,6 +33929,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 575753397}
     m_Modifications:
+    - target: {fileID: -7537552796262020943, guid: 537ceed3beb30eb4fa01a9c3deb7294c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2667958547559455208, guid: 537ceed3beb30eb4fa01a9c3deb7294c,
         type: 3}
       propertyPath: m_Name
