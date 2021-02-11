@@ -2,50 +2,52 @@
 
 namespace Destructible
 {
-    public class PoolAfter : MonoBehaviour
-    {
-        public float seconds;           // seconds to wait before re-pooling this game object.
-        public bool reenableChildren;   // determines whether to re-enable all child objects when this object is pooled.
-        public bool removeWhenPooled;   // Remove this script when the object is pooled?
-        public bool resetToPrefab;      // Reset the entire object back to prefab? (This means it will destroy and recreate the object.)
+	public class PoolAfter : MonoBehaviour
+	{
+		public float seconds; // seconds to wait before re-pooling this game object.
+		public bool reenableChildren; // determines whether to re-enable all child objects when this object is pooled.
+		public bool removeWhenPooled; // Remove this script when the object is pooled?
 
-        private float _timeLeft;
-        private bool _isInitialized;
+		public bool
+			resetToPrefab; // Reset the entire object back to prefab? (This means it will destroy and recreate the object.)
 
-        void Start()
-        {
-            _timeLeft = seconds;
-            _isInitialized = true;
-        }
+		private float _timeLeft;
+		private bool _isInitialized;
 
-        void OnEnable()
-        {
-            _timeLeft = seconds;
-        }
+		void Start()
+		{
+			_timeLeft = seconds;
+			_isInitialized = true;
+		}
 
-        void Update()
-        {
-            if (!_isInitialized) return;
+		void OnEnable()
+		{
+			_timeLeft = seconds;
+		}
 
-            _timeLeft -= Time.deltaTime;
-            if (_timeLeft <= 0)
-            {
-                if (resetToPrefab)
-                {
-                    GameObject objectToPool = ObjectPool.Instance.SpawnFromOriginal(this.gameObject.name);
-                    if (objectToPool != null)
-                        ObjectPool.Instance.PoolObject(objectToPool);
-                    
-                    Destroy(this.gameObject);
-                    _isInitialized = false;
-                    return;
-                }
+		void Update()
+		{
+			if (!_isInitialized) return;
 
-                if (removeWhenPooled)
-                    Destroy(this);
+			_timeLeft -= Time.deltaTime;
+			if (_timeLeft <= 0)
+			{
+				if (resetToPrefab)
+				{
+					GameObject objectToPool = ObjectPool.Instance.SpawnFromOriginal(this.gameObject.name);
+					if (objectToPool != null)
+						ObjectPool.Instance.PoolObject(objectToPool);
 
-                ObjectPool.Instance.PoolObject(this.gameObject, reenableChildren);
-            }
-        }
-    }
+					Destroy(this.gameObject);
+					_isInitialized = false;
+					return;
+				}
+
+				if (removeWhenPooled)
+					Destroy(this);
+
+				ObjectPool.Instance.PoolObject(this.gameObject, reenableChildren);
+			}
+		}
+	}
 }

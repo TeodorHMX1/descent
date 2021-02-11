@@ -1,392 +1,439 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+
 // ReSharper disable UnusedMember.Global
 // ReSharper disable ForCanBeConvertedToForeach
 
 namespace Destructible
 {
-    /// <summary>Put this script on an object you want to be destructible.</summary>
-    [DisallowMultipleComponent]
-    public class Destructible : MonoBehaviour
-    {
-        [HideInInspector] public bool canPlayerCollide = false;
-        [HideInInspector] public float totalHitPoints = 50f;
-        [HideInInspector] public float currentHitPoints = 50f;
-        [HideInInspector] public List<DamageLevel> damageLevels;
-	    [HideInInspector] public GameObject destroyedPrefab;
-	    [HideInInspector] public GameObject destroyedPrefabParent;
-        [HideInInspector] public ParticleSystem fallbackParticle;        
-        [HideInInspector] public Material fallbackParticleMaterial;
-        [HideInInspector] public List<DamageEffect> damageEffects;
-        [HideInInspector] public float velocityReduction = .5f;
-        [HideInInspector] public float ignoreCollisionsUnder = 2f;
-        [HideInInspector] public List<GameObject> unparentOnDestroy;
-        [HideInInspector] public bool disableKinematicOnUparentedChildren = true;
-        [HideInInspector] public List<MaterialMapping> replaceMaterials;
-        [HideInInspector] public bool canBeDestroyed = true;
-        [HideInInspector] public bool canBeRepaired = true;
-        [HideInInspector] public bool canBeObliterated = true;
-        [HideInInspector] public List<string> debrisToReParentByName;
-        [HideInInspector] public bool debrisToReParentIsKinematic;
-        [HideInInspector] public List<string> childrenToReParentByName;
-        [HideInInspector] public int destructibleGroupId;
-        [HideInInspector] public bool isDebrisChipAway;
-        [HideInInspector] public float chipAwayDebrisMass = 1f;
-        [HideInInspector] public float chipAwayDebrisDrag;
-        [HideInInspector] public float chipAwayDebrisAngularDrag = 0.05f;
-        [HideInInspector] public bool autoPoolDestroyedPrefab = true;
-        [HideInInspector] public bool useFallbackParticle = true;
-        [HideInInspector] public Vector3 centerPointOverride;
-        [HideInInspector] public bool sinkWhenDestroyed;
-        [HideInInspector] public bool shouldDeactivate; // If true, this script will deactivate after a set period of time (configurable on DestructionManager).
-        [HideInInspector] public bool isTerrainTree; // Is this Destructible object a stand-in for a terrain tree?
+	/// <summary>Put this script on an object you want to be destructible.</summary>
+	[DisallowMultipleComponent]
+	public class Destructible : MonoBehaviour
+	{
+		[HideInInspector] public bool canPlayerCollide = false;
+		[HideInInspector] public float totalHitPoints = 50f;
+		[HideInInspector] public float currentHitPoints = 50f;
+		[HideInInspector] public List<DamageLevel> damageLevels;
+		[HideInInspector] public GameObject destroyedPrefab;
+		[HideInInspector] public GameObject destroyedPrefabParent;
+		[HideInInspector] public ParticleSystem fallbackParticle;
+		[HideInInspector] public Material fallbackParticleMaterial;
+		[HideInInspector] public List<DamageEffect> damageEffects;
+		[HideInInspector] public float velocityReduction = .5f;
+		[HideInInspector] public float ignoreCollisionsUnder = 2f;
+		[HideInInspector] public List<GameObject> unparentOnDestroy;
+		[HideInInspector] public bool disableKinematicOnUparentedChildren = true;
+		[HideInInspector] public List<MaterialMapping> replaceMaterials;
+		[HideInInspector] public bool canBeDestroyed = true;
+		[HideInInspector] public bool canBeRepaired = true;
+		[HideInInspector] public bool canBeObliterated = true;
+		[HideInInspector] public List<string> debrisToReParentByName;
+		[HideInInspector] public bool debrisToReParentIsKinematic;
+		[HideInInspector] public List<string> childrenToReParentByName;
+		[HideInInspector] public int destructibleGroupId;
+		[HideInInspector] public bool isDebrisChipAway;
+		[HideInInspector] public float chipAwayDebrisMass = 1f;
+		[HideInInspector] public float chipAwayDebrisDrag;
+		[HideInInspector] public float chipAwayDebrisAngularDrag = 0.05f;
+		[HideInInspector] public bool autoPoolDestroyedPrefab = true;
+		[HideInInspector] public bool useFallbackParticle = true;
+		[HideInInspector] public Vector3 centerPointOverride;
+		[HideInInspector] public bool sinkWhenDestroyed;
 
-        // Private variables
-        private const float InvulnerableTimer = 0.5f; // How long (in seconds) the destructible object is invulnerable after instantiation.
-        private DamageLevel _currentDamageLevel;
-        private bool _isObliterated;
-        private bool _isInitialized;
-        private float _deactivateTimer;
-        private bool _firstFixedUpdate = true;
-        private Rigidbody _rigidBody; // store a reference to this destructible object's rigidbody, so we don't have to use GetComponent() at runtime.
-        private bool _isInvulnerable; // Determines whether the destructible object starts with a short period of invulnerability. Prevents destructible debris being immediately destroyed by the same forces that destroyed the original object.
+		[HideInInspector]
+		public bool
+			shouldDeactivate; // If true, this script will deactivate after a set period of time (configurable on DestructionManager).
 
-        // Properties
-        public bool UseProgressiveDamage { get; set; } = true; // Used to determine if the shader on the destructible object is
-        public bool CheckForClingingDebris { get; set; } = true; // This is an added optimization used when we are auto-pooling destroyed prefabs. It allows us to avoid a GetComponentsInChildren() check for ClingPoints destruction time.
-        public Rigidbody[] PooledRigidbodies { get; set; } // This is an added optimization used when we are auto-pooling destroyed prefabs. It allows us to avoid multiple GetComponentsInChildren() checks for Rigidbodies at destruction time.
-        public GameObject[] PooledRigidbodyGos { get; set; } // This is an added optimization used when we are auto-pooling destroyed prefabs. It allows us to avoid multiple GetComponentsInChildren() checks for the GameObjects on Rigidibodies at destruction time.
-        public float VelocityReduction => Mathf.Abs(velocityReduction - 1f) /* invert the velocity reduction value (so it makes sense in the UI) */;
-        public Quaternion RotationFixedUpdate { get; private set; }
-        public Vector3 PositionFixedUpdate { get; private set; }
-        public Vector3 VelocityFixedUpdate { get; private set; }
-        public Vector3 AngularVelocityFixedUpdate { get; private set; }
-        public float LastRepairedAmount { get; private set; }
-        public float LastDamagedAmount { get; private set; }
-        public bool IsDestroyed => !_isInvulnerable && canBeDestroyed && currentHitPoints <= 0;
-        public Vector3 MeshCenterPoint { get; private set; }
+		[HideInInspector] public bool isTerrainTree; // Is this Destructible object a stand-in for a terrain tree?
 
-        // Events
-        public event Action DamagedEvent;
-        public event Action DestroyedEvent;
-        public event Action RepairedEvent;
+		// Private variables
+		private const float
+			InvulnerableTimer =
+				0.5f; // How long (in seconds) the destructible object is invulnerable after instantiation.
 
-        public void Start()
-        {
-            CheckForClingingDebris = true;
+		private DamageLevel _currentDamageLevel;
+		private bool _isObliterated;
+		private bool _isInitialized;
+		private float _deactivateTimer;
+		private bool _firstFixedUpdate = true;
 
-            if (damageLevels == null || damageLevels.Count == 0)
-                damageLevels = DestructibleHelper.DefaultDamageLevels();
-            damageLevels.CalculateDamageLevels(totalHitPoints);
+		private Rigidbody
+			_rigidBody; // store a reference to this destructible object's rigidbody, so we don't have to use GetComponent() at runtime.
 
-            // Store a reference to this object's rigidbody, for better performance.
-            _rigidBody = GetComponent<Rigidbody>();
+		private bool
+			_isInvulnerable; // Determines whether the destructible object starts with a short period of invulnerability. Prevents destructible debris being immediately destroyed by the same forces that destroyed the original object.
 
-            // Only calculate the mesh center point if the destructible object uses a fallback particle.
-            if (useFallbackParticle)
-            {
-                MeshRenderer[] meshRenderers = gameObject.GetComponentsInChildren<MeshRenderer>();
-                MeshCenterPoint = gameObject.GetMeshCenterPoint(meshRenderers);
-                if (gameObject.IsAnyMeshPartOfStaticBatch(meshRenderers) && centerPointOverride == Vector3.zero)
-                    Debug.Log($"[{gameObject.name}] is a Destructible object with one or more static meshes, but no position override for the fallback particle effect. Particle effect may not spawn where you expect.");
-            }
+		// Properties
+		public bool UseProgressiveDamage { get; set; } =
+			true; // Used to determine if the shader on the destructible object is
 
-            PlayDamageEffects();
-            _isInvulnerable = true;
-            Invoke("RemoveInvulnerability", InvulnerableTimer);
+		public bool CheckForClingingDebris { get; set; } =
+			true; // This is an added optimization used when we are auto-pooling destroyed prefabs. It allows us to avoid a GetComponentsInChildren() check for ClingPoints destruction time.
 
-            if (gameObject.HasTag(Tag.TerrainTree))
-                isTerrainTree = true;
+		public Rigidbody[]
+			PooledRigidbodies
+		{
+			get;
+			set;
+		} // This is an added optimization used when we are auto-pooling destroyed prefabs. It allows us to avoid multiple GetComponentsInChildren() checks for Rigidbodies at destruction time.
 
-            // If AutoPool is turned on, add the destroyed prefab to the ObjectPool.
-            if (autoPoolDestroyedPrefab)
-                ObjectPool.Instance.AddDestructibleObjectToPool(this);
-            
-            _isInitialized = true;
-        }
+		public GameObject[]
+			PooledRigidbodyGos
+		{
+			get;
+			set;
+		} // This is an added optimization used when we are auto-pooling destroyed prefabs. It allows us to avoid multiple GetComponentsInChildren() checks for the GameObjects on Rigidibodies at destruction time.
 
-        public void RemoveInvulnerability()
-        {
-            _isInvulnerable = false;
-        }
+		public float VelocityReduction =>
+			Mathf.Abs(velocityReduction - 1f) /* invert the velocity reduction value (so it makes sense in the UI) */;
 
-        public void FixedUpdate()
-        {
-            if (!_isInitialized) return;
-            DestructionManager destructionManager = DestructionManager.Instance;
-            if (destructionManager == null) return;
+		public Quaternion RotationFixedUpdate { get; private set; }
+		public Vector3 PositionFixedUpdate { get; private set; }
+		public Vector3 VelocityFixedUpdate { get; private set; }
+		public Vector3 AngularVelocityFixedUpdate { get; private set; }
+		public float LastRepairedAmount { get; private set; }
+		public float LastDamagedAmount { get; private set; }
+		public bool IsDestroyed => !_isInvulnerable && canBeDestroyed && currentHitPoints <= 0;
+		public Vector3 MeshCenterPoint { get; private set; }
 
-            // Use the fixed update position/rotation for placement of the destroyed prefab.
-            PositionFixedUpdate = transform.position;
-            RotationFixedUpdate = transform.rotation;
-            if (_rigidBody != null)
-            {
-                VelocityFixedUpdate = _rigidBody.velocity;
-                AngularVelocityFixedUpdate = _rigidBody.angularVelocity;
-            }
+		// Events
+		public event Action DamagedEvent;
+		public event Action DestroyedEvent;
+		public event Action RepairedEvent;
 
-            SetDamageLevel();
-            PlayDamageEffects();
+		public void Start()
+		{
+			CheckForClingingDebris = true;
 
-            // Check if this script should be auto-deactivated, as configured on the DestructionManager
-            if (destructionManager.autoDeactivateDestructibles && !isTerrainTree && shouldDeactivate)
-                UpdateDeactivation(destructionManager.deactivateAfter);
-            else if (destructionManager.autoDeactivateDestructibleTerrainObjects && isTerrainTree && shouldDeactivate)
-                UpdateDeactivation(destructionManager.deactivateAfter);
-            
-            if (IsDestroyed) 
-                destructionManager.ProcessDestruction(this, destroyedPrefab, new ExplosiveDamage(), _isObliterated);
+			if (damageLevels == null || damageLevels.Count == 0)
+				damageLevels = DestructibleHelper.DefaultDamageLevels();
+			damageLevels.CalculateDamageLevels(totalHitPoints);
 
-            // If this is the first fixed update frame and autoDeativateDestructibles is true, start this component deactivated.
-            if (_firstFixedUpdate)
-                this.SetActiveOrInactive(destructionManager);
+			// Store a reference to this object's rigidbody, for better performance.
+			_rigidBody = GetComponent<Rigidbody>();
 
-            _firstFixedUpdate = false;
-        }
+			// Only calculate the mesh center point if the destructible object uses a fallback particle.
+			if (useFallbackParticle)
+			{
+				MeshRenderer[] meshRenderers = gameObject.GetComponentsInChildren<MeshRenderer>();
+				MeshCenterPoint = gameObject.GetMeshCenterPoint(meshRenderers);
+				if (gameObject.IsAnyMeshPartOfStaticBatch(meshRenderers) && centerPointOverride == Vector3.zero)
+					Debug.Log(
+						$"[{gameObject.name}] is a Destructible object with one or more static meshes, but no position override for the fallback particle effect. Particle effect may not spawn where you expect.");
+			}
 
-        private void UpdateDeactivation(float deactivateAfter)
-        {
-            if (_deactivateTimer > deactivateAfter)
-            {
-                _deactivateTimer = 0f;
-                shouldDeactivate = false;
-                enabled = false;
-            }
-            else
-                _deactivateTimer += Time.fixedDeltaTime;
-        }
+			PlayDamageEffects();
+			_isInvulnerable = true;
+			Invoke("RemoveInvulnerability", InvulnerableTimer);
 
-        /// <summary>Applies a generic amount of damage, with no specific impact or explosive force.</summary>
-        public void ApplyDamage(float amount)
-        {
-            if (IsDestroyed || _isInvulnerable) return; // don't try to apply damage to an already-destroyed or invulnerable object.
+			if (gameObject.HasTag(Tag.TerrainTree))
+				isTerrainTree = true;
 
-            LastDamagedAmount = amount;
-            FireDamagedEvent();
+			// If AutoPool is turned on, add the destroyed prefab to the ObjectPool.
+			if (autoPoolDestroyedPrefab)
+				ObjectPool.Instance.AddDestructibleObjectToPool(this);
 
-            currentHitPoints -= amount;
-            CheckForObliterate(amount);
-            if (currentHitPoints > 0) return;
-            if (currentHitPoints < 0) currentHitPoints = 0;
+			_isInitialized = true;
+		}
 
-            PlayDamageEffects();
+		public void RemoveInvulnerability()
+		{
+			_isInvulnerable = false;
+		}
 
-            if (IsDestroyed)
-                DestructionManager.Instance.ProcessDestruction(this, destroyedPrefab, new DirectDamage{DamageAmount = amount}, _isObliterated);
-        }
+		public void FixedUpdate()
+		{
+			if (!_isInitialized) return;
+			DestructionManager destructionManager = DestructionManager.Instance;
+			if (destructionManager == null) return;
 
-        public void ApplyDamage(Damage damage)
-        {
-            if (IsDestroyed || _isInvulnerable) return; // don't try to apply damage to an already-destroyed or invulnerable object.
+			// Use the fixed update position/rotation for placement of the destroyed prefab.
+			PositionFixedUpdate = transform.position;
+			RotationFixedUpdate = transform.rotation;
+			if (_rigidBody != null)
+			{
+				VelocityFixedUpdate = _rigidBody.velocity;
+				AngularVelocityFixedUpdate = _rigidBody.angularVelocity;
+			}
 
-            LastDamagedAmount = damage.DamageAmount;
-            FireDamagedEvent();
+			SetDamageLevel();
+			PlayDamageEffects();
 
-            currentHitPoints -= damage.DamageAmount;
-            CheckForObliterate(damage.DamageAmount);
-            if (currentHitPoints > 0) return;
-            if (currentHitPoints < 0) currentHitPoints = 0;
+			// Check if this script should be auto-deactivated, as configured on the DestructionManager
+			if (destructionManager.autoDeactivateDestructibles && !isTerrainTree && shouldDeactivate)
+				UpdateDeactivation(destructionManager.deactivateAfter);
+			else if (destructionManager.autoDeactivateDestructibleTerrainObjects && isTerrainTree && shouldDeactivate)
+				UpdateDeactivation(destructionManager.deactivateAfter);
 
-            PlayDamageEffects();
+			if (IsDestroyed)
+				destructionManager.ProcessDestruction(this, destroyedPrefab, new ExplosiveDamage(), _isObliterated);
 
-            if (IsDestroyed)
-                DestructionManager.Instance.ProcessDestruction(this, destroyedPrefab, damage, _isObliterated);
-        }
+			// If this is the first fixed update frame and autoDeativateDestructibles is true, start this component deactivated.
+			if (_firstFixedUpdate)
+				this.SetActiveOrInactive(destructionManager);
 
-        public void RepairDamage(float amount) 
-        {
-            if (IsDestroyed || !canBeRepaired) return; // object cannot be repaired if it is either already destroyed or not repairable.
+			_firstFixedUpdate = false;
+		}
 
-            LastRepairedAmount = amount;
+		private void UpdateDeactivation(float deactivateAfter)
+		{
+			if (_deactivateTimer > deactivateAfter)
+			{
+				_deactivateTimer = 0f;
+				shouldDeactivate = false;
+				enabled = false;
+			}
+			else
+				_deactivateTimer += Time.fixedDeltaTime;
+		}
 
-            currentHitPoints += amount;
-            if (currentHitPoints > totalHitPoints) // object cannot be over-repaired beyond its total hit points.
-                currentHitPoints = totalHitPoints;
+		/// <summary>Applies a generic amount of damage, with no specific impact or explosive force.</summary>
+		public void ApplyDamage(float amount)
+		{
+			if (IsDestroyed || _isInvulnerable)
+				return; // don't try to apply damage to an already-destroyed or invulnerable object.
 
-            PlayDamageEffects();
-            FireRepairedEvent();
-        }
+			LastDamagedAmount = amount;
+			FireDamagedEvent();
 
-        public void Destroy()
-        {
-            if (IsDestroyed || _isInvulnerable) return; // don't try to destroy an already-destroyed or invulnerable object.
+			currentHitPoints -= amount;
+			CheckForObliterate(amount);
+			if (currentHitPoints > 0) return;
+			if (currentHitPoints < 0) currentHitPoints = 0;
 
-            LastDamagedAmount = currentHitPoints;
-            FireDamagedEvent();
+			PlayDamageEffects();
 
-            currentHitPoints = 0;
-            PlayDamageEffects();
+			if (IsDestroyed)
+				DestructionManager.Instance.ProcessDestruction(this, destroyedPrefab,
+					new DirectDamage {DamageAmount = amount}, _isObliterated);
+		}
 
-            DestructionManager.Instance.ProcessDestruction(this, destroyedPrefab, currentHitPoints, _isObliterated);
-        }
+		public void ApplyDamage(Damage damage)
+		{
+			if (IsDestroyed || _isInvulnerable)
+				return; // don't try to apply damage to an already-destroyed or invulnerable object.
 
-        /// <summary>Check to see if the destructible object has been obliterated from taking excessive damage. If so, set the ObliteratedLevel on the object.</summary>
-        /// <param name="damage">The amount of damage applied to the object from a single source.</param>
-        private void CheckForObliterate(float damage)
-        {
-            if (_isInvulnerable || !canBeDestroyed || !canBeObliterated) return;
+			LastDamagedAmount = damage.DamageAmount;
+			FireDamagedEvent();
 
-            if (damage >= (DestructionManager.Instance.obliterateMultiplier * totalHitPoints))
-                _isObliterated = true;
-        }
+			currentHitPoints -= damage.DamageAmount;
+			CheckForObliterate(damage.DamageAmount);
+			if (currentHitPoints > 0) return;
+			if (currentHitPoints < 0) currentHitPoints = 0;
 
-        /// <summary>Advances the damage state, applies damage-level materials as needed, and plays particle effects.</summary>
-        private void SetDamageLevel()
-        {
-            DamageLevel damageLevel = damageLevels?.GetDamageLevel(currentHitPoints);
-            if (damageLevel == null) return;
-            if (_currentDamageLevel != null && damageLevel == _currentDamageLevel) return;
+			PlayDamageEffects();
 
-            _currentDamageLevel = damageLevel;
-            Renderer[] renderers = GetComponentsInChildren<Renderer>();
+			if (IsDestroyed)
+				DestructionManager.Instance.ProcessDestruction(this, destroyedPrefab, damage, _isObliterated);
+		}
 
-            foreach (Renderer rend in renderers)
-            {
-                Destructible parentDestructible = rend.GetComponentInParent<Destructible>(); // child Destructible objects should not be affected by damage on their parents.
-                if (parentDestructible != this) continue;
-                bool isAcceptableRenderer = rend is MeshRenderer || rend is SkinnedMeshRenderer;
-                if (isAcceptableRenderer && !rend.gameObject.HasTag(Tag.ClingingDebris) && rend.gameObject.layer != DestructionManager.Instance.debrisLayer)
-                {
-                    for (int j = 0; j < rend.sharedMaterials.Length; j++)
-                        DestructionManager.Instance.SetProgressiveDamageTexture(rend, rend.sharedMaterials[j], _currentDamageLevel);
-                }
-            }
+		public void RepairDamage(float amount)
+		{
+			if (IsDestroyed || !canBeRepaired)
+				return; // object cannot be repaired if it is either already destroyed or not repairable.
 
-            PlayDamageEffects();
-        }
+			LastRepairedAmount = amount;
 
-        /// <summary>Gets the material to use for the fallback particle effect when this Destructible object is destroyed.</summary>
-        public Material GetDestroyedParticleEffectMaterial()
-        {
-            Renderer[] renderers = GetComponentsInChildren<Renderer>();
+			currentHitPoints += amount;
+			if (currentHitPoints > totalHitPoints) // object cannot be over-repaired beyond its total hit points.
+				currentHitPoints = totalHitPoints;
 
-            foreach (Renderer rend in renderers)
-            {
-                Destructible parentDestructible = rend.GetComponentInParent<Destructible>(); // only get the material for the parent object to use for a particle effect
-                if (parentDestructible != this) continue;
-                bool isAcceptableRenderer = rend is MeshRenderer || rend is SkinnedMeshRenderer;
-                if (isAcceptableRenderer)
-                    return rend.sharedMaterial;
-            }
+			PlayDamageEffects();
+			FireRepairedEvent();
+		}
 
-            return null; // could not find an acceptable material to use for particle effects
-        }
+		public void Destroy()
+		{
+			if (IsDestroyed || _isInvulnerable)
+				return; // don't try to destroy an already-destroyed or invulnerable object.
 
-        private void PlayDamageEffects()
-        {
-            // Check if we should play a particle effect for this damage level
-            if (damageEffects == null || damageEffects.Count == 0) return;
+			LastDamagedAmount = currentHitPoints;
+			FireDamagedEvent();
 
-            int currentDamageLevelIndex = 0;
-            if (_currentDamageLevel != null)
-                currentDamageLevelIndex = damageLevels.IndexOf(_currentDamageLevel); // FindIndex(a => a == currentDamageLevel);
-            
-            foreach (DamageEffect effect in damageEffects)
-            {
-                if (effect == null || effect.Prefab == null) continue;
+			currentHitPoints = 0;
+			PlayDamageEffects();
 
-                // get rotation
-                Quaternion rotation = transform.rotation;
-                if (effect.Rotation != Vector3.zero)
-                    rotation = transform.rotation * Quaternion.Euler(effect.Rotation);
+			DestructionManager.Instance.ProcessDestruction(this, destroyedPrefab, currentHitPoints, _isObliterated);
+		}
 
-                // Is this effect only played if the destructible object has a certain tag?
-                if (effect.HasTagDependency && !gameObject.HasTag(effect.TagDependency))
-                    continue;
+		/// <summary>Check to see if the destructible object has been obliterated from taking excessive damage. If so, set the ObliteratedLevel on the object.</summary>
+		/// <param name="damage">The amount of damage applied to the object from a single source.</param>
+		private void CheckForObliterate(float damage)
+		{
+			if (_isInvulnerable || !canBeDestroyed || !canBeObliterated) return;
 
-                if (_currentDamageLevel != null && effect.TriggeredAt < damageLevels.Count)
-                {
-                    // TURN ON pre-destruction damage effects
-                    if (currentDamageLevelIndex >= effect.TriggeredAt && !effect.HasStarted)
-                    {
-                        if (effect.GameObject != null)
-                        {
-                            for (int i = 0; i < effect.ParticleSystems.Length; i++)
-                            {
-                                ParticleSystem.EmissionModule emission = effect.ParticleSystems[i].emission;
-                                emission.enabled = true;
-                            }
-                        }
-                        else
-                        {
-                            // set parent to this destructible object and play
-                            effect.GameObject = ObjectPool.Instance.Spawn(effect.Prefab, effect.Offset, rotation, transform);
+			if (damage >= (DestructionManager.Instance.obliterateMultiplier * totalHitPoints))
+				_isObliterated = true;
+		}
 
-                            if (effect.GameObject != null)
-                                effect.ParticleSystems = effect.GameObject.GetComponentsInChildren<ParticleSystem>();
-                        }
+		/// <summary>Advances the damage state, applies damage-level materials as needed, and plays particle effects.</summary>
+		private void SetDamageLevel()
+		{
+			DamageLevel damageLevel = damageLevels?.GetDamageLevel(currentHitPoints);
+			if (damageLevel == null) return;
+			if (_currentDamageLevel != null && damageLevel == _currentDamageLevel) return;
 
-                        effect.HasStarted = true;
-                    }
+			_currentDamageLevel = damageLevel;
+			Renderer[] renderers = GetComponentsInChildren<Renderer>();
 
-                    // TURN OFF pre-destruction damage effects
-                    if (currentDamageLevelIndex < effect.TriggeredAt && effect.HasStarted)
-                    {
-                        if (effect.GameObject != null)
-                        {
-                            for (int i = 0; i < effect.ParticleSystems.Length; i++)
-                            {
-                                ParticleSystem.EmissionModule emission = effect.ParticleSystems[i].emission;
-                                emission.enabled = false;
-                            }
-                        }
+			foreach (Renderer rend in renderers)
+			{
+				Destructible
+					parentDestructible =
+						rend.GetComponentInParent<Destructible
+						>(); // child Destructible objects should not be affected by damage on their parents.
+				if (parentDestructible != this) continue;
+				bool isAcceptableRenderer = rend is MeshRenderer || rend is SkinnedMeshRenderer;
+				if (isAcceptableRenderer && !rend.gameObject.HasTag(Tag.ClingingDebris) &&
+					rend.gameObject.layer != DestructionManager.Instance.debrisLayer)
+				{
+					for (int j = 0; j < rend.sharedMaterials.Length; j++)
+						DestructionManager.Instance.SetProgressiveDamageTexture(rend, rend.sharedMaterials[j],
+							_currentDamageLevel);
+				}
+			}
 
-                        effect.HasStarted = false;
-                    }
-                }
+			PlayDamageEffects();
+		}
 
-                // Destroyed effects
-                if (effect.TriggeredAt == damageLevels.Count && IsDestroyed && !effect.HasStarted)
-                {
-                    effect.GameObject = canBeDestroyed ? 
-                        ObjectPool.Instance.Spawn(effect.Prefab, transform.TransformPoint(effect.Offset), rotation) : 
-                        ObjectPool.Instance.Spawn(effect.Prefab, effect.Offset, rotation, transform);
+		/// <summary>Gets the material to use for the fallback particle effect when this Destructible object is destroyed.</summary>
+		public Material GetDestroyedParticleEffectMaterial()
+		{
+			Renderer[] renderers = GetComponentsInChildren<Renderer>();
 
-                    if (effect.GameObject != null)
-                        effect.ParticleSystems = effect.GameObject.GetComponentsInChildren<ParticleSystem>();
+			foreach (Renderer rend in renderers)
+			{
+				Destructible
+					parentDestructible =
+						rend.GetComponentInParent<Destructible
+						>(); // only get the material for the parent object to use for a particle effect
+				if (parentDestructible != this) continue;
+				bool isAcceptableRenderer = rend is MeshRenderer || rend is SkinnedMeshRenderer;
+				if (isAcceptableRenderer)
+					return rend.sharedMaterial;
+			}
 
-                    effect.HasStarted = true;
-                }
-            }
-        }
+			return null; // could not find an acceptable material to use for particle effects
+		}
 
-        // NOTE: OnCollisionEnter will only fire if a rigidbody is attached to this object!
-        public void OnCollisionEnter(Collision collision)
-        {
-            if (DestructionManager.Instance == null) return;
-            if (!isActiveAndEnabled) return;
-            if (!canPlayerCollide && collision.collider.gameObject.CompareTag("Player")) return;
+		private void PlayDamageEffects()
+		{
+			// Check if we should play a particle effect for this damage level
+			if (damageEffects == null || damageEffects.Count == 0) return;
 
-            this.ProcessDestructibleCollision(collision, GetComponent<Rigidbody>());
-            
-            if (collision.contacts.Length <= 0) return;
-            
-            Destructible destructibleObj = collision.contacts[0].otherCollider.gameObject.GetComponentInParent<Destructible>();
-            if (destructibleObj != null && collision.contacts[0].otherCollider.attachedRigidbody == null)
-                destructibleObj.ProcessDestructibleCollision(collision, GetComponent<Rigidbody>());
-        }
+			int currentDamageLevelIndex = 0;
+			if (_currentDamageLevel != null)
+				currentDamageLevelIndex =
+					damageLevels.IndexOf(_currentDamageLevel); // FindIndex(a => a == currentDamageLevel);
 
-        // NOTE: OnDrawGizmos will only fire if Gizmos are turned on in the Unity Editor!
-        public void OnDrawGizmos()
-        {
-            damageEffects.DrawGizmos(transform);
-            centerPointOverride.DrawGizmos(transform);
-        }
+			foreach (DamageEffect effect in damageEffects)
+			{
+				if (effect == null || effect.Prefab == null) continue;
 
-        public void FireDestroyedEvent()
-        {
-            DestroyedEvent?.Invoke(); // If there is at least one listener, trigger the event.
-        }
+				// get rotation
+				Quaternion rotation = transform.rotation;
+				if (effect.Rotation != Vector3.zero)
+					rotation = transform.rotation * Quaternion.Euler(effect.Rotation);
 
-        public void FireRepairedEvent()
-        {
-            RepairedEvent?.Invoke(); // If there is at least one listener, trigger the event.
-        }
+				// Is this effect only played if the destructible object has a certain tag?
+				if (effect.HasTagDependency && !gameObject.HasTag(effect.TagDependency))
+					continue;
 
-        public void FireDamagedEvent()
-        {
-            DamagedEvent?.Invoke(); // If there is at least one listener, trigger the event.
-        }
-    }
+				if (_currentDamageLevel != null && effect.TriggeredAt < damageLevels.Count)
+				{
+					// TURN ON pre-destruction damage effects
+					if (currentDamageLevelIndex >= effect.TriggeredAt && !effect.HasStarted)
+					{
+						if (effect.GameObject != null)
+						{
+							for (int i = 0; i < effect.ParticleSystems.Length; i++)
+							{
+								ParticleSystem.EmissionModule emission = effect.ParticleSystems[i].emission;
+								emission.enabled = true;
+							}
+						}
+						else
+						{
+							// set parent to this destructible object and play
+							effect.GameObject =
+								ObjectPool.Instance.Spawn(effect.Prefab, effect.Offset, rotation, transform);
+
+							if (effect.GameObject != null)
+								effect.ParticleSystems = effect.GameObject.GetComponentsInChildren<ParticleSystem>();
+						}
+
+						effect.HasStarted = true;
+					}
+
+					// TURN OFF pre-destruction damage effects
+					if (currentDamageLevelIndex < effect.TriggeredAt && effect.HasStarted)
+					{
+						if (effect.GameObject != null)
+						{
+							for (int i = 0; i < effect.ParticleSystems.Length; i++)
+							{
+								ParticleSystem.EmissionModule emission = effect.ParticleSystems[i].emission;
+								emission.enabled = false;
+							}
+						}
+
+						effect.HasStarted = false;
+					}
+				}
+
+				// Destroyed effects
+				if (effect.TriggeredAt == damageLevels.Count && IsDestroyed && !effect.HasStarted)
+				{
+					effect.GameObject = canBeDestroyed
+						? ObjectPool.Instance.Spawn(effect.Prefab, transform.TransformPoint(effect.Offset), rotation)
+						: ObjectPool.Instance.Spawn(effect.Prefab, effect.Offset, rotation, transform);
+
+					if (effect.GameObject != null)
+						effect.ParticleSystems = effect.GameObject.GetComponentsInChildren<ParticleSystem>();
+
+					effect.HasStarted = true;
+				}
+			}
+		}
+
+		// NOTE: OnCollisionEnter will only fire if a rigidbody is attached to this object!
+		public void OnCollisionEnter(Collision collision)
+		{
+			if (DestructionManager.Instance == null) return;
+			if (!isActiveAndEnabled) return;
+			if (!canPlayerCollide && collision.collider.gameObject.CompareTag("Player")) return;
+
+			this.ProcessDestructibleCollision(collision, GetComponent<Rigidbody>());
+
+			if (collision.contacts.Length <= 0) return;
+
+			Destructible destructibleObj =
+				collision.contacts[0].otherCollider.gameObject.GetComponentInParent<Destructible>();
+			if (destructibleObj != null && collision.contacts[0].otherCollider.attachedRigidbody == null)
+				destructibleObj.ProcessDestructibleCollision(collision, GetComponent<Rigidbody>());
+		}
+
+		// NOTE: OnDrawGizmos will only fire if Gizmos are turned on in the Unity Editor!
+		public void OnDrawGizmos()
+		{
+			damageEffects.DrawGizmos(transform);
+			centerPointOverride.DrawGizmos(transform);
+		}
+
+		public void FireDestroyedEvent()
+		{
+			DestroyedEvent?.Invoke(); // If there is at least one listener, trigger the event.
+		}
+
+		public void FireRepairedEvent()
+		{
+			RepairedEvent?.Invoke(); // If there is at least one listener, trigger the event.
+		}
+
+		public void FireDamagedEvent()
+		{
+			DamagedEvent?.Invoke(); // If there is at least one listener, trigger the event.
+		}
+	}
 }

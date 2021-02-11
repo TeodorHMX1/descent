@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class DemoNavigation : MonoBehaviour 
+public class DemoNavigation : MonoBehaviour
 {
 	public void Start()
 	{
 		Cursor.lockState = CursorLockMode.None;
 		Cursor.visible = true;
 	}
-	
+
 	public void LoadMainScenariosDemoScene()
 	{
 		Cursor.visible = false;

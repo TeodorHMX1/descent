@@ -1,4 +1,5 @@
-﻿Shader "Destructible/DestructibleSpeedTree" {
+﻿Shader "Destructible/DestructibleSpeedTree"
+{
     Properties
     {
         _Color ("Main Color", Color) = (1,1,1,1)
@@ -25,129 +26,137 @@
         LOD 400
         Cull [_Cull]
 
-        CGPROGRAM 
-            #pragma surface surf Lambert vertex:DestructibleSpeedTreeVert nodirlightmap nodynlightmap fullforwardshadows 
-            #pragma target 3.0 
-            #pragma instancing_options assumeuniformscaling maxcount:50
-            #pragma multi_compile_vertex LOD_FADE_PERCENTAGE
-            #pragma shader_feature GEOM_TYPE_BRANCH GEOM_TYPE_BRANCH_DETAIL GEOM_TYPE_FROND GEOM_TYPE_LEAF GEOM_TYPE_MESH
-            #pragma shader_feature EFFECT_BUMP
-            #pragma shader_feature EFFECT_HUE_VARIATION
-            #define ENABLE_WIND
-            #include "DestructibleSpeedTreeCommon.cginc"
+        CGPROGRAM
+        #pragma surface surf Lambert vertex:DestructibleSpeedTreeVert nodirlightmap nodynlightmap fullforwardshadows
+        #pragma target 3.0
+        #pragma instancing_options assumeuniformscaling maxcount:50
+        #pragma multi_compile_vertex LOD_FADE_PERCENTAGE
+        #pragma shader_feature GEOM_TYPE_BRANCH GEOM_TYPE_BRANCH_DETAIL GEOM_TYPE_FROND GEOM_TYPE_LEAF GEOM_TYPE_MESH
+        #pragma shader_feature EFFECT_BUMP
+        #pragma shader_feature EFFECT_HUE_VARIATION
+        #define ENABLE_WIND
+        #include "DestructibleSpeedTreeCommon.cginc"
 
-            void surf(Input IN, inout SurfaceOutput OUT)
-            {
-                SpeedTreeFragOut o; 
-                SpeedTreeFrag(IN, o);
-                SPEEDTREE_COPY_FRAG(OUT, o)
-            }
+        void surf(Input IN, inout SurfaceOutput OUT)
+        {
+            SpeedTreeFragOut o;
+            SpeedTreeFrag(IN, o);
+            SPEEDTREE_COPY_FRAG(OUT, o)
+        }
         ENDCG
 
         Pass
         {
-            Tags { "LightMode" = "ShadowCaster" }
+            Tags
+            {
+                "LightMode" = "ShadowCaster"
+            }
 
             CGPROGRAM
-                #pragma vertex vert
-                #pragma fragment frag 
-                #pragma target 3.0
-                #pragma instancing_options assumeuniformscaling maxcount:50
-                #pragma multi_compile_vertex LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
-                #pragma multi_compile_fragment __ LOD_FADE_CROSSFADE
-                #pragma multi_compile_instancing
-                #pragma shader_feature GEOM_TYPE_BRANCH GEOM_TYPE_BRANCH_DETAIL GEOM_TYPE_FROND GEOM_TYPE_LEAF GEOM_TYPE_MESH
-                #pragma multi_compile_shadowcaster
-                #define ENABLE_WIND
-                #include "DestructibleSpeedTreeCommon.cginc"
+            #pragma vertex vert
+            #pragma fragment frag
+            #pragma target 3.0
+            #pragma instancing_options assumeuniformscaling maxcount:50
+            #pragma multi_compile_vertex LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
+            #pragma multi_compile_fragment __ LOD_FADE_CROSSFADE
+            #pragma multi_compile_instancing
+            #pragma shader_feature GEOM_TYPE_BRANCH GEOM_TYPE_BRANCH_DETAIL GEOM_TYPE_FROND GEOM_TYPE_LEAF GEOM_TYPE_MESH
+            #pragma multi_compile_shadowcaster
+            #define ENABLE_WIND
+            #include "DestructibleSpeedTreeCommon.cginc"
 
-                struct v2f
-                {
-                    V2F_SHADOW_CASTER;
-                    #ifdef SPEEDTREE_ALPHATEST
+            struct v2f
+            {
+                V2F_SHADOW_CASTER;
+                #ifdef SPEEDTREE_ALPHATEST
                         float2 uv : TEXCOORD1;
-                    #endif
-                    UNITY_VERTEX_INPUT_INSTANCE_ID
-                    UNITY_VERTEX_OUTPUT_STEREO
-                };
+                #endif
+                UNITY_VERTEX_INPUT_INSTANCE_ID
+                UNITY_VERTEX_OUTPUT_STEREO
+            };
 
-                v2f vert(SpeedTreeVB v)
-                {
-                    v2f o;
-                    UNITY_SETUP_INSTANCE_ID(v);
-                    UNITY_TRANSFER_INSTANCE_ID(v, o);
-                    UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-                    #ifdef SPEEDTREE_ALPHATEST
+            v2f vert(SpeedTreeVB v)
+            {
+                v2f o;
+                UNITY_SETUP_INSTANCE_ID(v);
+                UNITY_TRANSFER_INSTANCE_ID(v, o);
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+                #ifdef SPEEDTREE_ALPHATEST
                         o.uv = v.texcoord.xy;
-                    #endif
-                    OffsetSpeedTreeVertex(v, unity_LODFade.x);
-                    TRANSFER_SHADOW_CASTER_NORMALOFFSET(o)
+                #endif
+                OffsetSpeedTreeVertex(v, unity_LODFade.x);
+                TRANSFER_SHADOW_CASTER_NORMALOFFSET(o)
 
-                    return o;
-                }
+                return o;
+            }
 
-                float4 frag(v2f i) : SV_Target
-                {
-                    UNITY_SETUP_INSTANCE_ID(i);
-                    #ifdef SPEEDTREE_ALPHATEST
+            float4 frag(v2f i) : SV_Target
+            {
+                UNITY_SETUP_INSTANCE_ID(i);
+                #ifdef SPEEDTREE_ALPHATEST
                         clip(tex2D(_MainTex, i.uv).a * _Color.a - _Cutoff);
-                    #endif
-                    UNITY_APPLY_DITHER_CROSSFADE(i.pos.xy);
-                    SHADOW_CASTER_FRAGMENT(i)
-                }
+                #endif
+                UNITY_APPLY_DITHER_CROSSFADE(i.pos.xy);
+                SHADOW_CASTER_FRAGMENT(i)
+            }
             ENDCG
         }
 
         Pass
         {
-            Tags { "LightMode" = "Vertex" }
+            Tags
+            {
+                "LightMode" = "Vertex"
+            }
 
             CGPROGRAM
-                #pragma vertex vert
-                #pragma fragment frag
-                #pragma target 3.0
-                #pragma instancing_options assumeuniformscaling maxcount:50
-                #pragma multi_compile_fog
-                #pragma multi_compile_vertex LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
-                #pragma multi_compile_fragment __ LOD_FADE_CROSSFADE
-                #pragma multi_compile_instancing
-                #pragma shader_feature GEOM_TYPE_BRANCH GEOM_TYPE_BRANCH_DETAIL GEOM_TYPE_FROND GEOM_TYPE_LEAF GEOM_TYPE_MESH
-                #pragma shader_feature EFFECT_HUE_VARIATION
-                #define ENABLE_WIND
-                #include "DestructibleSpeedTreeCommon.cginc"
+            #pragma vertex vert
+            #pragma fragment frag
+            #pragma target 3.0
+            #pragma instancing_options assumeuniformscaling maxcount:50
+            #pragma multi_compile_fog
+            #pragma multi_compile_vertex LOD_FADE_PERCENTAGE LOD_FADE_CROSSFADE
+            #pragma multi_compile_fragment __ LOD_FADE_CROSSFADE
+            #pragma multi_compile_instancing
+            #pragma shader_feature GEOM_TYPE_BRANCH GEOM_TYPE_BRANCH_DETAIL GEOM_TYPE_FROND GEOM_TYPE_LEAF GEOM_TYPE_MESH
+            #pragma shader_feature EFFECT_HUE_VARIATION
+            #define ENABLE_WIND
+            #include "DestructibleSpeedTreeCommon.cginc"
 
-                struct v2f
-                {
-                    UNITY_POSITION(vertex);
-                    UNITY_FOG_COORDS(0)
-                    Input data      : TEXCOORD1;
-                    UNITY_VERTEX_INPUT_INSTANCE_ID
-                    UNITY_VERTEX_OUTPUT_STEREO
-                };
+            struct v2f
+            {
+                UNITY_POSITION(vertex);
+                UNITY_FOG_COORDS (
+                0
+                )
+                Input data : TEXCOORD1;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
+                UNITY_VERTEX_OUTPUT_STEREO
+            };
 
-                v2f vert(SpeedTreeVB v)
-                {
-                    v2f o;
-                    UNITY_SETUP_INSTANCE_ID(v);
-                    UNITY_TRANSFER_INSTANCE_ID(v, o);
-                    UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-                    DestructibleSpeedTreeVert(v, o.data);
-                    o.data.color.rgb *= ShadeVertexLightsFull(v.vertex, v.normal, 4, true);
-                    o.vertex = UnityObjectToClipPos(v.vertex);
-                    UNITY_TRANSFER_FOG(o,o.vertex);
-                    return o;
-                }
+            v2f vert(SpeedTreeVB v)
+            {
+                v2f o;
+                UNITY_SETUP_INSTANCE_ID(v);
+                UNITY_TRANSFER_INSTANCE_ID(v, o);
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+                DestructibleSpeedTreeVert(v, o.data);
+                o.data.color.rgb *= ShadeVertexLightsFull(v.vertex, v.normal, 4, true);
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                UNITY_TRANSFER_FOG(o, o.vertex);
+                return o;
+            }
 
-                fixed4 frag(v2f i) : SV_Target
-                {
-                    UNITY_SETUP_INSTANCE_ID(i);
-                    SpeedTreeFragOut o;
-                    SpeedTreeFrag(i.data, o);
-                    UNITY_APPLY_DITHER_CROSSFADE(i.vertex.xy);
-                    fixed4 c = fixed4(o.Albedo, o.Alpha);
-                    UNITY_APPLY_FOG(i.fogCoord, c);
-                    return c;
-                }
+            fixed4 frag(v2f i) : SV_Target
+            {
+                UNITY_SETUP_INSTANCE_ID(i);
+                SpeedTreeFragOut o;
+                SpeedTreeFrag(i.data, o);
+                UNITY_APPLY_DITHER_CROSSFADE(i.vertex.xy);
+                fixed4 c = fixed4(o.Albedo, o.Alpha);
+                UNITY_APPLY_FOG(i.fogCoord, c);
+                return c;
+            }
             ENDCG
         }
     }
@@ -166,100 +175,108 @@
         Cull [_Cull]
 
         CGPROGRAM
-            #pragma surface surf Lambert vertex:DestructibleSpeedTreeVert nodirlightmap nodynlightmap fullforwardshadows noinstancing
-            #pragma multi_compile_vertex LOD_FADE_PERCENTAGE
-            #pragma shader_feature GEOM_TYPE_BRANCH GEOM_TYPE_BRANCH_DETAIL GEOM_TYPE_FROND GEOM_TYPE_LEAF GEOM_TYPE_MESH
-            #include "DestructibleSpeedTreeCommon.cginc"
+        #pragma surface surf Lambert vertex:DestructibleSpeedTreeVert nodirlightmap nodynlightmap fullforwardshadows noinstancing
+        #pragma multi_compile_vertex LOD_FADE_PERCENTAGE
+        #pragma shader_feature GEOM_TYPE_BRANCH GEOM_TYPE_BRANCH_DETAIL GEOM_TYPE_FROND GEOM_TYPE_LEAF GEOM_TYPE_MESH
+        #include "DestructibleSpeedTreeCommon.cginc"
 
-            void surf(Input IN, inout SurfaceOutput OUT)
-            {
-                SpeedTreeFragOut o;
-                SpeedTreeFrag(IN, o);
-                SPEEDTREE_COPY_FRAG(OUT, o)
-            } 
+        void surf(Input IN, inout SurfaceOutput OUT)
+        {
+            SpeedTreeFragOut o;
+            SpeedTreeFrag(IN, o);
+            SPEEDTREE_COPY_FRAG(OUT, o)
+        }
         ENDCG
 
         Pass
         {
-            Tags { "LightMode" = "ShadowCaster" }
+            Tags
+            {
+                "LightMode" = "ShadowCaster"
+            }
 
             CGPROGRAM
-                #pragma vertex vert
-                #pragma fragment frag
-                #pragma multi_compile_vertex LOD_FADE_PERCENTAGE
-                #pragma shader_feature GEOM_TYPE_BRANCH GEOM_TYPE_BRANCH_DETAIL GEOM_TYPE_FROND GEOM_TYPE_LEAF GEOM_TYPE_MESH
-                #pragma multi_compile_shadowcaster
-                #include "DestructibleSpeedTreeCommon.cginc"
+            #pragma vertex vert
+            #pragma fragment frag
+            #pragma multi_compile_vertex LOD_FADE_PERCENTAGE
+            #pragma shader_feature GEOM_TYPE_BRANCH GEOM_TYPE_BRANCH_DETAIL GEOM_TYPE_FROND GEOM_TYPE_LEAF GEOM_TYPE_MESH
+            #pragma multi_compile_shadowcaster
+            #include "DestructibleSpeedTreeCommon.cginc"
 
-                struct v2f
-                {
-                    V2F_SHADOW_CASTER;
-                    #ifdef SPEEDTREE_ALPHATEST
+            struct v2f
+            {
+                V2F_SHADOW_CASTER;
+                #ifdef SPEEDTREE_ALPHATEST
                         float2 uv : TEXCOORD1;
-                    #endif
-                };
+                #endif
+            };
 
-                v2f vert(SpeedTreeVB v)
-                {
-                    v2f o;
-                    #ifdef SPEEDTREE_ALPHATEST
+            v2f vert(SpeedTreeVB v)
+            {
+                v2f o;
+                #ifdef SPEEDTREE_ALPHATEST
                         o.uv = v.texcoord.xy;
-                    #endif
-                    OffsetSpeedTreeVertex(v, unity_LODFade.x);
-                    TRANSFER_SHADOW_CASTER_NORMALOFFSET(o)
-                    return o;
-                }
+                #endif
+                OffsetSpeedTreeVertex(v, unity_LODFade.x);
+                TRANSFER_SHADOW_CASTER_NORMALOFFSET(o)
+                return o;
+            }
 
-                float4 frag(v2f i) : SV_Target
-                {
-                    #ifdef SPEEDTREE_ALPHATEST
+            float4 frag(v2f i) : SV_Target
+            {
+                #ifdef SPEEDTREE_ALPHATEST
                         clip(tex2D(_MainTex, i.uv).a * _Color.a - _Cutoff);
-                    #endif
-                    SHADOW_CASTER_FRAGMENT(i)
-                }
+                #endif
+                SHADOW_CASTER_FRAGMENT(i)
+            }
             ENDCG
         }
 
         Pass
         {
-            Tags { "LightMode" = "Vertex" }
+            Tags
+            {
+                "LightMode" = "Vertex"
+            }
 
             CGPROGRAM
-                #pragma vertex vert
-                #pragma fragment frag
-                #pragma multi_compile_fog
-                #pragma multi_compile_vertex LOD_FADE_PERCENTAGE
-                #pragma shader_feature GEOM_TYPE_BRANCH GEOM_TYPE_BRANCH_DETAIL GEOM_TYPE_FROND GEOM_TYPE_LEAF GEOM_TYPE_MESH
-                #include "DestructibleSpeedTreeCommon.cginc"
+            #pragma vertex vert
+            #pragma fragment frag
+            #pragma multi_compile_fog
+            #pragma multi_compile_vertex LOD_FADE_PERCENTAGE
+            #pragma shader_feature GEOM_TYPE_BRANCH GEOM_TYPE_BRANCH_DETAIL GEOM_TYPE_FROND GEOM_TYPE_LEAF GEOM_TYPE_MESH
+            #include "DestructibleSpeedTreeCommon.cginc"
 
-                struct v2f
-                {
-                    UNITY_POSITION(vertex);
-                    UNITY_FOG_COORDS(0)
-                    Input data      : TEXCOORD1;
-                    UNITY_VERTEX_OUTPUT_STEREO
-                };
+            struct v2f
+            {
+                UNITY_POSITION(vertex);
+                UNITY_FOG_COORDS (
+                0
+                )
+                Input data : TEXCOORD1;
+                UNITY_VERTEX_OUTPUT_STEREO
+            };
 
-                v2f vert(SpeedTreeVB v)
-                {
-                    v2f o;
-                    UNITY_SETUP_INSTANCE_ID(v);
-                    UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-                    DestructibleSpeedTreeVert(v, o.data);
-                    o.data.color.rgb *= ShadeVertexLightsFull(v.vertex, v.normal, 2, false);
-                    o.vertex = UnityObjectToClipPos(v.vertex);
-                    UNITY_TRANSFER_FOG(o,o.vertex);
-                    return o;
-                }
+            v2f vert(SpeedTreeVB v)
+            {
+                v2f o;
+                UNITY_SETUP_INSTANCE_ID(v);
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+                DestructibleSpeedTreeVert(v, o.data);
+                o.data.color.rgb *= ShadeVertexLightsFull(v.vertex, v.normal, 2, false);
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                UNITY_TRANSFER_FOG(o, o.vertex);
+                return o;
+            }
 
-                fixed4 frag(v2f i) : SV_Target
-                {
-                    SpeedTreeFragOut o;
-                    SpeedTreeFrag(i.data, o);
-                    fixed4 c = fixed4(o.Albedo, o.Alpha);
-                    UNITY_APPLY_FOG(i.fogCoord, c); 
-                    return c;
-                }
+            fixed4 frag(v2f i) : SV_Target
+            {
+                SpeedTreeFragOut o;
+                SpeedTreeFrag(i.data, o);
+                fixed4 c = fixed4(o.Albedo, o.Alpha);
+                UNITY_APPLY_FOG(i.fogCoord, c);
+                return c;
+            }
             ENDCG
         }
     }

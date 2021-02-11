@@ -5,27 +5,27 @@ using UnityEngine.SceneManagement;
 
 namespace Destructible
 {
-    [CustomEditor(typeof(TreeManager))]
-    public class TreeManagerEditor : Editor
-    {
-        public override void OnInspectorGUI()
-        {
-            TreeManager treeManager = target as TreeManager;
-            
-            base.OnInspectorGUI();
+	[CustomEditor(typeof(TreeManager))]
+	public class TreeManagerEditor : Editor
+	{
+		public override void OnInspectorGUI()
+		{
+			TreeManager treeManager = target as TreeManager;
 
-            EditorGUILayout.Separator();
-            
-            if (GUILayout.Button("Update Trees", EditorStyles.toolbarButton, GUILayout.Width(160)))
-                TreeManager.Instance.UpdateTrees();
+			base.OnInspectorGUI();
 
-            EditorGUILayout.Separator();
-            
-            if (GUI.changed && !Application.isPlaying)
-            {
-                EditorUtility.SetDirty(treeManager);
-                EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
-            }
-        }
-    }
+			EditorGUILayout.Separator();
+
+			if (GUILayout.Button("Update Trees", EditorStyles.toolbarButton, GUILayout.Width(160)))
+				TreeManager.Instance.UpdateTrees();
+
+			EditorGUILayout.Separator();
+
+			if (GUI.changed && !Application.isPlaying)
+			{
+				EditorUtility.SetDirty(treeManager);
+				EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
+			}
+		}
+	}
 }

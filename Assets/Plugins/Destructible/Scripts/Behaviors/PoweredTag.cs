@@ -2,16 +2,16 @@
 
 namespace Destructible
 {
-    public class PoweredTag : MonoBehaviour
-    {
-        public PowerSource powerSource;
+	public class PoweredTag : MonoBehaviour
+	{
+		public PowerSource powerSource;
 
-        void Update()
-        {
-            if (powerSource == null || !powerSource.hasPower)
-                gameObject.RemoveTag(Tag.Powered);
-            else 
-                gameObject.AddTag(Tag.Powered);
-        }
-    }
+		void Update()
+		{
+			if (powerSource == null || !powerSource.hasPower)
+				gameObject.RemoveTag(Tag.Powered);
+			else
+				gameObject.AddTag(Tag.Powered);
+		}
+	}
 }

@@ -11,7 +11,7 @@ namespace Destructible
 	{
 		[Tooltip("The prefab of the object you want to spawn into the scene from the object pool.")]
 		public GameObject prefab;
-		
+
 		private ObjectPool _objectPool;
 
 		private void Start()
@@ -21,12 +21,11 @@ namespace Destructible
 			{
 				Debug.LogWarning("Object Pool was not found or could not be created. Removing script and exiting.");
 				Destroy(this);
-                return;
-            }
-			
+				return;
+			}
+
 			_objectPool.Spawn(prefab, transform.localPosition, transform.localRotation, transform.parent);
-			gameObject.SetActive(false); 
+			gameObject.SetActive(false);
 		}
 	}
 }
-

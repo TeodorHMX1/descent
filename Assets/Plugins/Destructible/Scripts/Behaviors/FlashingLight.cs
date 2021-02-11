@@ -4,16 +4,16 @@ using System.Collections;
 public class FlashingLight : MonoBehaviour
 {
 	public float flashInterval = 0.5f;
-	
-    private Light _flashingLight;
 
-    public void Start()
-    {
+	private Light _flashingLight;
+
+	public void Start()
+	{
 		_flashingLight = GetComponent<Light>();
 		StartCoroutine(Flashing());
 	}
 
-    private IEnumerator Flashing()
+	private IEnumerator Flashing()
 	{
 		while (true)
 		{
