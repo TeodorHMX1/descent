@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     /// <summary>
     /// This script is used in conjunction with Object Pooling to enhance performance, in particular with mobile devices.

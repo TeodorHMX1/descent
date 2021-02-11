@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     /// <summary>This script will intantiate the specified explosion prefab after [seconds].</summary>
     public class ExplodeAfter : MonoBehaviour

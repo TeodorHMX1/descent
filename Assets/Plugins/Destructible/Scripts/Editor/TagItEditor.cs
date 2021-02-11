@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 // ReSharper disable InconsistentNaming
 
-namespace DestroyIt
+namespace Destructible
 {
     [CustomEditor(typeof(TagIt))]
     public class TagItEditor : Editor

@@ -2,29 +2,29 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
-    public class SetupDestroyIt
+    public class SetupDestructible
     {
-        [MenuItem("Window/DestroyIt/Setup - Minimal")]
+        [MenuItem("Window/Destructible/Setup - Minimal")]
         public static void SetupMinimalMenuOption()
         {
-            GameObject destroyIt;
+            GameObject Destructible;
             DestructionManager destructionManager = Object.FindObjectOfType<DestructionManager>();
             if (destructionManager != null)
-                destroyIt = destructionManager.gameObject;
+                Destructible = destructionManager.gameObject;
             else
-                destroyIt = new GameObject("DestroyIt"); 
+                Destructible = new GameObject("Destructible"); 
             
-            destroyIt.AddComponent<DestructionManager>();
-            destroyIt.AddComponent<ParticleManager>();
-            ObjectPool pool = destroyIt.AddComponent<ObjectPool>();
+            Destructible.AddComponent<DestructionManager>();
+            Destructible.AddComponent<ParticleManager>();
+            ObjectPool pool = Destructible.AddComponent<ObjectPool>();
 
             DestructionTest destructionTest = Object.FindObjectOfType<DestructionTest>();
             if (destructionTest == null)
             {
-                GameObject destroyItTest = new GameObject("DestroyIt-InputTest");
-                destroyItTest.AddComponent<DestructionTest>();
+                GameObject DestructibleTest = new GameObject("Destructible-InputTest");
+                DestructibleTest.AddComponent<DestructionTest>();
             }
 
             if (pool != null)
@@ -37,12 +37,12 @@ namespace DestroyIt
             }
         }
         
-        [MenuItem("Window/DestroyIt/Setup - Destructible Trees")]
+        [MenuItem("Window/Destructible/Setup - Destructible Trees")]
         public static void SetupDestructibleTreesMenuOption()
         {
             EditorUtility.DisplayDialog("A Note About Destructible Trees",
                 "NOTE: You will need to uncheck Enable Tree Colliders on your terrain in order to use destructible trees.\n\n" + 
-                "Once you've added your trees to the terrain, click the \"Update Trees\" button on the TreeManager, and DestroyIt will " + 
+                "Once you've added your trees to the terrain, click the \"Update Trees\" button on the TreeManager, and Destructible will " + 
                 "create game objects with colliders and place them over the terrain tree instances so they can be destroyed.", "Ok");
             
             DestructionManager destructionManager = Object.FindObjectOfType<DestructionManager>();

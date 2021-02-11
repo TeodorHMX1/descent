@@ -2,7 +2,7 @@
 using UnityEngine;
 // ReSharper disable ForCanBeConvertedToForeach
 
-namespace DestroyIt
+namespace Destructible
 {
     /// <summary>These extension methods work with the TagIt multi-tag system to make it easier to search for and add tags.</summary>
     public static class TagItExtensions

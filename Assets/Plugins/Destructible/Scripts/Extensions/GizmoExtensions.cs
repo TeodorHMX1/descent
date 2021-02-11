@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     public static class GizmoExtensions
     {

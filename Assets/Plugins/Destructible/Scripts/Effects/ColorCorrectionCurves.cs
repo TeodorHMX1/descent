@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     [ExecuteInEditMode]
     [AddComponentMenu ("Image Effects/Color Adjustments/Color Correction (Curves, Saturation)")]

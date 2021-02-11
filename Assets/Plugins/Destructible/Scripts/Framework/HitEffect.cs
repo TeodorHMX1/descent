@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     [Serializable]
     public class HitEffect

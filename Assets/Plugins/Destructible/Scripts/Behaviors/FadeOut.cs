@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     /// <summary>
     /// Attach this script to any object that has a transparent shader on its mesh renderer.
@@ -154,20 +154,20 @@ namespace DestroyIt
         {
             Shader transShader;
             // Try to find the appropriate "Transparent" version of the shader.
-            if (currentShader.name.Contains("DestroyIt/"))
-                transShader = Shader.Find(currentShader.name.Replace("DestroyIt/", "DestroyIt/Transparent"));
+            if (currentShader.name.Contains("Destructible/"))
+                transShader = Shader.Find(currentShader.name.Replace("Destructible/", "Destructible/Transparent"));
             else
-                transShader = Shader.Find("DestroyIt/Transparent" + currentShader.name.Replace(" ", ""));
+                transShader = Shader.Find("Destructible/Transparent" + currentShader.name.Replace(" ", ""));
             if (transShader != null)
                 return transShader;
 
-            // Transparent version of shader not found. Try to fallback on DestroyIt/TransparentDiffuse.
-            transShader = Shader.Find("DestroyIt/TransparentDiffuse");
+            // Transparent version of shader not found. Try to fallback on Destructible/TransparentDiffuse.
+            transShader = Shader.Find("Destructible/TransparentDiffuse");
             if (transShader != null)
                 return transShader;
 
             // if no transparency shader could be found, log an error and destroy this script
-            Debug.LogError("DestroyIt: No progressive damage transparency shader could be found. Cannot fade out material with shader \"" + currentShader.name + "\" object.");
+            Debug.LogError("Destructible: No progressive damage transparency shader could be found. Cannot fade out material with shader \"" + currentShader.name + "\" object.");
             return currentShader;
         }
     }

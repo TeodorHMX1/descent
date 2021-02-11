@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     /// <summary>
     /// Put this script on a GameObject that has the Destructible script.

@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     [CustomEditor (typeof(Tonemapping))]
     class TonemappingEditor : Editor

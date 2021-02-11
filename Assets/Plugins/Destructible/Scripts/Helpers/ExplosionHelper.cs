@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     public static class ExplosionHelper
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     [ExecuteInEditMode]
     [RequireComponent(typeof (Camera))]

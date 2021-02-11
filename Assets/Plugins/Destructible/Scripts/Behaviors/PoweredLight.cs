@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 
-namespace DestroyIt
+namespace Destructible
 {
     /// <summary>
     /// This script checks if an object that contains lights is getting power from its

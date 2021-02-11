@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     /// <summary>
     /// Place this script on a rigidbody parent that has one or more compound collider Destructible children under it. 

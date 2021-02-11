@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     /// <summary>
     /// This script manages a single support point (a Trigger Collider) on an object. 

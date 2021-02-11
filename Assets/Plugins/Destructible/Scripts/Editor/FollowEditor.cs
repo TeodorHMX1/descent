@@ -1,6 +1,6 @@
 ﻿using UnityEditor;
 
-namespace DestroyIt
+namespace Destructible
 {
     [CustomEditor(typeof(Follow))]
     public class FollowEditor : Editor

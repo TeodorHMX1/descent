@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     /// <summary>
     /// This script produces a screen-wide fade-in effect. It starts from one color and fades that color out over the specified number of seconds.

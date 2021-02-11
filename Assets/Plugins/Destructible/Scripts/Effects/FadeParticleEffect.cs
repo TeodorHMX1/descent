@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     /// <summary>This script fades out all the child particle effects for the game object it is attached to.</summary>
     public class FadeParticleEffect : MonoBehaviour

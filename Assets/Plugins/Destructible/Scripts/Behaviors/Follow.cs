@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     public class Follow : MonoBehaviour
     {
@@ -17,7 +17,7 @@ namespace DestroyIt
         {
             if (objectToFollow == null)
             {
-                Debug.Log("[DestroyIt-Follow]: No transform was provided. Nothing to follow. Removing script...");
+                Debug.Log("[Destructible-Follow]: No transform was provided. Nothing to follow. Removing script...");
                 Destroy(this);
             }
         }

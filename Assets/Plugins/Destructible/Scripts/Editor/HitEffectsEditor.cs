@@ -4,7 +4,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace DestroyIt
+namespace Destructible
 {
     [CustomEditor(typeof(HitEffects))]
     public class HitEffectsEditor : Editor

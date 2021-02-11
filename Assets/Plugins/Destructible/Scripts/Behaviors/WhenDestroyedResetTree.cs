@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     /// <summary>
     /// This is a helper script that listens to a Destructible object's DestroyedEvent and runs additional code when the object is destroyed.

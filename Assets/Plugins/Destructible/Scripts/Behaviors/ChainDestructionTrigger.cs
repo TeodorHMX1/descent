@@ -4,7 +4,7 @@
 // ReSharper disable LoopCanBeConvertedToQuery
 // ReSharper disable CommentTypo
 
-namespace DestroyIt
+namespace Destructible
 {
     /// <summary>
     /// This script triggers a chain destruction sequence on one or more Destructible objects that also have the

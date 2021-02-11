@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DestroyIt
+namespace Destructible
 {
     public static class ArrayExtensions
     {

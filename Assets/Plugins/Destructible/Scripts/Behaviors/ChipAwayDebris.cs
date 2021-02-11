@@ -2,7 +2,7 @@
 // ReSharper disable CommentTypo
 // ReSharper disable IdentifierTypo
 
-namespace DestroyIt
+namespace Destructible
 {
     /// <summary>
     /// This script is attached to a debris piece at runtime. Your projectiles should check for collisions with 

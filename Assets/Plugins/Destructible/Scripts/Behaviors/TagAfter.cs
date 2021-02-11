@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     /// <summary>
     /// This script tags all colliders on the object after X seconds. It is used to tag colliders on destroyed object

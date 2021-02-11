@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     public static class DestructibleHelper
     {
@@ -31,7 +31,7 @@ namespace DestroyIt
         /// <summary>
         /// For SpeedTree trees, locks the Hue Variation by setting the override property _HueVariationPos.
         /// This way, destroyed trees won't change color as they fall and roll around.
-        /// Note that _HueVariationPos is a custom property added by the DestroyItSpeedTree custom shader.
+        /// Note that _HueVariationPos is a custom property added by the DestructibleSpeedTree custom shader.
         /// </summary>
         public static void LockHueVariation(this GameObject go)
         {

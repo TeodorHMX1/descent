@@ -4,7 +4,7 @@
 // ReSharper disable ForCanBeConvertedToForeach
 // ReSharper disable SuggestVarOrType_BuiltInTypes
 
-namespace DestroyIt
+namespace Destructible
 {
     public static class TerrainExtensions
     {

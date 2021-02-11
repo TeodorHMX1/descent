@@ -1,4 +1,4 @@
-﻿namespace DestroyIt
+﻿namespace Destructible
 {
     public enum Tag
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 // ReSharper disable CommentTypo
 // ReSharper disable IdentifierTypo
 
-namespace DestroyIt
+namespace Destructible
 {
     [RequireComponent(typeof(Destructible))]
     [RequireComponent(typeof(Rigidbody))]

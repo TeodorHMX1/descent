@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 // ReSharper disable IdentifierTypo
 
-namespace DestroyIt
+namespace Destructible
 {
     [Serializable]
     public class DamageLevel

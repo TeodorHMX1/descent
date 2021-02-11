@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     public class DestructibleTrees : MonoBehaviour
     {

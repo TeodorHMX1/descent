@@ -2,12 +2,12 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace DestroyIt
+namespace Destructible
 {
     [InitializeOnLoad]
     public class CreateLayers
     {
-        private static readonly string[] layersToCreate = {"DestroyItDebris"}; // put your layers here (comma-separated)
+        private static readonly string[] layersToCreate = {"DestructibleDebris"}; // put your layers here (comma-separated)
         private static SerializedObject tagManager;
 
         static CreateLayers()

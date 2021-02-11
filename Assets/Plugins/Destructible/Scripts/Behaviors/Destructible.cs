@@ -4,7 +4,7 @@ using UnityEngine;
 // ReSharper disable UnusedMember.Global
 // ReSharper disable ForCanBeConvertedToForeach
 
-namespace DestroyIt
+namespace Destructible
 {
     /// <summary>Put this script on an object you want to be destructible.</summary>
     [DisallowMultipleComponent]

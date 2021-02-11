@@ -18,7 +18,7 @@ using Object = UnityEngine.Object;
 // ReSharper disable CommentTypo
 // ReSharper disable StringLiteralTypo
 
-namespace DestroyIt
+namespace Destructible
 {
     
     /// <summary>
@@ -38,7 +38,7 @@ namespace DestroyIt
 
         // NOTE: This folder and all its contents will be deleted each time Destructible Trees are updated!
         [Tooltip("The folder where the stripped-down destructible terrain tree prototype prefabs are stored.\n\nYou can change this if you want to store your tree stand-in resources somewhere else.")]
-        public string pathToStandIns = "Assets/DestroyIt/Resources/TreeStandIns/"; 
+        public string pathToStandIns = "Assets/Destructible/Resources/TreeStandIns/"; 
         
         [Tooltip("These are stripped-down tree prototype objects, containing only colliders and other essential components to make them destructible.\n\nYou don't need to change these - they are automatically generated when the Update Destructible Trees button is clicked.")]
         public List<DestructibleTree> destructibleTrees;
@@ -112,7 +112,7 @@ namespace DestroyIt
             
             if (treePrototypes.Length != destructibleTrees.Count)
             {
-                Debug.LogWarning("Tree prototypes do not match DestroyIt's tree stand-in prefabs. Please click the \"Update Trees\" button on the TreeManager script.");
+                Debug.LogWarning("Tree prototypes do not match Destructible's tree stand-in prefabs. Please click the \"Update Trees\" button on the TreeManager script.");
                 return;
             }
 

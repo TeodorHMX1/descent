@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     /// <summary>
     /// Particle Manager (Singleton) - manages the playing of particle effects and handles performance throttling.

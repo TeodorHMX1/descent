@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     /// <summary>
     /// This is a helper script that listens to a Destructible object's DestroyedEvent and plays a sound when the object is destroyed.

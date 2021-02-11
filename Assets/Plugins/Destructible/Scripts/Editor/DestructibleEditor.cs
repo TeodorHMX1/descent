@@ -7,7 +7,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace DestroyIt
+namespace Destructible
 {
     [CustomEditor(typeof(Destructible)), CanEditMultipleObjects]
     public class DestructibleEditor : Editor
@@ -542,7 +542,7 @@ namespace DestroyIt
                     }
                     EditorGUILayout.BeginHorizontal();
                     EditorGUILayout.LabelField("", GUILayout.Width(15));
-                    destructible.centerPointOverride = EditorGUILayout.Vector3Field(new GUIContent("Position Override", "Here you can override the position the particle effect will spawn. This is particularly useful for Static objects, since DestroyIt uses the transform's position as the particle spawn point, which may not always be the center of the mesh."), centerPointOverride.vector3Value);
+                    destructible.centerPointOverride = EditorGUILayout.Vector3Field(new GUIContent("Position Override", "Here you can override the position the particle effect will spawn. This is particularly useful for Static objects, since Destructible uses the transform's position as the particle spawn point, which may not always be the center of the mesh."), centerPointOverride.vector3Value);
                     EditorGUILayout.EndHorizontal();
                 }
                 EditorGUILayout.Separator();

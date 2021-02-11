@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
 	[ExecuteInEditMode]
 	[DisallowMultipleComponent]

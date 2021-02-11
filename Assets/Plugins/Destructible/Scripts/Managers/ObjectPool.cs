@@ -4,7 +4,7 @@ using UnityEngine;
 // ReSharper disable CommentTypo
 // ReSharper disable ForCanBeConvertedToForeach
 
-namespace DestroyIt
+namespace Destructible
 {
     /// <summary>
     /// Creates a pool of objects to pull from, instead of using expensive Instantiate/Destroy calls.
@@ -48,7 +48,7 @@ namespace DestroyIt
             if (objectPools.Length > 1)
                 Debug.LogError("Multiple ObjectPool scripts found in scene. There can be only one.");
             if (objectPools.Length == 0)
-                Debug.LogError("ObjectPool script not found in scene. This is required for DestroyIt to work properly.");
+                Debug.LogError("ObjectPool script not found in scene. This is required for Destructible to work properly.");
 
             _instance = objectPools[0];
         }
@@ -59,8 +59,8 @@ namespace DestroyIt
             if (prefabsToPool == null) return;
 
             // Check if the object pool container already exists. If so, use it.
-            GameObject existingContainer = GameObject.Find("DestroyIt_ObjectPool");
-            container = existingContainer != null ? existingContainer : new GameObject("DestroyIt_ObjectPool");
+            GameObject existingContainer = GameObject.Find("Destructible_ObjectPool");
+            container = existingContainer != null ? existingContainer : new GameObject("Destructible_ObjectPool");
             
             autoPooledObjects = new Dictionary<int, GameObject>();
 

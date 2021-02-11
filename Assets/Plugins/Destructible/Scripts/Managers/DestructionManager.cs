@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     /// <summary>
     /// Destruction Manager (Singleton) - manages all destructible objects.
@@ -104,7 +104,7 @@ namespace DestroyIt
             DestroyedPrefabCounter = new List<float>();
             overlapColliders = new Collider[100];
             _detailMasks = Resources.LoadAll<Texture2D>("ProgressiveDamage").ToList();
-            debrisLayer = LayerMask.NameToLayer("DestroyItDebris");
+            debrisLayer = LayerMask.NameToLayer("DestructibleDebris");
             _debrisPieces = new List<Debris>();
             _destroyedObjects = new List<Destructible>();
             _nextUpdate = Time.time + updateFrequency;
@@ -118,8 +118,8 @@ namespace DestroyIt
             // Checks
             Check.IsDefaultLargeParticleAssigned();
             Check.IsDefaultSmallParticleAssigned();
-            if (Check.LayerExists("DestroyItDebris", false) == false)
-                Debug.LogWarning("DestroyItDebris layer not found. Add a layer named 'DestroyItDebris' to your project if you want debris to ignore other debris when using Cling Points.");
+            if (Check.LayerExists("DestructibleDebris", false) == false)
+                Debug.LogWarning("DestructibleDebris layer not found. Add a layer named 'DestructibleDebris' to your project if you want debris to ignore other debris when using Cling Points.");
         }
 
         private void Update()

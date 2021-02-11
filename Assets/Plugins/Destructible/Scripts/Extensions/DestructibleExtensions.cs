@@ -2,7 +2,7 @@
 using UnityEngine;
 // ReSharper disable ForCanBeConvertedToForeach
 
-namespace DestroyIt
+namespace Destructible
 {
     public static class DestructionExtensions
     {

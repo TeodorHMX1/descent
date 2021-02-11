@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace DestroyIt
+namespace Destructible
 {
     /// <summary>
     /// This script provides extra features to the BulbFlash particle effect.

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
 	/// <summary>
 	/// This script is used for directly spawning objects into the scene from the Object Pool.

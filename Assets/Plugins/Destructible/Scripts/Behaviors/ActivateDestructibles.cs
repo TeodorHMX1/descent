@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 // ReSharper disable IdentifierTypo
 
-namespace DestroyIt
+namespace Destructible
 {
     public class ActivateDestructibles : MonoBehaviour
     {

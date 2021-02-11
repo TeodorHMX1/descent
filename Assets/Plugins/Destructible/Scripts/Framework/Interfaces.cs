@@ -1,5 +1,5 @@
 ﻿
-namespace DestroyIt
+namespace Destructible
 {
     public interface Damage
     {

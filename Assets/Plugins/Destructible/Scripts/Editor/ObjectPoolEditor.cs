@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Debug = UnityEngine.Debug;
 
-namespace DestroyIt
+namespace Destructible
 {
     [CustomEditor(typeof(ObjectPool))]
     public class ObjectPoolEditor : Editor
@@ -163,7 +163,7 @@ namespace DestroyIt
             if (GUILayout.Button("Save", EditorStyles.toolbarButton, GUILayout.Width(70)))
             {
                 string saveFilePath = EditorUtility.SaveFilePanel("Save Object File To", SceneManager.GetActiveScene().path.SceneFolder(), SceneManager.GetActiveScene().name.Replace(" ", "") + "ObjectPool.txt", "txt");
-                //string saveFilePath = SceneManager.GetActiveScene().path.SceneFolder() + "/ObjectPool-SaveFile.txt"; //"Assets/DestroyIt - Core/ObjectPool-SaveFile.txt";
+                //string saveFilePath = SceneManager.GetActiveScene().path.SceneFolder() + "/ObjectPool-SaveFile.txt"; //"Assets/Destructible - Core/ObjectPool-SaveFile.txt";
                 if (saveFilePath.Length != 0)
                 { 
                     if (objectPool.prefabsToPool != null && objectPool.prefabsToPool.Count > 0)

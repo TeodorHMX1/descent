@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     public static class Check
     {
@@ -37,7 +37,7 @@ namespace DestroyIt
             if (layer == -1)
             {
                 if (logMessage)
-                    Debug.LogWarning(String.Format("[DestroyIt Core] Layer \"{0}\" does not exist. Please add a layer named \"{0}\" to your project.", layerName));
+                    Debug.LogWarning(String.Format("[Destructible Core] Layer \"{0}\" does not exist. Please add a layer named \"{0}\" to your project.", layerName));
                 return false;
             }
             return true;

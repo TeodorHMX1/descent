@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     /// <summary>This script will destroy the gameobject it is attached to after [seconds].</summary>
     public class DestroyAfter : MonoBehaviour

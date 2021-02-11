@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using DestroyIt;
+using Destructible;
 using Puzzle;
 using UnityEngine;
 
@@ -31,7 +31,7 @@ namespace Walls
             }
             
             Collider[] objectsInRange = Physics.OverlapSphere(transform.position, meleeRadius);
-            List<Destructible> damagedObjects = new List<Destructible>(); // Keep track of what objects have been damaged so we don't do damage multiple times per collider.
+            List<Destructible.Destructible> damagedObjects = new List<Destructible.Destructible>(); // Keep track of what objects have been damaged so we don't do damage multiple times per collider.
             bool hasPlayedHitEffect = false;
 
             foreach (Collider col in objectsInRange)
@@ -63,8 +63,8 @@ namespace Walls
                 // Apply damage if object hit was Destructible
                 // Only do this for active and enabled Destructible scripts found in parent objects
                 // Special Note: Destructible scripts are turned off on terrain trees by default (to save resources), so we will make an exception for them and process the hit anyway
-                Destructible[] destObjs = col.gameObject.GetComponentsInParent<Destructible>(false);
-                foreach (Destructible destObj in destObjs)
+                Destructible.Destructible[] destObjs = col.gameObject.GetComponentsInParent<Destructible.Destructible>(false);
+                foreach (Destructible.Destructible destObj in destObjs)
                 {
                     if (damagedObjects.Contains(destObj)) continue;
                     if (!destObj.isActiveAndEnabled && !destObj.isTerrainTree) continue;

@@ -1,4 +1,4 @@
-﻿Shader "DestroyIt/DestroyItSpeedTree" {
+﻿Shader "Destructible/DestructibleSpeedTree" {
     Properties
     {
         _Color ("Main Color", Color) = (1,1,1,1)
@@ -26,7 +26,7 @@
         Cull [_Cull]
 
         CGPROGRAM 
-            #pragma surface surf Lambert vertex:DestroyItSpeedTreeVert nodirlightmap nodynlightmap fullforwardshadows 
+            #pragma surface surf Lambert vertex:DestructibleSpeedTreeVert nodirlightmap nodynlightmap fullforwardshadows 
             #pragma target 3.0 
             #pragma instancing_options assumeuniformscaling maxcount:50
             #pragma multi_compile_vertex LOD_FADE_PERCENTAGE
@@ -34,7 +34,7 @@
             #pragma shader_feature EFFECT_BUMP
             #pragma shader_feature EFFECT_HUE_VARIATION
             #define ENABLE_WIND
-            #include "DestroyItSpeedTreeCommon.cginc"
+            #include "DestructibleSpeedTreeCommon.cginc"
 
             void surf(Input IN, inout SurfaceOutput OUT)
             {
@@ -59,7 +59,7 @@
                 #pragma shader_feature GEOM_TYPE_BRANCH GEOM_TYPE_BRANCH_DETAIL GEOM_TYPE_FROND GEOM_TYPE_LEAF GEOM_TYPE_MESH
                 #pragma multi_compile_shadowcaster
                 #define ENABLE_WIND
-                #include "DestroyItSpeedTreeCommon.cginc"
+                #include "DestructibleSpeedTreeCommon.cginc"
 
                 struct v2f
                 {
@@ -114,7 +114,7 @@
                 #pragma shader_feature GEOM_TYPE_BRANCH GEOM_TYPE_BRANCH_DETAIL GEOM_TYPE_FROND GEOM_TYPE_LEAF GEOM_TYPE_MESH
                 #pragma shader_feature EFFECT_HUE_VARIATION
                 #define ENABLE_WIND
-                #include "DestroyItSpeedTreeCommon.cginc"
+                #include "DestructibleSpeedTreeCommon.cginc"
 
                 struct v2f
                 {
@@ -131,7 +131,7 @@
                     UNITY_SETUP_INSTANCE_ID(v);
                     UNITY_TRANSFER_INSTANCE_ID(v, o);
                     UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-                    DestroyItSpeedTreeVert(v, o.data);
+                    DestructibleSpeedTreeVert(v, o.data);
                     o.data.color.rgb *= ShadeVertexLightsFull(v.vertex, v.normal, 4, true);
                     o.vertex = UnityObjectToClipPos(v.vertex);
                     UNITY_TRANSFER_FOG(o,o.vertex);
@@ -166,10 +166,10 @@
         Cull [_Cull]
 
         CGPROGRAM
-            #pragma surface surf Lambert vertex:DestroyItSpeedTreeVert nodirlightmap nodynlightmap fullforwardshadows noinstancing
+            #pragma surface surf Lambert vertex:DestructibleSpeedTreeVert nodirlightmap nodynlightmap fullforwardshadows noinstancing
             #pragma multi_compile_vertex LOD_FADE_PERCENTAGE
             #pragma shader_feature GEOM_TYPE_BRANCH GEOM_TYPE_BRANCH_DETAIL GEOM_TYPE_FROND GEOM_TYPE_LEAF GEOM_TYPE_MESH
-            #include "DestroyItSpeedTreeCommon.cginc"
+            #include "DestructibleSpeedTreeCommon.cginc"
 
             void surf(Input IN, inout SurfaceOutput OUT)
             {
@@ -189,7 +189,7 @@
                 #pragma multi_compile_vertex LOD_FADE_PERCENTAGE
                 #pragma shader_feature GEOM_TYPE_BRANCH GEOM_TYPE_BRANCH_DETAIL GEOM_TYPE_FROND GEOM_TYPE_LEAF GEOM_TYPE_MESH
                 #pragma multi_compile_shadowcaster
-                #include "DestroyItSpeedTreeCommon.cginc"
+                #include "DestructibleSpeedTreeCommon.cginc"
 
                 struct v2f
                 {
@@ -230,7 +230,7 @@
                 #pragma multi_compile_fog
                 #pragma multi_compile_vertex LOD_FADE_PERCENTAGE
                 #pragma shader_feature GEOM_TYPE_BRANCH GEOM_TYPE_BRANCH_DETAIL GEOM_TYPE_FROND GEOM_TYPE_LEAF GEOM_TYPE_MESH
-                #include "DestroyItSpeedTreeCommon.cginc"
+                #include "DestructibleSpeedTreeCommon.cginc"
 
                 struct v2f
                 {
@@ -245,7 +245,7 @@
                     v2f o;
                     UNITY_SETUP_INSTANCE_ID(v);
                     UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-                    DestroyItSpeedTreeVert(v, o.data);
+                    DestructibleSpeedTreeVert(v, o.data);
                     o.data.color.rgb *= ShadeVertexLightsFull(v.vertex, v.normal, 2, false);
                     o.vertex = UnityObjectToClipPos(v.vertex);
                     UNITY_TRANSFER_FOG(o,o.vertex);

@@ -3,7 +3,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace DestroyIt
+namespace Destructible
 {
     [CustomEditor(typeof(DestructionManager))]
     public class DestructionManagerEditor : Editor

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-namespace DestroyIt
+namespace Destructible
 {
     public class SmoothMouseLook : MonoBehaviour
     {

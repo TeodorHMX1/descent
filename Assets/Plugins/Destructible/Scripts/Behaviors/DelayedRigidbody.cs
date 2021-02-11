@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DestroyIt
+namespace Destructible
 {
     /// <summary>
     /// This script is used to add a Rigidbody component to a gameobject through code. It allows you to start with an object that has no Rigidbody

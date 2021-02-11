@@ -11,7 +11,7 @@
     #define GEOM_TYPE_BRANCH
 #endif
 
-#include "DestroyItSpeedTreeVertex.cginc"
+#include "DestructibleSpeedTreeVertex.cginc"
 
 // Define Input structure
 
@@ -53,7 +53,7 @@ fixed4 _Color;
 
 // Vertex processing
 
-void DestroyItSpeedTreeVert(inout SpeedTreeVB IN, out Input OUT)
+void DestructibleSpeedTreeVert(inout SpeedTreeVB IN, out Input OUT)
 {
     UNITY_INITIALIZE_OUTPUT(Input, OUT);
 
