@@ -13,6 +13,7 @@ namespace Items
 	{
 		public Light helmetLight;
 		public int rechargeTime = 400;
+		public float lightIntensity = 2.7f;
 
 		private bool _isBoxColliderNotNull;
 		private BoxCollider _boxCollider;
@@ -25,24 +26,24 @@ namespace Items
 		private readonly FlashPattern[] _lightPattern =
 		{
 			// initial battery capacity
-			new FlashPattern {IsDark = false, Time = 300},
+			new FlashPattern {IsDark = false, Time = 300, Intensity = 2.7f},
 
 			// light pattern (first light then dark and so on)
-			new FlashPattern {IsDark = false, Time = 200},
-			new FlashPattern {IsDark = true, Time = 10},
-			new FlashPattern {IsDark = false, Time = 180},
-			new FlashPattern {IsDark = true, Time = 10},
-			new FlashPattern {IsDark = false, Time = 160},
-			new FlashPattern {IsDark = true, Time = 10},
-			new FlashPattern {IsDark = false, Time = 140},
-			new FlashPattern {IsDark = true, Time = 10},
-			new FlashPattern {IsDark = false, Time = 120},
-			new FlashPattern {IsDark = true, Time = 10},
-			new FlashPattern {IsDark = false, Time = 100},
-			new FlashPattern {IsDark = true, Time = 20},
-			new FlashPattern {IsDark = false, Time = 80},
-			new FlashPattern {IsDark = true, Time = 35},
-			new FlashPattern {IsDark = false, Time = 60},
+			new FlashPattern {IsDark = false, Time = 200, Intensity = 2.7f},
+			new FlashPattern {IsDark = true, Time = 10, Intensity = 0f},
+			new FlashPattern {IsDark = false, Time = 180, Intensity = 2.5f},
+			new FlashPattern {IsDark = true, Time = 10, Intensity = 0f},
+			new FlashPattern {IsDark = false, Time = 160, Intensity = 2.3f},
+			new FlashPattern {IsDark = true, Time = 10, Intensity = 0f},
+			new FlashPattern {IsDark = false, Time = 140, Intensity = 2.2f},
+			new FlashPattern {IsDark = true, Time = 10, Intensity = 0f},
+			new FlashPattern {IsDark = false, Time = 120, Intensity = 2.0f},
+			new FlashPattern {IsDark = true, Time = 10, Intensity = 0f},
+			new FlashPattern {IsDark = false, Time = 100, Intensity = 1.8f},
+			new FlashPattern {IsDark = true, Time = 20, Intensity = 0f},
+			new FlashPattern {IsDark = false, Time = 80, Intensity = 1.6f},
+			new FlashPattern {IsDark = true, Time = 35, Intensity = 0f},
+			new FlashPattern {IsDark = false, Time = 60, Intensity = 1.4f},
 
 			// end pattern
 			new FlashPattern {IsDark = true, Time = 0},
@@ -63,6 +64,8 @@ namespace Items
 		{
 			_boxCollider = GetComponent<BoxCollider>();
 			_isBoxColliderNotNull = _boxCollider != null;
+			
+			_lightPattern[0].Intensity = lightIntensity;
 		}
 
 		/// <summary>
@@ -75,11 +78,17 @@ namespace Items
 			if (_isBoxColliderNotNull) _boxCollider.enabled = false;
 			if (Input.GetKeyDown(KeyCode.F))
 			{
-				if (!_outOfBattery)
+				if (!_outOfBattery && !helmetLight.enabled)
 				{
 					_index = 0;
 					_timer = 0;
-					helmetLight.enabled = !helmetLight.enabled;
+					helmetLight.enabled = true;
+					helmetLight.intensity = _lightPattern[0].Intensity;
+				} else if (helmetLight.enabled)
+				{
+					_index = 0;
+					_timer = 0;
+					helmetLight.enabled = false;
 				}
 			}
 
@@ -114,6 +123,7 @@ namespace Items
 			if (_index < _lightPattern.Length)
 			{
 				helmetLight.enabled = !_lightPattern[_index].IsDark;
+				helmetLight.intensity = _lightPattern[_index].Intensity;
 				return;
 			}
 
@@ -121,6 +131,7 @@ namespace Items
 			_outTime = rechargeTime;
 			_outOfBattery = true;
 			helmetLight.enabled = false;
+			helmetLight.intensity = 0;
 		}
 	}
 }

@@ -1444,7 +1444,8 @@ MonoBehaviour:
 
     "M" - Map
 
-    "ESC" - Pause menu'
+    "ESC"
+    - Pause menu'
 --- !u!222 &110062724
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6880,6 +6881,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   helmetLight: {fileID: 1000147350}
+  rechargeTime: 400
+  lightIntensity: 2.7
 --- !u!114 &515420532
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,27 +7,22 @@
 	/// </summary>
 	public class FlashPattern
 	{
-		private int _time;
-		private bool _isDark;
-
 		/// <summary>
 		///     <para> IsDark </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public bool IsDark
-		{
-			get => _isDark;
-			set => _isDark = value;
-		}
+		public bool IsDark { get; set; }
 
 		/// <summary>
 		///     <para> Time </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public int Time
-		{
-			get => _time;
-			set => _time = value;
-		}
+		public int Time { get; set; }
+
+		/// <summary>
+		///     <para> Intensity </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
+		public float Intensity { get; set; }
 	}
 }
