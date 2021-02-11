@@ -1,5 +1,6 @@
 ﻿using DestroyIt;
 using UnityEngine;
+using Walls;
 using ZeoFlow.Pickup;
 using ZeoFlow.Pickup.Interfaces;
 
@@ -55,6 +56,7 @@ namespace Items
 		/// </summary>
 		private void BroadcastMeleeDamage()
 		{
+			if (meleeArea == null) return;
 			meleeArea.OnMeleeDamage();
 		}
 	}

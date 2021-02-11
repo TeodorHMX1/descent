@@ -86,7 +86,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effects:
   - hitBy: -1
-    effect: {fileID: 100000, guid: 45536824928c30649a722060696ea9be, type: 3}
+    effect: {fileID: 0}
 --- !u!114 &684673048
 MonoBehaviour:
   m_ObjectHideFlags: 0

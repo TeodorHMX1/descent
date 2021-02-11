@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using DestroyIt;
 using UnityEngine;
 
-namespace DestroyIt
+namespace Walls
 {
     public class MeleeArea : MonoBehaviour
     {
