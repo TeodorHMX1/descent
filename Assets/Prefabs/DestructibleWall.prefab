@@ -175,8 +175,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1000010239863294, guid: fcc0bf284f54c024481860d5f87316fc, type: 3}
       propertyPath: m_Name
-      value: Part_1
+      value: DestructibleWall
       objectReference: {fileID: 0}
+    - target: {fileID: 1000010239863294, guid: fcc0bf284f54c024481860d5f87316fc, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 2800000, guid: af3d01e5993c605418b19e80549802d1, type: 3}
     - target: {fileID: 4000013228661774, guid: fcc0bf284f54c024481860d5f87316fc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.15
