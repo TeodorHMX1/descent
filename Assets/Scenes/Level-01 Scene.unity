@@ -23933,6 +23933,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c20fcfa3428d7d4693bd8f42ed2a518, type: 3}
+--- !u!114 &1579649548 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8741233814337052955, guid: ea42f19fe3c5adf4bb409294166323b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 6545096615317947652}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dbd57f2092cbcd468a47079b0e1569e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1581525987
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34005,6 +34017,16 @@ PrefabInstance:
       propertyPath: updatetext
       value: 
       objectReference: {fileID: 1830564248}
+    - target: {fileID: 4725510805502904073, guid: 0b529b61276858445a231b627fc1fef8,
+        type: 3}
+      propertyPath: requirePuzzle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4725510805502904073, guid: 0b529b61276858445a231b627fc1fef8,
+        type: 3}
+      propertyPath: pyramidPuzzle
+      value: 
+      objectReference: {fileID: 1579649548}
     - target: {fileID: 5914844958613702666, guid: 0b529b61276858445a231b627fc1fef8,
         type: 3}
       propertyPath: m_Enabled

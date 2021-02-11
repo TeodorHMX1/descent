@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using DestroyIt;
+using Puzzle;
 using UnityEngine;
 
 namespace Walls
@@ -7,14 +8,27 @@ namespace Walls
     public class MeleeArea : MonoBehaviour
     {
         public int damageAmount = 30;
-        public int repairAmount = 20;
         public float meleeRadius = 1.3f;
         public float additionalForceAmount = 150f;
         public float additionalForceRadius = 2f;
-        public ParticleSystem repairEffect;
+        public bool requirePuzzle = false;
+        public PyramidPuzzle pyramidPuzzle;
 
         public void OnMeleeDamage()
         {
+
+            if (requirePuzzle)
+            {
+                if (pyramidPuzzle == null)
+                {
+                    return;
+                }
+
+                if (!pyramidPuzzle.IsCompleted())
+                {
+                    return;
+                }
+            }
             
             Collider[] objectsInRange = Physics.OverlapSphere(transform.position, meleeRadius);
             List<Destructible> damagedObjects = new List<Destructible>(); // Keep track of what objects have been damaged so we don't do damage multiple times per collider.
@@ -59,41 +73,6 @@ namespace Walls
                     ImpactDamage meleeImpact = new ImpactDamage() { DamageAmount = damageAmount, AdditionalForce = additionalForceAmount,
                         AdditionalForcePosition = transform.position, AdditionalForceRadius = additionalForceRadius };
                     destObj.ApplyDamage(meleeImpact);
-                }
-            }
-        }
-
-        private void OnMeleeRepair()
-        {
-            Collider[] objectsInRange = Physics.OverlapSphere(transform.position, meleeRadius);
-            List<Destructible> repairedObjects = new List<Destructible>(); // Keep track of what objects have been repaired so we don't repair multiple times per collider.
-            bool hasPlayedRepairEffect = false;
-
-            // Repair items within range
-            foreach (Collider col in objectsInRange)
-            {
-                // Ignore terrain colliders
-                if (col is TerrainCollider) continue;
-
-                // Ignore trigger colliders
-                if (col.isTrigger) continue;
-
-                // Ignore the player's character controller (ie, don't allow hitting yourself)
-                if (col is CharacterController && col.tag == "Player") continue;
-
-                // Repair object if it is a Destructible
-                Destructible destObj = col.gameObject.GetComponentInParent<Destructible>();
-                if (destObj != null && !repairedObjects.Contains(destObj) && destObj.currentHitPoints < destObj.totalHitPoints && destObj.canBeRepaired)
-                {
-                    repairedObjects.Add(destObj);
-                    destObj.RepairDamage(repairAmount);
-                    // Play repair particle effect
-                    if (repairEffect != null && !hasPlayedRepairEffect)
-                    {
-                        repairEffect.GetComponent<ParticleSystem>().Clear(true);
-                        repairEffect.Play(true);
-                        hasPlayedRepairEffect = true;
-                    }
                 }
             }
         }

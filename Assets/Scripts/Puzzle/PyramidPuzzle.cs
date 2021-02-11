@@ -20,7 +20,17 @@ namespace Puzzle
 		{
 			if (pyramids.Count(pyramid => pyramid.IsWinState()) < pyramids.Count) return;
 
-			Debug.Log("puzzleCompleted");
+			// Debug.Log("puzzleCompleted");
+		}
+		
+		/// <summary>
+		///     <para> IsCompleted </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
+		/// <returns param="isCompleted"></returns>
+		public bool IsCompleted()
+		{
+			return !(pyramids.Count(pyramid => pyramid.IsWinState()) < pyramids.Count);
 		}
 	}
 }
