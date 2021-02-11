@@ -2,7 +2,7 @@
 ///     <para> Constants </para>
 ///     <author> @TeodorHMX1 </author>
 /// </summary>
-public class Constants
+public static class Constants
 {
 
 	/// <summary>
