@@ -1,0 +1,98 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 400000}
+  - component: {fileID: 11400000}
+  m_Layer: 0
+  m_Name: BatsSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb06d29f4de53246aba69ce69e041b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  childPrefab: {fileID: 11400000, guid: 782a6118b25045846a806ad99eedb4ea, type: 3}
+  childAmount: 3
+  slowSpawn: 1
+  spawnSphere: 2.43
+  spawnSphereHeight: 3.58
+  spawnSphereDepth: -2.23
+  minSpeed: 6
+  maxSpeed: 8
+  minScale: 0.39
+  maxScale: 0.84
+  soarFrequency: 0.44
+  soarAnimation: BatSoar
+  flapAnimation: BatFlap
+  idleAnimation: BatIdle
+  diveValue: 10
+  diveFrequency: 0.5
+  minDamping: 0.38
+  maxDamping: 0.5
+  waypointDistance: 5.21
+  minAnimationSpeed: 4
+  maxAnimationSpeed: 5
+  randomPositionTimer: 3
+  positionSphere: 69
+  positionSphereHeight: 5
+  positionSphereDepth: -1
+  childTriggerPos: 1
+  forceChildWaypoints: 1
+  forcedRandomDelay: 2
+  flatFly: 0
+  flatSoar: 0
+  birdAvoid: 1
+  birdAvoidHorizontalForce: 500
+  birdAvoidDown: 1
+  birdAvoidUp: 1
+  birdAvoidVerticalForce: 200
+  birdAvoidDistanceMax: 4.504076
+  birdAvoidDistanceMin: 2.893548
+  soarMaxTime: 0.5
+  avoidanceMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  roamers: []
+  posBuffer: {x: 0, y: 0, z: -21.072369}
+  updateDivisor: 1
+  newDelta: 0
+  updateCounter: 0
+  activeChildren: 0
+  groupChildToNewTransform: 0
+  groupTransform: {fileID: 0}
+  groupName: 
+  groupChildToFlock: 0
+  startPosOffset: {x: 0, y: 0, z: 0}
+  thisT: {fileID: 400000}

@@ -22,9 +22,9 @@ namespace Bats
 		public float minScale = .7f;
 		public float maxScale = 1.0f;
 		public float soarFrequency;
-		public string soarAnimation = "Soar";
-		public string flapAnimation = "Flap";
-		public string idleAnimation = "Idle";
+		public string soarAnimation = "BatSoar";
+		public string flapAnimation = "BatFlap";
+		public string idleAnimation = "BatIdle";
 		public float diveValue = 7.0f;
 		public float diveFrequency = 0.5f;
 		public float minDamping = 1.0f;
