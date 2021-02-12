@@ -34,13 +34,7 @@ namespace Bats
 			if (flock == null)
 			{
 				flock = (FlockController) FindObjectOfType(typeof(FlockController));
-				Debug.Log(this + " has no assigned FlockController, a random FlockController has been assigned");
 			}
-
-			#if UNITY_EDITOR
-			if (autoCatchDelay.x > 0 && (autoCatchDelay.x < 5 || autoCatchDelay.y < 5))
-				Debug.Log(name + ": autoCatchDelay values set low, this might result in strange behaviours");
-			#endif
 
 			if (landOnStart) StartCoroutine(InstantLandOnStart(.1f));
 		}
