@@ -6737,7 +6737,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   helmetLight: {fileID: 1000147350}
-  rechargeTime: 400
   lightIntensity: 2.7
 --- !u!114 &515420532
 MonoBehaviour:
@@ -33700,5 +33699,10 @@ PrefabInstance:
       propertyPath: effectSub.cameraEffectEnabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7631892124183925867, guid: a2dc7e6858b377b4d9fa7d773eb921c5,
+        type: 3}
+      propertyPath: effectSub.helmetObj
+      value: 
+      objectReference: {fileID: 515420531}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2dc7e6858b377b4d9fa7d773eb921c5, type: 3}

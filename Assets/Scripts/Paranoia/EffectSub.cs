@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Items;
 using UnityEngine;
 
 namespace Paranoia
@@ -13,6 +14,7 @@ namespace Paranoia
 	{
 		public bool enabled;
 		public bool musicEnabled;
+		public HelmetManage helmetObj;
 		[Range(0f, 1f)] public float audioClipVolume = 0.1f;
 		public List<AudioClip> audioClips = new List<AudioClip>();
 		public bool cameraEffectEnabled;

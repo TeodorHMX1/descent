@@ -14,6 +14,7 @@ namespace Paranoia
 		public ParanoiaEntrances numberOfEntrances = ParanoiaEntrances.Two;
 		public List<ParanoiaTrigger> paranoiaTriggers = new List<ParanoiaTrigger>();
 		public EffectSub effectSub = new EffectSub();
+		
 		private AudioSource _audioSource;
 		private float _darkAlpha;
 		private float _fadeAlpha;
@@ -23,6 +24,8 @@ namespace Paranoia
 
 		private ParanoiaState _paranoiaBoxState = ParanoiaState.Outside;
 		private float _saturationAlpha;
+		private bool _isHelmetObjNotNull;
+		private bool _isAudioSourceNotNull;
 
 		/// <summary>
 		///     <para> Start </para>
@@ -31,6 +34,9 @@ namespace Paranoia
 		private void Start()
 		{
 			_audioSource = GetComponent<AudioSource>();
+			_isAudioSourceNotNull = _audioSource != null;
+			_isHelmetObjNotNull = effectSub.helmetObj != null;
+			
 			if (effectSub.camera == null) return;
 
 			_filterParanoia = effectSub.camera.AddComponent<FilterParanoia>();
@@ -126,6 +132,11 @@ namespace Paranoia
 			_filterParanoia.saturation = _saturationAlpha;
 			_filterParanoiaDark.alpha = _darkAlpha;
 			_filterIllusions.fade = _fadeAlpha;
+			
+			if (_isHelmetObjNotNull)
+			{
+				effectSub.helmetObj.DisableParanoiaTriggered();
+			}
 		}
 
 		/// <summary>
@@ -136,8 +147,31 @@ namespace Paranoia
 		{
 			if (!effectSub.enabled) return;
 
+			if (_isHelmetObjNotNull)
+			{
+				if (effectSub.helmetObj.IsOutOfBattery())
+				{
+					ApplyParanoiaEffect();
+				}
+				else
+				{
+					effectSub.helmetObj.SetParanoiaTriggered();
+				}
+			}
+			else
+			{
+				ApplyParanoiaEffect();
+			}
+		}
+
+		/// <summary>
+		///     <para> ApplyParanoiaEffect </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
+		private void ApplyParanoiaEffect()
+		{
 			if (effectSub.musicEnabled)
-				if (_audioSource != null)
+				if (_isAudioSourceNotNull)
 					foreach (var audioClip in effectSub.audioClips)
 						_audioSource.PlayOneShot(audioClip, effectSub.audioClipVolume);
 

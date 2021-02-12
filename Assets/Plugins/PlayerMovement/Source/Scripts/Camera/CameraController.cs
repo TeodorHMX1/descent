@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace ZeoFlow.PlayerMovement
@@ -15,8 +14,8 @@ namespace ZeoFlow.PlayerMovement
 		//Upper and lower limits (in degrees) for vertical rotation (along the local x-axis of the gameobject);
 		[Range(0f, 90f)] public float upperVerticalLimit = 60f;
 		[Range(0f, 90f)] public float lowerVerticalLimit = 60f;
-		[Range(0.01f, 3f)] public float sensivityVertical = 1.0f;
-		[Range(0.01f, 3f)] public float sensivityHorizontal = 1.0f;
+		[Range(0.01f, 3f)] public float sensitivityVertical = 1.0f;
+		[Range(0.01f, 3f)] public float sensitivityHorizontal = 1.0f;
 
 		private Scene _runtimeScene;
 
@@ -81,6 +80,8 @@ namespace ZeoFlow.PlayerMovement
 
 		void Update()
 		{
+			sensitivityVertical = PlayerPrefs.GetFloat(Constants.Storage.SensitivityVertical, sensitivityVertical);
+			sensitivityHorizontal = PlayerPrefs.GetFloat(Constants.Storage.SensitivityHorizontal, sensitivityHorizontal);
 			HandleCameraRotation();
 		}
 
@@ -131,8 +132,8 @@ namespace ZeoFlow.PlayerMovement
 			}
 
 			//Add input to camera angles;
-			currentXAngle += oldVerticalInput * cameraSpeed * Time.deltaTime * sensivityVertical;
-			currentYAngle += oldHorizontalInput * cameraSpeed * Time.deltaTime * sensivityHorizontal;
+			currentXAngle += oldVerticalInput * cameraSpeed * Time.deltaTime * sensitivityVertical;
+			currentYAngle += oldHorizontalInput * cameraSpeed * Time.deltaTime * sensitivityHorizontal;
 
 			//Clamp vertical rotation;
 			currentXAngle = Mathf.Clamp(currentXAngle, -upperVerticalLimit, lowerVerticalLimit);

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using ZeoFlow.Pickup;
 using ZeoFlow.Pickup.Interfaces;
 
@@ -12,15 +11,7 @@ namespace Items
 	public class HelmetManage : MonoBehaviour, IOnAttached
 	{
 		public Light helmetLight;
-		public int rechargeTime = 400;
 		public float lightIntensity = 2.7f;
-
-		private bool _isBoxColliderNotNull;
-		private BoxCollider _boxCollider;
-		private int _timer;
-		private int _index;
-		private bool _outOfBattery;
-		private int _outTime;
 
 		// unity 1 = 1frame
 		private readonly FlashPattern[] _lightPattern =
@@ -31,29 +22,30 @@ namespace Items
 			// light pattern (first light then dark and so on)
 			new FlashPattern {IsDark = false, Time = 200, Intensity = 2.7f},
 			new FlashPattern {IsDark = true, Time = 10, Intensity = 0f},
-			new FlashPattern {IsDark = false, Time = 180, Intensity = 2.5f},
-			new FlashPattern {IsDark = true, Time = 10, Intensity = 0f},
-			new FlashPattern {IsDark = false, Time = 160, Intensity = 2.3f},
-			new FlashPattern {IsDark = true, Time = 10, Intensity = 0f},
-			new FlashPattern {IsDark = false, Time = 140, Intensity = 2.2f},
-			new FlashPattern {IsDark = true, Time = 10, Intensity = 0f},
 			new FlashPattern {IsDark = false, Time = 120, Intensity = 2.0f},
-			new FlashPattern {IsDark = true, Time = 10, Intensity = 0f},
-			new FlashPattern {IsDark = false, Time = 100, Intensity = 1.8f},
-			new FlashPattern {IsDark = true, Time = 20, Intensity = 0f},
-			new FlashPattern {IsDark = false, Time = 80, Intensity = 1.6f},
 			new FlashPattern {IsDark = true, Time = 35, Intensity = 0f},
 			new FlashPattern {IsDark = false, Time = 60, Intensity = 1.4f},
 
 			// end pattern
-			new FlashPattern {IsDark = true, Time = 0},
+			new FlashPattern {IsDark = true, Time = 0}
 		};
 
+		private BoxCollider _boxCollider;
+		private int _index;
+		private bool _isBoxColliderNotNull;
+		private bool _outOfBattery;
+
+		private bool _paranoiaTriggered;
+		private int _timer;
+
+		/// <summary>
+		///     <para> HelmetManage </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		public HelmetManage()
 		{
 			_timer = 0;
 			_index = 0;
-			_outTime = 0;
 		}
 
 		/// <summary>
@@ -64,7 +56,7 @@ namespace Items
 		{
 			_boxCollider = GetComponent<BoxCollider>();
 			_isBoxColliderNotNull = _boxCollider != null;
-			
+
 			_lightPattern[0].Intensity = lightIntensity;
 		}
 
@@ -78,34 +70,30 @@ namespace Items
 			if (_isBoxColliderNotNull) _boxCollider.enabled = false;
 			if (Input.GetKeyDown(KeyCode.F))
 			{
-				if (!_outOfBattery && !helmetLight.enabled)
+				if (!_outOfBattery && !helmetLight.enabled && !_paranoiaTriggered)
 				{
 					_index = 0;
 					_timer = 0;
 					helmetLight.enabled = true;
 					helmetLight.intensity = _lightPattern[0].Intensity;
-				} else if (helmetLight.enabled)
+				}
+				else if (helmetLight.enabled)
 				{
 					_index = 0;
 					_timer = 0;
 					helmetLight.enabled = false;
+					if (_paranoiaTriggered)
+					{
+						_outOfBattery = true;
+					}
 				}
 			}
 
+			if (!_paranoiaTriggered) return;
+
 			if (!_outOfBattery)
 			{
-				if (_index < _lightPattern.Length)
-				{
-					Flashlight();
-				}
-			}
-			else
-			{
-				_outTime--;
-				if (_outTime <= 0)
-				{
-					_outOfBattery = false;
-				}
+				if (_index < _lightPattern.Length) Flashlight();
 			}
 		}
 
@@ -128,10 +116,45 @@ namespace Items
 			}
 
 			_index = 0;
-			_outTime = rechargeTime;
 			_outOfBattery = true;
 			helmetLight.enabled = false;
 			helmetLight.intensity = 0;
+		}
+
+		/// <summary>
+		///     <para> IsOutOfBattery </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
+		/// <returns param="_outOfBattery"></returns>
+		public bool IsOutOfBattery()
+		{
+			return _outOfBattery;
+		}
+
+		/// <summary>
+		///     <para> SetParanoiaTriggered </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
+		public void SetParanoiaTriggered()
+		{
+			if (_paranoiaTriggered) return;
+
+			_paranoiaTriggered = true;
+			_index = 0;
+			_timer = 0;
+			_outOfBattery = !helmetLight.enabled;
+		}
+
+		/// <summary>
+		///     <para> DisableParanoiaTriggered </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
+		public void DisableParanoiaTriggered()
+		{
+			if (!_paranoiaTriggered) return;
+
+			_paranoiaTriggered = false;
+			_outOfBattery = false;
 		}
 	}
 }
