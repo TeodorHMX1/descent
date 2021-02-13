@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ZeoFlow.PlayerMovement
 {
@@ -13,8 +11,8 @@ namespace ZeoFlow.PlayerMovement
 		public string mouseVerticalAxis = "Mouse Y";
 
 		//Invert input options;
-		public bool invertHorizontalInput = false;
-		public bool invertVerticalInput = false;
+		public bool invertHorizontalInput;
+		public bool invertVerticalInput;
 
 		//Use this value to fine-tune mouse movement;
 		//All mouse input will be multiplied by this value;
@@ -23,7 +21,7 @@ namespace ZeoFlow.PlayerMovement
 		public override float GetHorizontalCameraInput()
 		{
 			//Get raw mouse input;
-			float _input = Input.GetAxisRaw(mouseHorizontalAxis);
+			float _input = InputManager.GetAxisRaw(mouseHorizontalAxis) * 0.1f;
 
 			//Since raw mouse input is already time-based, we need to correct for this before passing the input to the camera controller;
 			if (Time.timeScale > 0f)
@@ -47,7 +45,7 @@ namespace ZeoFlow.PlayerMovement
 		public override float GetVerticalCameraInput()
 		{
 			//Get raw mouse input;
-			float _input = -Input.GetAxisRaw(mouseVerticalAxis);
+			float _input = -InputManager.GetAxisRaw(mouseVerticalAxis) * 0.1f;
 
 			//Since raw mouse input is already time-based, we need to correct for this before passing the input to the camera controller;
 			if (Time.timeScale > 0f)

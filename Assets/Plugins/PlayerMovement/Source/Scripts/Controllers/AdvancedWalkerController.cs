@@ -225,7 +225,6 @@ namespace ZeoFlow.PlayerMovement
 							 characterInput.GetHorizontalMovementInput();
 				_velocity += Vector3.ProjectOnPlane(cameraTransform.forward, tr.up).normalized *
 							 characterInput.GetVerticalMovementInput();
-				Debug.Log(characterInput.GetHorizontalMovementInput());
 			}
 
 			//If necessary, clamp movement vector to magnitude of 1f;

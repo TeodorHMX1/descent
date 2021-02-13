@@ -15,24 +15,22 @@ namespace ZeoFlow.PlayerMovement
 
 		public override float GetHorizontalMovementInput()
 		{
-			return useRawInput ? Input.GetAxisRaw(horizontalInputAxis) : Input.GetAxis(horizontalInputAxis);
+			return useRawInput ? InputManager.GetAxisRaw(horizontalInputAxis) : InputManager.GetAxis(horizontalInputAxis);
 		}
 
 		public override float GetVerticalMovementInput()
 		{
-			return useRawInput ? Input.GetAxisRaw(verticalInputAxis) : Input.GetAxis(verticalInputAxis);
+			return useRawInput ? InputManager.GetAxisRaw(verticalInputAxis) : InputManager.GetAxis(verticalInputAxis);
 		}
 
 		public override bool IsJumpKeyPressed()
 		{
-			const string keyPrefix = "Controller.Key.Jump";
-			return Input.GetKey((KeyCode) PlayerPrefs.GetInt(keyPrefix, (int) jumpKey));
+			return InputManager.GetButton("Jump");
 		}
 
 		public override bool IsRunKeyPressed()
 		{
-			const string keyPrefix = "Controller.Key.Run";
-			return Input.GetKey((KeyCode) PlayerPrefs.GetInt(keyPrefix, (int) runKey));
+			return InputManager.GetButton("Run");
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using ZeoFlow;
 using ZeoFlow.PlayerMovement;
 
 /// <summary>
@@ -27,7 +28,7 @@ public class Pause : MonoBehaviour
 	/// </summary>
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Escape)) isPaused = !isPaused;
+		if (InputManager.GetButtonDown("PauseMenu")) isPaused = !isPaused;
 
 		if (isPaused)
 			Paused();
