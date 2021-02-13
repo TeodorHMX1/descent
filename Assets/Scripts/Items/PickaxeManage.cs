@@ -10,13 +10,16 @@ namespace Items
 	///     <para> PickaxeManage </para>
 	///     <author> @TeodorHMX1 </author>
 	/// </summary>
+	[RequireComponent(typeof(AudioSource))]
 	public class PickaxeManage : MonoBehaviour, IOnAttached
 	{
 
 		public Animation animator;
 		public KeyCode swingKey = KeyCode.Mouse0;
 		public MeleeArea meleeArea;
+		public AudioClip sound;
 		
+		private AudioSource _audioData;
 		private bool _isAnimatorNull;
 		private bool _isBoxColliderNotNull;
 		private BoxCollider _boxCollider;
@@ -30,6 +33,7 @@ namespace Items
 			_boxCollider = GetComponent<BoxCollider>();
 			_isBoxColliderNotNull = _boxCollider != null;
 			_isAnimatorNull = animator == null;
+			_audioData = GetComponent<AudioSource>();
 		}
 
 		/// <summary>
@@ -47,6 +51,7 @@ namespace Items
 			if (animator.isPlaying) return;
 			
 			animator.Play(Constants.Animations.PickaxeSwing);
+			_audioData.PlayOneShot(sound);
 			Invoke(nameof(BroadcastMeleeDamage), .2f);
 		}
 
