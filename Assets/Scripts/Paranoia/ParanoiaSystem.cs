@@ -149,13 +149,20 @@ namespace Paranoia
 
 			if (_isHelmetObjNotNull)
 			{
-				if (effectSub.helmetObj.IsOutOfBattery())
+				if (effectSub.helmetObj.attached)
 				{
-					ApplyParanoiaEffect();
+					if (effectSub.helmetObj.IsOutOfBattery())
+					{
+						ApplyParanoiaEffect();
+					}
+					else
+					{
+						effectSub.helmetObj.SetParanoiaTriggered();
+					}
 				}
 				else
 				{
-					effectSub.helmetObj.SetParanoiaTriggered();
+					ApplyParanoiaEffect();
 				}
 			}
 			else

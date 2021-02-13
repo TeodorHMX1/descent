@@ -80,8 +80,8 @@ namespace ZeoFlow.PlayerMovement
 
 		void Update()
 		{
-			sensitivityVertical = PlayerPrefs.GetFloat(Constants.Storage.SensitivityVertical, sensitivityVertical);
-			sensitivityHorizontal = PlayerPrefs.GetFloat(Constants.Storage.SensitivityHorizontal, sensitivityHorizontal);
+			sensitivityVertical = PlayerPrefs.GetFloat(Constants.Options.SensitivityVertical, sensitivityVertical);
+			sensitivityHorizontal = PlayerPrefs.GetFloat(Constants.Options.SensitivityHorizontal, sensitivityHorizontal);
 			HandleCameraRotation();
 		}
 

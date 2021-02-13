@@ -8583,6 +8583,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   helmetLight: {fileID: 1000147350}
   lightIntensity: 2.7
+  attached: 0
 --- !u!114 &515420532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36198,6 +36199,21 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6714196959235106676}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1849082949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1849082944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c3a2740da421f54c82b9c4135e76b58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shader: {fileID: 4800000, guid: 6bfdbbe5101874c4987ef0328b46bad5, type: 3}
+  _Brightness: 1
+  _Contrast: 1
 --- !u!4 &1851680152 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fc4e43a6840122c438b503e069f5ac6a,
@@ -43167,5 +43183,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EventSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 9205644167293249639, guid: 03420c87dc42ede47a524458a88dd018,
+        type: 3}
+      propertyPath: brightnessEffect
+      value: 
+      objectReference: {fileID: 1849082949}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 03420c87dc42ede47a524458a88dd018, type: 3}

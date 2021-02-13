@@ -1,0 +1,22 @@
+﻿using UnityEngine;
+
+[AddComponentMenu("Options/Options Synchronizer")]
+public class SyncOptions : MonoBehaviour
+{
+	public BrightnessEffect brightnessEffect;
+	private bool _isBrightnessEffectNotNull;
+
+	private void Start()
+	{
+		_isBrightnessEffectNotNull = brightnessEffect != null;
+	}
+
+	private void Update()
+	{
+		if (_isBrightnessEffectNotNull)
+		{
+			brightnessEffect.SetBrightness(PlayerPrefs.GetFloat(Constants.Options.Brightness, 1.0f));
+			brightnessEffect.SetContrast(PlayerPrefs.GetFloat(Constants.Options.Contrast, 1.0f));
+		}
+	}
+}

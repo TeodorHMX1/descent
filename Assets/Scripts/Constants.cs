@@ -56,26 +56,23 @@ public static class Constants
 	}
 
 	/// <summary>
-	///     <para> Storage </para>
+	///     <para> Options </para>
 	///     <author> @TeodorHMX1 </author>
 	/// </summary>
-	public static class Storage
+	public static class Options
 	{
 		
 		/// <summary>
-		///     <para> SensivityX </para>
+		///     <para> Brightness </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public const string SensivityX = "StorageSensivityX";
+		public const string Brightness = "StorageBrightness";
 		
 		/// <summary>
-		///     <para> SensivityY </para>
+		///     <para> Contrast </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public const string SensivityY = "StorageSensivityY";
-	
-		// PlayerPrefs.SetFloat(Constants.PlayPrefsSensivityX, _senX);
-		// PlayerPrefs.GetFloat(Constants.PlayPrefsSoundVolume);
+		public const string Contrast = "StorageContrast";
 
 	}
 	

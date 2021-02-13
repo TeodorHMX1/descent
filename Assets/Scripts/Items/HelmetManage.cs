@@ -13,6 +13,7 @@ namespace Items
 	{
 		public Light helmetLight;
 		public float lightIntensity = 2.7f;
+		public bool attached = false;
 
 		// unity 1 = 1frame
 		private readonly FlashPattern[] _lightPattern =
@@ -68,6 +69,7 @@ namespace Items
 		/// <param name="playerAttachMenu"></param>
 		public void ONUpdate(PlayerAttachSub playerAttachMenu)
 		{
+			attached = true;
 			if (_isBoxColliderNotNull) _boxCollider.enabled = false;
 			if (InputManager.GetButtonDown("Flashlight"))
 			{

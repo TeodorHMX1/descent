@@ -8,10 +8,10 @@
 	public static class Constants
 	{
 		/// <summary>
-		///     <para> Storage </para>
+		///     <para> Options </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public static class Storage
+		public static class Options
 		{
 		
 			/// <summary>
