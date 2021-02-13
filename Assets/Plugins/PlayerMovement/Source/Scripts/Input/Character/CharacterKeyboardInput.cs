@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ZeoFlow.PlayerMovement
 {
@@ -17,28 +15,24 @@ namespace ZeoFlow.PlayerMovement
 
 		public override float GetHorizontalMovementInput()
 		{
-			if (useRawInput)
-				return Input.GetAxisRaw(horizontalInputAxis);
-			else
-				return Input.GetAxis(horizontalInputAxis);
+			return useRawInput ? Input.GetAxisRaw(horizontalInputAxis) : Input.GetAxis(horizontalInputAxis);
 		}
 
 		public override float GetVerticalMovementInput()
 		{
-			if (useRawInput)
-				return Input.GetAxisRaw(verticalInputAxis);
-			else
-				return Input.GetAxis(verticalInputAxis);
+			return useRawInput ? Input.GetAxisRaw(verticalInputAxis) : Input.GetAxis(verticalInputAxis);
 		}
 
 		public override bool IsJumpKeyPressed()
 		{
-			return Input.GetKey(jumpKey);
+			const string keyPrefix = "Controller.Key.Jump";
+			return Input.GetKey((KeyCode) PlayerPrefs.GetInt(keyPrefix, (int) jumpKey));
 		}
 
 		public override bool IsRunKeyPressed()
 		{
-			return Input.GetKey(runKey);
+			const string keyPrefix = "Controller.Key.Run";
+			return Input.GetKey((KeyCode) PlayerPrefs.GetInt(keyPrefix, (int) runKey));
 		}
 	}
 }

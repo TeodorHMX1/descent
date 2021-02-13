@@ -107,7 +107,7 @@ namespace ZeoFlow.PlayerMovement
 		{
 		}
 
-		void Update()
+		private void Update()
 		{
 			HandleJumpKeyInput();
 			HandleMovementInput();
@@ -133,18 +133,20 @@ namespace ZeoFlow.PlayerMovement
 		//Handle movement type FixedUpdate;
 		void HandleMovementInput()
 		{
-			bool _newRunKeyPressedState = IsRunKeyPressed();
+			var newRunKeyPressedState = IsRunKeyPressed();
 
-			if (runKeyIsPressed == false && _newRunKeyPressedState == true)
-				runKeyWasPressed = true;
-
-			if (runKeyIsPressed == true && _newRunKeyPressedState == false)
+			switch (runKeyIsPressed)
 			{
-				runKeyWasLetGo = true;
-				runInputIsLocked = false;
+				case false when newRunKeyPressedState:
+					runKeyWasPressed = true;
+					break;
+				case true when newRunKeyPressedState == false:
+					runKeyWasLetGo = true;
+					runInputIsLocked = false;
+					break;
 			}
 
-			runKeyIsPressed = _newRunKeyPressedState;
+			runKeyIsPressed = newRunKeyPressedState;
 		}
 
 		void FixedUpdate()
@@ -223,6 +225,7 @@ namespace ZeoFlow.PlayerMovement
 							 characterInput.GetHorizontalMovementInput();
 				_velocity += Vector3.ProjectOnPlane(cameraTransform.forward, tr.up).normalized *
 							 characterInput.GetVerticalMovementInput();
+				Debug.Log(characterInput.GetHorizontalMovementInput());
 			}
 
 			//If necessary, clamp movement vector to magnitude of 1f;
@@ -251,7 +254,7 @@ namespace ZeoFlow.PlayerMovement
 
 			//If controller is not grounded, multiply movement velocity with 'airControl';
 			if (!(currentControllerState == ControllerState.Grounded))
-				_velocity = _velocityDirection * speedVelocity * airControl;
+				_velocity = _velocityDirection * (speedVelocity * airControl);
 
 			return _velocity;
 		}
@@ -260,20 +263,14 @@ namespace ZeoFlow.PlayerMovement
 		protected virtual bool IsJumpKeyPressed()
 		{
 			//If no character input script is attached to this object, return;
-			if (characterInput == null)
-				return false;
-
-			return characterInput.IsJumpKeyPressed();
+			return characterInput != null && characterInput.IsJumpKeyPressed();
 		}
 
 		//Returns 'true' if the player presses the run key;
 		protected virtual bool IsRunKeyPressed()
 		{
 			//If no character input script is attached to this object, return;
-			if (characterInput == null)
-				return false;
-
-			return characterInput.IsRunKeyPressed();
+			return characterInput != null && characterInput.IsRunKeyPressed();
 		}
 
 		//Determine current controller state based on current momentum and whether the controller is grounded (or not);
@@ -281,14 +278,14 @@ namespace ZeoFlow.PlayerMovement
 		ControllerState DetermineControllerState()
 		{
 			//Check if vertical momentum is pointing upwards;
-			bool _isRising = IsRisingOrFalling() && (VectorMath.GetDotProduct(GetMomentum(), tr.up) > 0f);
+			var isRising = IsRisingOrFalling() && (VectorMath.GetDotProduct(GetMomentum(), tr.up) > 0f);
 			//Check if controller is sliding;
-			bool _isSliding = mover.IsGrounded() && IsGroundTooSteep();
+			var isSliding = mover.IsGrounded() && IsGroundTooSteep();
 
 			//Grounded;
 			if (currentControllerState == ControllerState.Grounded)
 			{
-				if (_isRising)
+				if (isRising)
 				{
 					OnGroundContactLost();
 					return ControllerState.Rising;
@@ -300,7 +297,7 @@ namespace ZeoFlow.PlayerMovement
 					return ControllerState.Falling;
 				}
 
-				if (_isSliding)
+				if (isSliding)
 				{
 					return ControllerState.Sliding;
 				}
@@ -311,18 +308,18 @@ namespace ZeoFlow.PlayerMovement
 			//Falling;
 			if (currentControllerState == ControllerState.Falling)
 			{
-				if (_isRising)
+				if (isRising)
 				{
 					return ControllerState.Rising;
 				}
 
-				if (mover.IsGrounded() && !_isSliding)
+				if (mover.IsGrounded() && !isSliding)
 				{
 					OnGroundContactRegained(momentum);
 					return ControllerState.Grounded;
 				}
 
-				if (_isSliding)
+				if (isSliding)
 				{
 					OnGroundContactRegained(momentum);
 					return ControllerState.Sliding;
@@ -334,7 +331,7 @@ namespace ZeoFlow.PlayerMovement
 			//Sliding;
 			if (currentControllerState == ControllerState.Sliding)
 			{
-				if (_isRising)
+				if (isRising)
 				{
 					OnGroundContactLost();
 					return ControllerState.Rising;
@@ -345,7 +342,7 @@ namespace ZeoFlow.PlayerMovement
 					return ControllerState.Falling;
 				}
 
-				if (mover.IsGrounded() && !_isSliding)
+				if (mover.IsGrounded() && !isSliding)
 				{
 					OnGroundContactRegained(momentum);
 					return ControllerState.Grounded;
@@ -357,15 +354,15 @@ namespace ZeoFlow.PlayerMovement
 			//Rising;
 			if (currentControllerState == ControllerState.Rising)
 			{
-				if (!_isRising)
+				if (!isRising)
 				{
-					if (mover.IsGrounded() && !_isSliding)
+					if (mover.IsGrounded() && !isSliding)
 					{
 						OnGroundContactRegained(momentum);
 						return ControllerState.Grounded;
 					}
 
-					if (_isSliding)
+					if (isSliding)
 					{
 						return ControllerState.Sliding;
 					}
