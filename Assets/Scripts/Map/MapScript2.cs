@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using ZeoFlow;
+using ZeoFlow.Pickup;
 
 namespace Map
 {
@@ -11,6 +13,8 @@ namespace Map
 		public static bool ColArea2;
 		public static bool ColArea3;
 		public bool mapOpen;
+		public Pause pause;
+		public RigidbodyPickUp rigidbodyPickUp;
 		public GameObject map;
 		public GameObject area1;
 		public GameObject area2;
@@ -18,12 +22,16 @@ namespace Map
 		private bool _isarea1Null;
 		private bool _isarea2Null;
 		private bool _isarea3Null;
+		private bool _isrigidbodyPickUpNotNull;
+		private bool _ispauseNotNull;
 
 		/// <summary>
 		///     <para> Start </para>
 		/// </summary>
 		private void Start()
 		{
+			_ispauseNotNull = pause != null;
+			_isrigidbodyPickUpNotNull = rigidbodyPickUp != null;
 			_isarea1Null = area1 == null;
 			_isarea2Null = area2 == null;
 			_isarea3Null = area3 == null;
@@ -58,18 +66,44 @@ namespace Map
 
 			area3.SetActive(ColArea3);
 
-			if (Input.GetKeyDown(KeyCode.M)) mapOpen = !mapOpen;
+			if (InputManager.GetButtonDown("Map")) mapOpen = !mapOpen;
+			
+			if (_isrigidbodyPickUpNotNull) rigidbodyPickUp.hideCrosshair = mapOpen;
 
-			if (mapOpen)
+			if (_ispauseNotNull)
 			{
-				Open_Map();
+				if (pause.isPaused)
+				{
+					area1.SetActive(false);
+					area2.SetActive(false);
+					area3.SetActive(false);
+					map.SetActive(false);
+				}
+				else if (mapOpen)
+				{
+					Open_Map();
+				}
+				else
+				{
+					area1.SetActive(false);
+					area2.SetActive(false);
+					area3.SetActive(false);
+					Exit_Map();
+				}
 			}
 			else
 			{
-				area1.SetActive(false);
-				area2.SetActive(false);
-				area3.SetActive(false);
-				Exit_Map();
+				if (mapOpen)
+				{
+					Open_Map();
+				}
+				else
+				{
+					area1.SetActive(false);
+					area2.SetActive(false);
+					area3.SetActive(false);
+					Exit_Map();
+				}
 			}
 		}
 

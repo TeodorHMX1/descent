@@ -7,6 +7,7 @@ namespace ZeoFlow.Pickup
 	public class RigidbodyPickUp : MonoBehaviour
 	{
 		public KeyCode pickupButton = KeyCode.E;
+		public string mouseHorizontalAxis = "Mouse X";
 		public KeyCode pauseButton = KeyCode.Escape;
 		public bool togglePickUp;
 		public float distance = 3f;
@@ -15,7 +16,10 @@ namespace ZeoFlow.Pickup
 		public GameObject playerCam;
 		public CrosshairSystem crosshairsSystem = new CrosshairSystem();
 		public AudioSoundsSub audioSystem = new AudioSoundsSub();
-
+		
+		[Space]
+		public bool hideCrosshair;
+		
 		private bool _objectIsToggled;
 		private float _toggTime = 0.01f;
 		private float _timeHeld = 0.01f;
@@ -84,7 +88,9 @@ namespace ZeoFlow.Pickup
 		{
 			if (!_isPuzzleFocused) return;
 
-			if (Input.GetAxis("Mouse X") < 0)
+			var inputX = InputManager.GetAxisRaw(mouseHorizontalAxis);
+			
+			if (inputX < 0)
 			{
 				if (timeStartedMovement != 0 && !isLeftMovement)
 				{
@@ -94,7 +100,7 @@ namespace ZeoFlow.Pickup
 				isLeftMovement = true;
 				isRightMovement = false;
 			}
-			else if (Input.GetAxis("Mouse X") > 0)
+			else if (inputX > 0)
 			{
 				if (timeStartedMovement != 0 && !isRightMovement)
 				{
@@ -184,6 +190,8 @@ namespace ZeoFlow.Pickup
 				}
 			}
 
+			pickupButton = InputManager.GetKeyCode("Interact");
+			
 			if (Input.GetKeyUp(pickupButton))
 			{
 				_isPuzzleFocused = false;
@@ -373,6 +381,8 @@ namespace ZeoFlow.Pickup
 		private void OnGUI()
 		{
 			if (Cursor.lockState == CursorLockMode.None) return;
+
+			if (hideCrosshair) return;
 
 			switch (crosshairsSystem.enabled)
 			{

@@ -14,6 +14,8 @@ namespace ZeoFlow.PlayerMovement
 		//Key used to lock mouse cursor;
 		public KeyCode lockKeyCode = KeyCode.Mouse0;
 
+		private bool gameIsPaused = false;
+
 		//Start;
 		private void Start()
 		{
@@ -27,22 +29,26 @@ namespace ZeoFlow.PlayerMovement
 		//Update;
 		private void Update()
 		{
-			if (Input.GetKeyDown(unlockKeyCode))
+			if (InputManager.GetButtonDown("PauseMenu"))
 			{
 				Cursor.lockState = CursorLockMode.None;
 				Cursor.visible = true;
 			}
-			else if (Input.GetKeyDown(lockKeyCode))
+			else if (!gameIsPaused && Input.GetKeyDown(lockKeyCode))
 			{
-				
 				Cursor.visible = false;
-				Invoke(nameof(LockMouse), 0.1f);
+				Cursor.lockState = CursorLockMode.Locked;
 			}
 		}
 
-		private void LockMouse()
+		public void SetPaused(bool isPaused)
 		{
-			Cursor.lockState = CursorLockMode.Locked;
+			if (gameIsPaused && !isPaused)
+			{
+				Cursor.visible = false;
+				Cursor.lockState = CursorLockMode.Locked;
+			}
+			gameIsPaused = isPaused;
 		}
 	}
 }

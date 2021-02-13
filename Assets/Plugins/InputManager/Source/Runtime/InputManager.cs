@@ -624,6 +624,11 @@ namespace ZeoFlow
 			return null;
 		}
 
+		public static KeyCode GetKeyCode(string actionName, PlayerID playerID = PlayerID.One)
+		{
+			return GetAction(playerID, actionName).Bindings[0].Positive;
+		}
+
 		public static ControlScheme CreateControlScheme(string name)
 		{
 			if (m_instance.m_schemeLookup.ContainsKey(name))

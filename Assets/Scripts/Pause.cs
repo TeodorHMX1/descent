@@ -11,7 +11,9 @@ public class Pause : MonoBehaviour
 {
 	public bool isPaused;
 	public GameObject pauseMenu;
+	public GameObject optionsMenu;
 	public string newLevel;
+	public MouseCursorLock mouseCursorLock;
 
 	/// <summary>
 	///     <para> Start </para>
@@ -20,6 +22,7 @@ public class Pause : MonoBehaviour
 	private void Start()
 	{
 		pauseMenu.SetActive(false);
+		optionsMenu.SetActive(false);
 	}
 
 	/// <summary>
@@ -29,7 +32,8 @@ public class Pause : MonoBehaviour
 	private void Update()
 	{
 		if (InputManager.GetButtonDown("PauseMenu")) isPaused = !isPaused;
-
+		mouseCursorLock.SetPaused(isPaused);
+		
 		if (isPaused)
 			Paused();
 		else
@@ -43,6 +47,27 @@ public class Pause : MonoBehaviour
 	public void OnResume()
 	{
 		isPaused = false;
+		pauseMenu.SetActive(false);
+	}
+
+	/// <summary>
+	///     <para> OnOptions </para>
+	///     <author> @TeodorHMX1 </author>
+	/// </summary>
+	public void OnOptions()
+	{
+		pauseMenu.SetActive(false);
+		optionsMenu.SetActive(true);
+	}
+
+	/// <summary>
+	///     <para> OnOptionsClosed </para>
+	///     <author> @TeodorHMX1 </author>
+	/// </summary>
+	public void OnOptionsClosed()
+	{
+		pauseMenu.SetActive(true);
+		optionsMenu.SetActive(false);
 	}
 
 	/// <summary>
@@ -51,7 +76,10 @@ public class Pause : MonoBehaviour
 	/// </summary>
 	private void Resume()
 	{
-		pauseMenu.SetActive(false);
+		if (pauseMenu.activeSelf)
+		{
+			pauseMenu.SetActive(false);
+		}
 		Time.timeScale = 1f;
 	}
 
@@ -61,7 +89,10 @@ public class Pause : MonoBehaviour
 	/// </summary>
 	private void Paused()
 	{
-		pauseMenu.SetActive(true);
+		if (!optionsMenu.activeSelf)
+		{
+			pauseMenu.SetActive(true);
+		}
 		Time.timeScale = 0f;
 	}
 

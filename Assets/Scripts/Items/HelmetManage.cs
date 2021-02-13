@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using ZeoFlow;
 using ZeoFlow.Pickup;
 using ZeoFlow.Pickup.Interfaces;
 
@@ -68,7 +69,7 @@ namespace Items
 		public void ONUpdate(PlayerAttachSub playerAttachMenu)
 		{
 			if (_isBoxColliderNotNull) _boxCollider.enabled = false;
-			if (Input.GetKeyDown(KeyCode.F))
+			if (InputManager.GetButtonDown("Flashlight"))
 			{
 				if (!_outOfBattery && !helmetLight.enabled && !_paranoiaTriggered)
 				{
