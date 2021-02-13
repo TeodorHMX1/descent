@@ -26,11 +26,13 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Profiling;
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.Callbacks;
+
 #endif
 
 namespace ZeoFlow
@@ -622,6 +624,39 @@ namespace ZeoFlow
 			}
 
 			return null;
+		}
+
+		public static bool ValidKeyCode(string actionName, string InputKey = null, bool isPositive = true, PlayerID playerID = PlayerID.One)
+		{
+			var scheme = m_instance.GetControlSchemeByPlayerID(playerID);
+			if (scheme == null)
+				return false;
+
+			Dictionary<string, InputAction> table;
+			if (!m_instance.m_actionLookup.TryGetValue(scheme.Name, out table)) return false;
+
+			foreach (var data in table.Where(data => !data.Key.Contains("UI_")))
+			{
+				if (data.Value.Bindings[0].Positive.ToString().Equals(actionName))
+				{
+					if (data.Key.Equals(InputKey) && isPositive)
+					{
+						continue;
+					}
+					return false;
+				}
+
+				if (data.Value.Bindings[0].Negative.ToString().Equals(actionName))
+				{
+					if (data.Key.Equals(InputKey) && !isPositive)
+					{
+						continue;
+					}
+					return false;
+				}
+			}
+
+			return true;
 		}
 
 		public static KeyCode GetKeyCode(string actionName, PlayerID playerID = PlayerID.One)

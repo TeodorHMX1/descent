@@ -33,7 +33,7 @@ public class Pause : MonoBehaviour
 	{
 		if (InputManager.GetButtonDown("PauseMenu")) isPaused = !isPaused;
 		mouseCursorLock.SetPaused(isPaused);
-		
+
 		if (isPaused)
 			Paused();
 		else

@@ -180,6 +180,7 @@ MonoBehaviour:
   m_bindingIndex: 0
   m_cancelKey: 27
   m_timeout: 10
+  m_isPositive: 1
   m_changePositiveKey: 1
   m_allowAnalogButton: 0
   m_joystick: 0
@@ -1009,6 +1010,7 @@ MonoBehaviour:
   m_bindingIndex: 0
   m_cancelKey: 27
   m_timeout: 10
+  m_isPositive: 1
   m_changePositiveKey: 1
   m_allowAnalogButton: 0
   m_joystick: 0
@@ -1431,6 +1433,7 @@ MonoBehaviour:
   m_bindingIndex: 0
   m_cancelKey: 27
   m_timeout: 10
+  m_isPositive: 1
   m_changePositiveKey: 1
   m_allowAnalogButton: 0
   m_joystick: 0
@@ -6956,6 +6959,7 @@ MonoBehaviour:
   m_bindingIndex: 0
   m_cancelKey: 27
   m_timeout: 10
+  m_isPositive: 1
   m_changePositiveKey: 1
   m_allowAnalogButton: 0
   m_joystick: 0
@@ -9026,6 +9030,7 @@ MonoBehaviour:
   m_bindingIndex: 0
   m_cancelKey: 27
   m_timeout: 10
+  m_isPositive: 1
   m_changePositiveKey: 1
   m_allowAnalogButton: 0
   m_joystick: 0
@@ -10198,6 +10203,7 @@ MonoBehaviour:
   m_bindingIndex: 0
   m_cancelKey: 27
   m_timeout: 10
+  m_isPositive: 0
   m_changePositiveKey: 0
   m_allowAnalogButton: 0
   m_joystick: 0
@@ -19039,6 +19045,7 @@ MonoBehaviour:
   m_bindingIndex: 0
   m_cancelKey: 27
   m_timeout: 10
+  m_isPositive: 0
   m_changePositiveKey: 0
   m_allowAnalogButton: 0
   m_joystick: 0
@@ -29097,6 +29104,7 @@ MonoBehaviour:
   m_bindingIndex: 0
   m_cancelKey: 27
   m_timeout: 10
+  m_isPositive: 1
   m_changePositiveKey: 1
   m_allowAnalogButton: 0
   m_joystick: 0
@@ -29272,6 +29280,7 @@ MonoBehaviour:
   m_bindingIndex: 0
   m_cancelKey: 27
   m_timeout: 10
+  m_isPositive: 1
   m_changePositiveKey: 1
   m_allowAnalogButton: 0
   m_joystick: 0
@@ -29716,6 +29725,7 @@ MonoBehaviour:
   m_bindingIndex: 0
   m_cancelKey: 27
   m_timeout: 10
+  m_isPositive: 1
   m_changePositiveKey: 1
   m_allowAnalogButton: 0
   m_joystick: 0
@@ -32735,6 +32745,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6714196959235106676}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1853356141 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1853356152, guid: 0b529b61276858445a231b627fc1fef8,
+    type: 3}
+  m_PrefabInstance: {fileID: 6714196959235106676}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1853356139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee1cf077de6a14f41addfed18dfad7be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1853356144 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5914844958613702666, guid: 0b529b61276858445a231b627fc1fef8,
@@ -34105,6 +34127,7 @@ MonoBehaviour:
   m_bindingIndex: 0
   m_cancelKey: 27
   m_timeout: 10
+  m_isPositive: 1
   m_changePositiveKey: 1
   m_allowAnalogButton: 0
   m_joystick: 0
@@ -38198,6 +38221,14 @@ PrefabInstance:
       propertyPath: area3
       value: 
       objectReference: {fileID: 910178335}
+    - target: {fileID: 1853356149, guid: 0b529b61276858445a231b627fc1fef8, type: 3}
+      propertyPath: rigidbodyPickUp
+      value: 
+      objectReference: {fileID: 1853356141}
+    - target: {fileID: 1853356149, guid: 0b529b61276858445a231b627fc1fef8, type: 3}
+      propertyPath: pause
+      value: 
+      objectReference: {fileID: 570312253}
     - target: {fileID: 1853356150, guid: 0b529b61276858445a231b627fc1fef8, type: 3}
       propertyPath: area1
       value: 
