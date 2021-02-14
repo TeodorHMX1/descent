@@ -3,6 +3,10 @@ using UnityEngine.UI;
 
 namespace Options
 {
+	/// <summary>
+	///     <para> OptionsMenu </para>
+	///     <author> @TeodorHMX1 </author>
+	/// </summary>
 	[AddComponentMenu("Options/Options Menu")]
 	public class OptionsMenu : MonoBehaviour
 	{
@@ -18,6 +22,10 @@ namespace Options
 		[SerializeField] private Slider contrast;
 		[SerializeField] private Slider sound;
 
+		/// <summary>
+		///     <para> Start </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		private void Start()
 		{
 			if (graphicsContent != null)
@@ -51,6 +59,10 @@ namespace Options
 			}
 		}
 
+		/// <summary>
+		///     <para> OnGraphicsTabClicked </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		public void OnGraphicsTabClicked()
 		{
 			if (graphicsContent != null)
@@ -63,6 +75,10 @@ namespace Options
 			}
 		}
 
+		/// <summary>
+		///     <para> OnControllerTabClicked </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		public void OnControllerTabClicked()
 		{
 			if (graphicsContent != null)
@@ -75,31 +91,55 @@ namespace Options
 			}
 		}
 
+		/// <summary>
+		///     <para> IOnSensitivityVertical </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		public void IOnSensitivityVertical()
 		{
 			PlayerPrefs.SetFloat(Constants.Options.SensitivityVertical, sensitivityVertical.value);
 		}
 
+		/// <summary>
+		///     <para> IOnSensitivityHorizontal </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		public void IOnSensitivityHorizontal()
 		{
 			PlayerPrefs.SetFloat(Constants.Options.SensitivityHorizontal, sensitivityHorizontal.value);
 		}
 
+		/// <summary>
+		///     <para> IOnBrightness </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		public void IOnBrightness()
 		{
 			PlayerPrefs.SetFloat(Constants.Options.Brightness, brightness.value);
 		}
 
+		/// <summary>
+		///     <para> IOnContrast </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		public void IOnContrast()
 		{
 			PlayerPrefs.SetFloat(Constants.Options.Contrast, contrast.value);
 		}
 
+		/// <summary>
+		///     <para> IOnSound </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		public void IOnSound()
 		{
 			PlayerPrefs.SetFloat(Constants.Options.Sound, contrast.value);
 		}
 
+		/// <summary>
+		///     <para> IOnDefaultGraphics </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		public void IOnDefaultGraphics()
 		{
 			PlayerPrefs.SetFloat(Constants.Options.SensitivityVertical, 1);
