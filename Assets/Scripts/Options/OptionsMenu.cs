@@ -40,22 +40,27 @@ namespace Options
 			if (sensitivityVertical != null)
 			{
 				sensitivityVertical.value = PlayerPrefs.GetFloat(Constants.Options.SensitivityVertical, 1.0f);
+				sensitivityVertical.onValueChanged.AddListener(IOnSensitivityVertical);
 			}
 			if (sensitivityHorizontal != null)
 			{
 				sensitivityHorizontal.value = PlayerPrefs.GetFloat(Constants.Options.SensitivityVertical, 1.0f);
+				sensitivityHorizontal.onValueChanged.AddListener(IOnSensitivityHorizontal);
 			}
 			if (brightness != null)
 			{
 				brightness.value = PlayerPrefs.GetFloat(Constants.Options.Brightness, 1.0f);
+				brightness.onValueChanged.AddListener(IOnBrightness);
 			}
 			if (contrast != null)
 			{
 				contrast.value = PlayerPrefs.GetFloat(Constants.Options.Contrast, 1.0f);
+				contrast.onValueChanged.AddListener(IOnContrast);
 			}
 			if (sound != null)
 			{
 				sound.value = PlayerPrefs.GetFloat(Constants.Options.Sound, 1.0f);
+				sound.onValueChanged.AddListener(IOnSound);
 			}
 		}
 
@@ -95,45 +100,45 @@ namespace Options
 		///     <para> IOnSensitivityVertical </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public void IOnSensitivityVertical()
+		private void IOnSensitivityVertical(float value)
 		{
-			PlayerPrefs.SetFloat(Constants.Options.SensitivityVertical, sensitivityVertical.value);
+			PlayerPrefs.SetFloat(Constants.Options.SensitivityVertical, value);
 		}
 
 		/// <summary>
 		///     <para> IOnSensitivityHorizontal </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public void IOnSensitivityHorizontal()
+		private void IOnSensitivityHorizontal(float value)
 		{
-			PlayerPrefs.SetFloat(Constants.Options.SensitivityHorizontal, sensitivityHorizontal.value);
+			PlayerPrefs.SetFloat(Constants.Options.SensitivityHorizontal, value);
 		}
 
 		/// <summary>
 		///     <para> IOnBrightness </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public void IOnBrightness()
+		private void IOnBrightness(float value)
 		{
-			PlayerPrefs.SetFloat(Constants.Options.Brightness, brightness.value);
+			PlayerPrefs.SetFloat(Constants.Options.Brightness, value);
 		}
 
 		/// <summary>
 		///     <para> IOnContrast </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public void IOnContrast()
+		private void IOnContrast(float value)
 		{
-			PlayerPrefs.SetFloat(Constants.Options.Contrast, contrast.value);
+			PlayerPrefs.SetFloat(Constants.Options.Contrast, value);
 		}
 
 		/// <summary>
 		///     <para> IOnSound </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public void IOnSound()
+		private void IOnSound(float value)
 		{
-			PlayerPrefs.SetFloat(Constants.Options.Sound, contrast.value);
+			PlayerPrefs.SetFloat(Constants.Options.Sound, value);
 		}
 
 		/// <summary>
@@ -146,10 +151,12 @@ namespace Options
 			PlayerPrefs.SetFloat(Constants.Options.SensitivityHorizontal, 1);
 			PlayerPrefs.SetFloat(Constants.Options.Brightness, 1);
 			PlayerPrefs.SetFloat(Constants.Options.Contrast, 1);
+			PlayerPrefs.SetFloat(Constants.Options.Sound, 1);
 			sensitivityVertical.value = PlayerPrefs.GetFloat(Constants.Options.SensitivityVertical, 1.0f);
 			sensitivityHorizontal.value = PlayerPrefs.GetFloat(Constants.Options.SensitivityVertical, 1.0f);
 			brightness.value = PlayerPrefs.GetFloat(Constants.Options.Brightness, 1.0f);
 			contrast.value = PlayerPrefs.GetFloat(Constants.Options.Contrast, 1.0f);
+			sound.value = PlayerPrefs.GetFloat(Constants.Options.Sound, 1.0f);
 		}
 	}
 }

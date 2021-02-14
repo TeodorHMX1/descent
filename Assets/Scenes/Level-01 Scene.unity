@@ -34333,6 +34333,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8615552266525472488, guid: 77f84b7a245c2a441a4759ee48d0a8dd,
+        type: 3}
+      propertyPath: brightnessEffect
+      value: 
+      objectReference: {fileID: 1849082949}
     - target: {fileID: 8615552267309181298, guid: 77f84b7a245c2a441a4759ee48d0a8dd,
         type: 3}
       propertyPath: m_LocalPosition.x

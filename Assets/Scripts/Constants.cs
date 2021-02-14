@@ -66,13 +66,13 @@ public static class Constants
 		///     <para> Brightness </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public const string Brightness = "StorageBrightness";
+		public const string Brightness = "Storage.Brightness";
 		
 		/// <summary>
 		///     <para> Contrast </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public const string Contrast = "StorageContrast";
+		public const string Contrast = "Storage.Contrast";
 		
 		/// <summary>
 		///     <para> Sound </para>
