@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UnityStandardAssets.ImageEffects
+namespace Options.Filter
 {
 	[RequireComponent(typeof(Camera))]
 	[AddComponentMenu("")]

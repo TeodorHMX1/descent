@@ -73,6 +73,24 @@ public static class Constants
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
 		public const string Contrast = "StorageContrast";
+		
+		/// <summary>
+		///     <para> Sound </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
+		public const string Sound = "StorageSound";
+		
+		/// <summary>
+		///     <para> SensitivityVertical </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
+		public const string SensitivityVertical = "StorageSensitivityVertical";
+		
+		/// <summary>
+		///     <para> SensitivityHorizontal </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
+		public const string SensitivityHorizontal = "StorageSensitivityHorizontal";
 
 	}
 	

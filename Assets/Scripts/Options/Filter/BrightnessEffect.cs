@@ -1,28 +1,30 @@
 ﻿using UnityEngine;
-using UnityStandardAssets.ImageEffects;
 
-[ExecuteInEditMode]
-[AddComponentMenu("Image Effects/Custom/Brightness Effect")]
-public class BrightnessEffect : ImageEffectBase
+namespace Options.Filter
 {
-	[Range(0f, 2f)] public float _Brightness = 1f;
-	[Range(0f, 2f)] public float _Contrast = 1f;
-
-	// Called by camera to apply image effect
-	private void OnRenderImage(RenderTexture source, RenderTexture destination)
+	[ExecuteInEditMode]
+	[AddComponentMenu("Image Effects/Custom/Brightness Effect")]
+	public class BrightnessEffect : ImageEffectBase
 	{
-		material.SetFloat("_Brightness", _Brightness);
-		material.SetFloat("_Contrast", _Contrast);
-		Graphics.Blit(source, destination, material);
-	}
+		[Range(0f, 2f)] public float _Brightness = 1f;
+		[Range(0f, 2f)] public float _Contrast = 1f;
 
-	public void SetBrightness(float value)
-	{
-		_Brightness = value;
-	}
+		// Called by camera to apply image effect
+		private void OnRenderImage(RenderTexture source, RenderTexture destination)
+		{
+			material.SetFloat("_Brightness", _Brightness);
+			material.SetFloat("_Contrast", _Contrast);
+			Graphics.Blit(source, destination, material);
+		}
 
-	public void SetContrast(float value)
-	{
-		_Contrast = value;
+		public void SetBrightness(float value)
+		{
+			_Brightness = value;
+		}
+
+		public void SetContrast(float value)
+		{
+			_Contrast = value;
+		}
 	}
 }

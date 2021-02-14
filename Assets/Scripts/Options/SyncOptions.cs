@@ -1,22 +1,28 @@
-﻿using UnityEngine;
+﻿using Options.Filter;
+using UnityEngine;
 
-[AddComponentMenu("Options/Options Synchronizer")]
-public class SyncOptions : MonoBehaviour
+namespace Options
 {
-	public BrightnessEffect brightnessEffect;
-	private bool _isBrightnessEffectNotNull;
-
-	private void Start()
+	[AddComponentMenu("Options/Options Synchronizer")]
+	public class SyncOptions : MonoBehaviour
 	{
-		_isBrightnessEffectNotNull = brightnessEffect != null;
-	}
+		public BrightnessEffect brightnessEffect;
+		private bool _isBrightnessEffectNotNull;
 
-	private void Update()
-	{
-		if (_isBrightnessEffectNotNull)
+		private void Start()
 		{
-			brightnessEffect.SetBrightness(PlayerPrefs.GetFloat(Constants.Options.Brightness, 1.0f));
-			brightnessEffect.SetContrast(PlayerPrefs.GetFloat(Constants.Options.Contrast, 1.0f));
+			_isBrightnessEffectNotNull = brightnessEffect != null;
 		}
+
+		private void Update()
+		{
+			if (_isBrightnessEffectNotNull)
+			{
+				brightnessEffect.SetBrightness(PlayerPrefs.GetFloat(Constants.Options.Brightness, 1.0f));
+				brightnessEffect.SetContrast(PlayerPrefs.GetFloat(Constants.Options.Contrast, 1.0f));
+			}
+			// PlayerPrefs.GetFloat(Constants.Options.Sound, 1.0f)
+		}
+
 	}
 }
