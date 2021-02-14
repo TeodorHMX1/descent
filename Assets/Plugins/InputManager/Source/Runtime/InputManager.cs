@@ -26,7 +26,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Profiling;
 #if UNITY_EDITOR
@@ -626,7 +625,8 @@ namespace ZeoFlow
 			return null;
 		}
 
-		public static bool ValidKeyCode(string actionName, string InputKey = null, bool isPositive = true, PlayerID playerID = PlayerID.One)
+		public static bool ValidKeyCode(string actionName, string InputKey = null, bool isPositive = true,
+			PlayerID playerID = PlayerID.One)
 		{
 			var scheme = m_instance.GetControlSchemeByPlayerID(playerID);
 			if (scheme == null)
@@ -635,23 +635,21 @@ namespace ZeoFlow
 			Dictionary<string, InputAction> table;
 			if (!m_instance.m_actionLookup.TryGetValue(scheme.Name, out table)) return false;
 
-			foreach (var data in table.Where(data => !data.Key.Contains("UI_")))
+			foreach (var data in table)
 			{
+				if (data.Value.Bindings[0].Type == InputType.MouseAxis) continue;
+				if (data.Key.Contains("UI_")) continue;
 				if (data.Value.Bindings[0].Positive.ToString().Equals(actionName))
 				{
-					if (data.Key.Equals(InputKey) && isPositive)
-					{
-						continue;
-					}
+					if (data.Key.Equals(InputKey) && isPositive) continue;
+					Debug.Log(data.Key + " > " + data.Value.Bindings[0].Type);
 					return false;
 				}
 
 				if (data.Value.Bindings[0].Negative.ToString().Equals(actionName))
 				{
-					if (data.Key.Equals(InputKey) && !isPositive)
-					{
-						continue;
-					}
+					if (data.Key.Equals(InputKey) && !isPositive) continue;
+					Debug.Log(data.Key + " < " + data.Value.Bindings[0].Type);
 					return false;
 				}
 			}

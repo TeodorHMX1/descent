@@ -193,8 +193,9 @@ namespace ZeoFlow.Examples
 		{
 			var isValid = true;
 
+			if (InputManager.GetKeyCode(m_inputActionName) == key) return true;
 			if (!InputManager.ValidKeyCode(key.ToString(), m_inputActionName, m_isPositive)) return false;
-
+			
 			if (m_rebindType == RebindType.Keyboard)
 			{
 				if ((int) key >= (int) KeyCode.JoystickButton0)
