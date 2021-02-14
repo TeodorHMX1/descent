@@ -642,14 +642,12 @@ namespace ZeoFlow
 				if (data.Value.Bindings[0].Positive.ToString().Equals(actionName))
 				{
 					if (data.Key.Equals(InputKey) && isPositive) continue;
-					Debug.Log(data.Key + " > " + data.Value.Bindings[0].Type);
 					return false;
 				}
 
 				if (data.Value.Bindings[0].Negative.ToString().Equals(actionName))
 				{
 					if (data.Key.Equals(InputKey) && !isPositive) continue;
-					Debug.Log(data.Key + " < " + data.Value.Bindings[0].Type);
 					return false;
 				}
 			}
