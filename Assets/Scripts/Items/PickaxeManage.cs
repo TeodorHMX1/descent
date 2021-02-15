@@ -1,4 +1,5 @@
-﻿using Destructible;
+﻿using System;
+using Destructible;
 using UnityEngine;
 using Walls;
 using ZeoFlow.Pickup;
@@ -19,7 +20,7 @@ namespace Items
 		public MeleeArea meleeArea;
 		public AudioClip sound;
 
-		private bool isAttached = false;
+		private bool _isAttached;
 		private AudioSource _audioData;
 		private bool _isAnimatorNull;
 		private bool _isBoxColliderNotNull;
@@ -37,14 +38,10 @@ namespace Items
 			_audioData = GetComponent<AudioSource>();
 		}
 
-		/// <summary>
-		///     <para> ONUpdate </para>
-		///     <author> @TeodorHMX1 </author>
-		/// </summary>
-		/// <param name="playerAttachMenu"></param>
-		public void ONUpdate(PlayerAttachSub playerAttachMenu)
+		private void Update()
 		{
-			isAttached = true;
+			if (!_isAttached) return;
+			
 			if (_isBoxColliderNotNull) _boxCollider.enabled = false;
 			
 			if (_isAnimatorNull) return;
@@ -58,6 +55,16 @@ namespace Items
 		}
 
 		/// <summary>
+		///     <para> ONUpdate </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
+		/// <param name="playerAttachMenu"></param>
+		public void ONUpdate(PlayerAttachSub playerAttachMenu)
+		{
+			_isAttached = true;
+		}
+
+		/// <summary>
 		///     <para> BroadcastMeleeDamage </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
@@ -67,6 +74,6 @@ namespace Items
 			meleeArea.OnMeleeDamage();
 		}
 
-		public bool IsAttached => isAttached;
+		public bool IsAttached => _isAttached;
 	}
 }

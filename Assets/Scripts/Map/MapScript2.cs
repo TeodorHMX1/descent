@@ -13,6 +13,7 @@ namespace Map
 		public static bool ColArea1;
 		public static bool ColArea2;
 		public static bool ColArea3;
+		public static bool Controlsvisible;
 		public bool mapOpen;
 		public Pause pause;
 		public RigidbodyPickUp rigidbodyPickUp;
@@ -20,6 +21,8 @@ namespace Map
 		public GameObject area1;
 		public GameObject area2;
 		public GameObject area3;
+		public GameObject controlprompt;
+		public GameObject Controls;
 		private bool _isarea1Null;
 		private bool _isarea2Null;
 		private bool _isarea3Null;
@@ -40,6 +43,8 @@ namespace Map
 			ColArea1 = false;
 			ColArea2 = false;
 			ColArea3 = false;
+			Controlsvisible = false;
+
 			if (!_isarea1Null)
 			{
 				area1.SetActive(false);
@@ -105,6 +110,22 @@ namespace Map
 					area3.SetActive(false);
 					Exit_Map();
 				}
+			}
+			//if (Input.GetKeyDown("N"))
+				//{
+
+				//Controlsvisible = !Controlsvisible;
+
+			//}
+			if (Controlsvisible == true)
+			{
+				controlprompt.SetActive(false);
+				Controls.SetActive(true);
+			}
+			else
+			{
+				controlprompt.SetActive(true);
+				Controls.SetActive(false);
 			}
 		}
 

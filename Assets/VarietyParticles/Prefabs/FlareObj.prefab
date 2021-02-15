@@ -107,6 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c584e5c102753a41af16330c3b9e0ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flareLight: {fileID: 5702051545814727107}
 --- !u!114 &849451540318378337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,6 +229,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b171dbb60a93c054b96e5cad113ede75, type: 3}
+--- !u!1 &5702051545814727107 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100006, guid: b171dbb60a93c054b96e5cad113ede75,
+    type: 3}
+  m_PrefabInstance: {fileID: 5702051545814761317}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5702051545815148003 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400006, guid: b171dbb60a93c054b96e5cad113ede75,
