@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using ZeoFlow;
 using ZeoFlow.Pickup;
 
@@ -16,9 +17,36 @@ namespace Items
 		public GameObject flaresObject;
 		public PickableObject pickableFlares;
 
+		private List<Item> _items = new List<Item>();
+
 		private void Update()
 		{
+			
+			if (pickaxeObject.activeSelf && flaresObject.activeSelf &&
+				pickaxeManage.IsAttached && flareManage.IsAttached)
+			{
+				if (!_items.Contains(Item.Pickaxe))
+				{
+					pickaxeObject.SetActive(true);
+					flaresObject.SetActive(false);
+				} else if (!_items.Contains(Item.Flare))
+				{
+					pickaxeObject.SetActive(false);
+					flaresObject.SetActive(true);
+				}
+			}
+			
+			if (pickaxeManage.IsAttached && !_items.Contains(Item.Pickaxe))
+			{
+				_items.Add(Item.Pickaxe);
+			}
+			if (flareManage.IsAttached && !_items.Contains(Item.Flare))
+			{
+				_items.Add(Item.Flare);
+			}
+			
 			if (GETSwitchType() == SwitchType.None) return;
+			
 			if (!pickaxeManage.IsAttached || !flareManage.IsAttached) return;
 
 			if (pickaxeObject.activeSelf)

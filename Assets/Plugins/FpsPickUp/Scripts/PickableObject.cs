@@ -67,10 +67,10 @@ namespace ZeoFlow.Pickup
 		public void OnDrop()
 		{
 			_isAttached = false;
-			if (_isRigidbodyNotNull)
-			{
-				_rigidbody.AddRelativeForce(Vector3.forward);
-			}
+			// if (_isRigidbodyNotNull)
+			// {
+			// 	_rigidbody.AddRelativeForce(Vector3.forward);
+			// }
 		}
 	}
 }

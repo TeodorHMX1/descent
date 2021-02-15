@@ -26,6 +26,7 @@ namespace Paranoia
 		private float _saturationAlpha;
 		private bool _isHelmetObjNotNull;
 		private bool _isAudioSourceNotNull;
+		private bool _insideSafeArea;
 
 		/// <summary>
 		///     <para> Start </para>
@@ -89,12 +90,20 @@ namespace Paranoia
 					break;
 			}
 
+			if (_insideSafeArea)
+			{
+				_paranoiaBoxState = ParanoiaState.SafeArea;
+			}
+
 			switch (_paranoiaBoxState)
 			{
 				case ParanoiaState.Inside:
 					OnParanoiaEffect();
 					break;
 				case ParanoiaState.Outside:
+					OnCancelEffect();
+					break;
+				case ParanoiaState.SafeArea:
 					OnCancelEffect();
 					break;
 				default:
@@ -192,6 +201,12 @@ namespace Paranoia
 				_filterIllusions.fade = _fadeAlpha;
 				_filterIllusions.enabled = true;
 			}
+		}
+
+		public bool InsideSafeArea
+		{
+			get => _insideSafeArea;
+			set => _insideSafeArea = value;
 		}
 	}
 }

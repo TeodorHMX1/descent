@@ -16,6 +16,12 @@
 		///     <para> Inside </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		Inside
+		Inside,
+
+		/// <summary>
+		///     <para> SafeArea </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
+		SafeArea
 	}
 }

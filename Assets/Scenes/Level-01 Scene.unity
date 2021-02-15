@@ -5791,6 +5791,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc4e43a6840122c438b503e069f5ac6a, type: 3}
+--- !u!114 &418358635 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7631892124183925867, guid: a2dc7e6858b377b4d9fa7d773eb921c5,
+    type: 3}
+  m_PrefabInstance: {fileID: 7631892125513322921}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c17e537d3cc92442ae77fd859988dc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &419251759
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16778,6 +16790,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 921435019}
     m_Modifications:
+    - target: {fileID: 107892304608210823, guid: 9b44bcea69b3e564298ad5dc09f83459,
+        type: 3}
+      propertyPath: seconds
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 107892304608210823, guid: 9b44bcea69b3e564298ad5dc09f83459,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1853356139}
+    - target: {fileID: 107892304608210823, guid: 9b44bcea69b3e564298ad5dc09f83459,
+        type: 3}
+      propertyPath: area
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 107892304608210823, guid: 9b44bcea69b3e564298ad5dc09f83459,
+        type: 3}
+      propertyPath: paranoiaSystem
+      value: 
+      objectReference: {fileID: 418358635}
     - target: {fileID: 849451540318378337, guid: 9b44bcea69b3e564298ad5dc09f83459,
         type: 3}
       propertyPath: playerAttachMenu.playerObject
@@ -16856,6 +16888,11 @@ PrefabInstance:
     - target: {fileID: 5702051546319184197, guid: 9b44bcea69b3e564298ad5dc09f83459,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5702051546319184199, guid: 9b44bcea69b3e564298ad5dc09f83459,
+        type: 3}
+      propertyPath: m_Constraints
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
