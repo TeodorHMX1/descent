@@ -44,6 +44,8 @@ namespace Map
 			ColArea2 = false;
 			ColArea3 = false;
 			Controlsvisible = false;
+			controlprompt.SetActive(true);
+			Controls.SetActive(false);
 
 			if (!_isarea1Null)
 			{
@@ -111,12 +113,12 @@ namespace Map
 					Exit_Map();
 				}
 			}
-			//if (Input.GetKeyDown("N"))
-				//{
+			if (InputManager.GetButtonDown("ToggleControls"))
+				{
 
-				//Controlsvisible = !Controlsvisible;
+				Controlsvisible = !Controlsvisible;
 
-			//}
+			}
 			if (Controlsvisible == true)
 			{
 				controlprompt.SetActive(false);
