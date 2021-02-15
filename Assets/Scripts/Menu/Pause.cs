@@ -33,6 +33,7 @@ namespace Menu
 		/// </summary>
 		private void Update()
 		{
+			Debug.Log(InputManager.GetAxisRaw("SwitchTool"));
 			var pausePressed = InputManager.GetButtonDown("PauseMenu");
 			switch (pausePressed)
 			{
