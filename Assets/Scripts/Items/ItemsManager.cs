@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using ZeoFlow;
+using ZeoFlow.Pickup;
 
 namespace Items
 {
@@ -8,10 +9,12 @@ namespace Items
 		[Header("Pickaxe")]
 		public PickaxeManage pickaxeManage;
 		public GameObject pickaxeObject;
+		public PickableObject pickablePickaxe;
 
 		[Header("Flares")]
 		public FlareManage flareManage;
 		public GameObject flaresObject;
+		public PickableObject pickableFlares;
 
 		private void Update()
 		{

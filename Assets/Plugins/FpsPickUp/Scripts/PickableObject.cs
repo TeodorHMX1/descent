@@ -12,6 +12,14 @@ namespace ZeoFlow.Pickup
 		public OutlinerSub outlinerMenu = new OutlinerSub();
 		public PuzzleSub puzzleSub = new PuzzleSub();
 		private bool _isAttached;
+		private bool _isRigidbodyNotNull;
+		private Rigidbody _rigidbody;
+
+		private void Start()
+		{
+			_rigidbody = GetComponent<Rigidbody>();
+			_isRigidbodyNotNull = GetComponent<Rigidbody>() != null;
+		}
 
 		private void Update()
 		{
@@ -59,6 +67,10 @@ namespace ZeoFlow.Pickup
 		public void OnDrop()
 		{
 			_isAttached = false;
+			if (_isRigidbodyNotNull)
+			{
+				_rigidbody.AddRelativeForce(Vector3.forward);
+			}
 		}
 	}
 }

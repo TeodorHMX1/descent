@@ -108,6 +108,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flareLight: {fileID: 5702051545814727107}
+  flareBody: {fileID: 5702051545892216355}
+  flare: {fileID: 5702051546319184196}
 --- !u!114 &849451540318378337
 MonoBehaviour:
   m_ObjectHideFlags: 0
