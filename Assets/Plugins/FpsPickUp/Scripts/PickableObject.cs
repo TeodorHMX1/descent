@@ -11,15 +11,9 @@ namespace ZeoFlow.Pickup
 		public PlayerAttachSub playerAttachMenu = new PlayerAttachSub();
 		public OutlinerSub outlinerMenu = new OutlinerSub();
 		public PuzzleSub puzzleSub = new PuzzleSub();
+		
 		private bool _isAttached;
-		private bool _isRigidbodyNotNull;
-		private Rigidbody _rigidbody;
-
-		private void Start()
-		{
-			_rigidbody = GetComponent<Rigidbody>();
-			_isRigidbodyNotNull = GetComponent<Rigidbody>() != null;
-		}
+		private GameObject newFlare;
 
 		private void Update()
 		{
@@ -32,18 +26,28 @@ namespace ZeoFlow.Pickup
 
 			var position = playerAttachMenu.playerObject.transform.position;
 			var positionOffset = playerAttachMenu.position;
-			gameObject.transform.position = new Vector3(
+			position = new Vector3(
 				position.x + positionOffset.x,
 				position.y + positionOffset.y,
 				position.z + positionOffset.z
 			);
+			
 			var eulerAngles = playerAttachMenu.playerObject.transform.eulerAngles;
 			var rotationOffset = playerAttachMenu.rotation;
-			gameObject.transform.eulerAngles = new Vector3(
+			eulerAngles = new Vector3(
 				eulerAngles.x + rotationOffset.x,
 				eulerAngles.y + rotationOffset.y,
 				eulerAngles.z + rotationOffset.z
 			);
+			
+			if (playerAttachMenu.createNewObject)
+			{
+				newFlare = Instantiate(gameObject, position, Quaternion.Euler(eulerAngles));
+				return;
+			}
+
+			gameObject.transform.position = position;
+			gameObject.transform.eulerAngles = eulerAngles;
 		}
 
 		public void OnMovement(bool isRight)
@@ -67,10 +71,9 @@ namespace ZeoFlow.Pickup
 		public void OnDrop()
 		{
 			_isAttached = false;
-			// if (_isRigidbodyNotNull)
-			// {
-			// 	_rigidbody.AddRelativeForce(Vector3.forward);
-			// }
 		}
+		
+		public GameObject NewFlare => newFlare;
+		
 	}
 }

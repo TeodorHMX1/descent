@@ -53,6 +53,7 @@ namespace Items
 			
 			if (_wasDropped)
 			{
+				_isAttached = false;
 				_time++;
 				if (_time >= 120)
 				{
@@ -97,7 +98,6 @@ namespace Items
 		private void OnTriggerEnter(Collider collision)
 		{
 			if (collision.gameObject.name != "Player") return;
-			Debug.Log("here");
 		}
 
 		/// <summary>
@@ -107,6 +107,7 @@ namespace Items
 		/// <param name="playerAttachMenu"></param>
 		public void ONUpdate(PlayerAttachSub playerAttachMenu)
 		{
+			flare = _pickableObject.NewFlare;
 			_isAttached = true;
 		}
 

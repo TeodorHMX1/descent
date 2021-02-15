@@ -6928,6 +6928,7 @@ MonoBehaviour:
     strength: 100
   playerAttachMenu:
     attachToPlayer: 1
+    createNewObject: 0
     playerObject: {fileID: 1101355879}
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}
@@ -15523,6 +15524,7 @@ MonoBehaviour:
     strength: 100
   playerAttachMenu:
     attachToPlayer: 1
+    createNewObject: 0
     playerObject: {fileID: 104405699}
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}
@@ -16815,6 +16817,11 @@ PrefabInstance:
       propertyPath: playerAttachMenu.playerObject
       value: 
       objectReference: {fileID: 1485512739}
+    - target: {fileID: 849451540318378337, guid: 9b44bcea69b3e564298ad5dc09f83459,
+        type: 3}
+      propertyPath: playerAttachMenu.createNewObject
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5702051545825522917, guid: 9b44bcea69b3e564298ad5dc09f83459,
         type: 3}
       propertyPath: m_BoundingSphereOverride.z
