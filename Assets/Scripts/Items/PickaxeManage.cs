@@ -18,7 +18,8 @@ namespace Items
 		public KeyCode swingKey = KeyCode.Mouse0;
 		public MeleeArea meleeArea;
 		public AudioClip sound;
-		
+
+		private bool isAttached = false;
 		private AudioSource _audioData;
 		private bool _isAnimatorNull;
 		private bool _isBoxColliderNotNull;
@@ -43,6 +44,7 @@ namespace Items
 		/// <param name="playerAttachMenu"></param>
 		public void ONUpdate(PlayerAttachSub playerAttachMenu)
 		{
+			isAttached = true;
 			if (_isBoxColliderNotNull) _boxCollider.enabled = false;
 			
 			if (_isAnimatorNull) return;
@@ -64,5 +66,7 @@ namespace Items
 			if (meleeArea == null) return;
 			meleeArea.OnMeleeDamage();
 		}
+
+		public bool IsAttached => isAttached;
 	}
 }

@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &4240984246632975348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5702051545892216355}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb27ea59190c47d99a4891b3f5ad7a27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &5702051546319184196
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,6 +26,8 @@ GameObject:
   - component: {fileID: 5702051546319184199}
   - component: {fileID: 1739956671809332637}
   - component: {fileID: -6153126952071970947}
+  - component: {fileID: 107892304608210823}
+  - component: {fileID: 849451540318378337}
   m_Layer: 0
   m_Name: FlareObj
   m_TagString: Untagged
@@ -79,6 +95,50 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: -0.29, z: 0}
+--- !u!114 &107892304608210823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5702051546319184196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c584e5c102753a41af16330c3b9e0ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &849451540318378337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5702051546319184196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1ef9ac377234ed78314d1cd5afa5309, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObject: {fileID: 5702051546319184196}
+  physicsMenu:
+    objectDirection: 0
+    placeObjectBack: 0
+    placeDistance: 3
+    keepRotation: 0
+  throwingSystem:
+    enabled: 0
+    throwButton: 101
+    strength: 100
+  playerAttachMenu:
+    attachToPlayer: 1
+    playerObject: {fileID: 0}
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+  outlinerMenu:
+    enabled: 1
+    outline: {fileID: 4240984246632975348}
+  puzzleSub:
+    enabled: 0
 --- !u!1001 &5702051545814761317
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -243,6 +303,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e97a4be640426bf4fb37771d741f0a42, type: 3}
+--- !u!1 &5702051545892216355 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: e97a4be640426bf4fb37771d741f0a42,
+    type: 3}
+  m_PrefabInstance: {fileID: 5702051545892182147}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5702051545891783171 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: e97a4be640426bf4fb37771d741f0a42,

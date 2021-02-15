@@ -30,6 +30,36 @@ Transform:
   m_Father: {fileID: 6711203492807119545}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -60.2, y: -17.56, z: 88.3}
+--- !u!1 &3986097982569729187
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 347370486464838583}
+  m_Layer: 0
+  m_Name: FlaresHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &347370486464838583
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3986097982569729187}
+  m_LocalRotation: {x: -0.44760987, y: 0.25047484, z: 0.5406235, w: 0.6668089}
+  m_LocalPosition: {x: 0.8, y: -1.1700001, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6711203492807119545}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: -60.2, y: -17.56, z: 88.3}
 --- !u!114 &1853356149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43,6 +73,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapOpen: 0
+  pause: {fileID: 0}
+  rigidbodyPickUp: {fileID: 0}
   map: {fileID: 0}
   area1: {fileID: 0}
   area2: {fileID: 0}
@@ -77,6 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupButton: 101
+  mouseHorizontalAxis: Mouse X
   pauseButton: 27
   togglePickUp: 0
   distance: 2
@@ -94,6 +127,23 @@ MonoBehaviour:
     pickedUpAudio: {fileID: 0}
     objectHeldAudio: {fileID: 0}
     throwAudio: {fileID: 0}
+  hideCrosshair: 0
+--- !u!114 &9134340441428196452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6712923109526943313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a247f83bbee804b9c51927a5db902e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickaxeManage: {fileID: 0}
+  pickaxeObject: {fileID: 0}
+  flareManage: {fileID: 0}
+  flaresObject: {fileID: 0}
 --- !u!114 &1849082948
 MonoBehaviour:
   m_ObjectHideFlags: 0
