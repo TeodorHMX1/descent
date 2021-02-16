@@ -13,21 +13,21 @@ namespace Items
 	public class HelmetManage : MonoBehaviour, IOnAttached
 	{
 		public Light helmetLight;
-		public float lightIntensity = 2.7f;
+		public float lightIntensity = 1f;
 		public bool attached = false;
 
 		// unity 1 = 1frame
 		private readonly FlashPattern[] _lightPattern =
 		{
 			// initial battery capacity
-			new FlashPattern {IsDark = false, Time = 300, Intensity = 2.7f},
+			new FlashPattern {IsDark = false, Time = 300, Intensity = 1f},
 
 			// light pattern (first light then dark and so on)
-			new FlashPattern {IsDark = false, Time = 200, Intensity = 2.7f},
+			new FlashPattern {IsDark = false, Time = 200, Intensity = 1f},
 			new FlashPattern {IsDark = true, Time = 10, Intensity = 0f},
-			new FlashPattern {IsDark = false, Time = 120, Intensity = 2.0f},
+			new FlashPattern {IsDark = false, Time = 120, Intensity = 0.8f},
 			new FlashPattern {IsDark = true, Time = 35, Intensity = 0f},
-			new FlashPattern {IsDark = false, Time = 60, Intensity = 1.4f},
+			new FlashPattern {IsDark = false, Time = 60, Intensity = 0.4f},
 
 			// end pattern
 			new FlashPattern {IsDark = true, Time = 0}
