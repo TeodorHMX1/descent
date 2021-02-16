@@ -108,7 +108,6 @@ namespace Items
 		/// <param name="playerAttachMenu"></param>
 		public void ONUpdate(PlayerAttachSub playerAttachMenu)
 		{
-			flare = _pickableObject.NewFlare;
 			_isAttached = true;
 		}
 
