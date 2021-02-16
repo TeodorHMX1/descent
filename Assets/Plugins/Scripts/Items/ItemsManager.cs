@@ -3,46 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using ZeoFlow;
-using ZeoFlow.Pickup;
-using Enumerable = System.Linq.Enumerable;
 
 namespace Items
 {
 	public class ItemsManager : MonoBehaviour
 	{
-		[Header("Pickaxe")] public PickaxeManage pickaxeManage;
-		public GameObject pickaxeObject;
-		public PickableObject pickablePickaxe;
-		
-		// [Header("Flares")] public FlareManage flareManage;
-		// public GameObject flaresObject;
-		// public PickableObject pickableFlares;
-		
-		private static int _index;
-		private static FlareManage _flareManage;
-		private static List<ItemBean> Items = new List<ItemBean>();
-
-		public static void AddItem(ItemBean item)
-		{
-			Items.Add(item);
-		}
-
+		private static readonly List<ItemBean> Items = new List<ItemBean>();
 		private static ItemsManager _mInstance;
 
-		public static bool CanPickUp(Item item)
+		private static int timeCountdown;
+
+		public static bool CanPickFlare()
 		{
-			return Items.All(itemS => itemS.ItemType != item);
+			return timeCountdown <= 0;
 		}
 
-		public static void Remove(Item item)
-		{
-			foreach (var itemS in Items.ToList().Where(itemS => itemS.ItemType == item))
-			{
-				Items.Remove(itemS);
-			}
-			_index = 0;
-		}
-		
 		private void Awake()
 		{
 			if (_mInstance == null)
@@ -58,68 +33,78 @@ namespace Items
 
 		private void Update()
 		{
-			if (Time.timeScale == 0) return;
-			
-			/*
-			
-			if (pickaxeObject.activeSelf && flaresObject.activeSelf &&
-				pickaxeManage.IsAttached && _flareManage.IsAttached)
-			{
-				if (!global::Items.Contains(Item.Pickaxe))
-				{
-					_index = global::Items.Count;
-					pickaxeObject.SetActive(true);
-					flaresObject.SetActive(false);
-				}
-				else if (!global::Items.Contains(Item.Flare))
-				{
-					_index = global::Items.Count;
-					pickaxeObject.SetActive(false);
-					flaresObject.SetActive(true);
-				}
-			}
+			if (timeCountdown > 0) timeCountdown--;
 
-			if (pickaxeManage.IsAttached && !global::Items.Contains(Item.Pickaxe)) global::Items.Add(Item.Pickaxe);
-			if (_flareManage.IsAttached && !global::Items.Contains(Item.Flare)) global::Items.Add(Item.Flare);
+			if (Time.timeScale == 0) return;
+			if (Items.Count == 0 || Items.Count == 1) return;
 
 			var switchType = GETSwitchType();
+			var isToTop = false;
 			switch (switchType)
 			{
 				case SwitchType.None:
 					return;
 				case SwitchType.Down:
 				{
-					_index--;
-					if (_index < 0) _index = global::Items.Count - 1;
+					ChangeTool(switchType);
 					break;
 				}
 				case SwitchType.Top:
 				{
-					_index++;
-					if (_index == global::Items.Count) _index = 0;
+					ChangeTool(switchType);
 					break;
 				}
 				default:
 					throw new ArgumentOutOfRangeException();
 			}
+		}
 
-			switch (global::Items[_index])
+		public static bool CanPickUp(Item item)
+		{
+			return Items.All(itemS => itemS.ItemType != item);
+		}
+
+		public static void Remove(Item item)
+		{
+			if (item == Item.Flare) timeCountdown = 60;
+
+			foreach (var itemS in Items.ToList().Where(itemS => itemS.ItemType == item)) Items.Remove(itemS);
+			if (Items.Count == 0) return;
+			ChangeTool(SwitchType.Top);
+		}
+
+		public static void AddItem(ItemBean item)
+		{
+			foreach (var itemS in Items) itemS.GameObject.SetActive(false);
+			item.GameObject.SetActive(true);
+			Items.Add(item);
+		}
+
+		private static void ChangeTool(SwitchType switchType)
+		{
+			var activeIndex = 0;
+			var index = 0;
+			foreach (var item in Items)
 			{
-				case Item.None:
-					if (pickaxeManage.IsAttached) pickaxeObject.SetActive(false);
-					if (_flareManage.IsAttached) flaresObject.SetActive(false);
+				if (item.GameObject.activeSelf) activeIndex = index;
+
+				item.GameObject.SetActive(false);
+				index++;
+			}
+
+			switch (switchType)
+			{
+				case SwitchType.Down:
+					Items[activeIndex - 1 < 0 ? Items.Count : activeIndex - 1].GameObject.SetActive(true);
 					break;
-				case Item.Flare:
-					if (pickaxeManage.IsAttached) pickaxeObject.SetActive(false);
-					if (_flareManage.IsAttached) flaresObject.SetActive(true);
+				case SwitchType.Top:
+					Items[activeIndex + 1 == Items.Count ? 0 : activeIndex + 1].GameObject.SetActive(true);
 					break;
-				case Item.Pickaxe:
-					if (pickaxeManage.IsAttached) pickaxeObject.SetActive(true);
-					if (_flareManage.IsAttached) flaresObject.SetActive(false);
+				case SwitchType.None:
 					break;
 				default:
-					throw new ArgumentOutOfRangeException();
-			}*/
+					throw new ArgumentOutOfRangeException(nameof(switchType), switchType, null);
+			}
 		}
 
 		private SwitchType GETSwitchType()

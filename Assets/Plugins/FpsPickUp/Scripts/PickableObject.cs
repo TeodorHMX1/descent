@@ -40,6 +40,10 @@ namespace ZeoFlow.Pickup
 
 			if (playerAttachMenu.createNewObject)
 			{
+				if (item == Item.Flare && !ItemsManager.CanPickFlare())
+				{
+					return;
+				}
 				var newFlare = Instantiate(gameObject, gameObject.transform.position,
 					Quaternion.Euler(gameObject.transform.eulerAngles));
 				newFlare.name = gameObject.name;
@@ -83,6 +87,7 @@ namespace ZeoFlow.Pickup
 
 		public void OnDrop()
 		{
+			gameObject.name = gameObject.name.Replace("(Picked)", "(Dropped)");
 			ItemFlags = ItemFlags.OnDropped;
 			_isAttached = false;
 			if (_syncItem == null) return;
