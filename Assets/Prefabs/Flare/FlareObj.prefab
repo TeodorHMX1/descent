@@ -123,7 +123,7 @@ MonoBehaviour:
     strength: 100
   playerAttachMenu:
     attachToPlayer: 1
-    createNewObject: 0
+    createNewObject: 1
     playerObject: {fileID: 0}
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}

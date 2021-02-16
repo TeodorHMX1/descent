@@ -65,9 +65,9 @@ namespace Items
 				paranoiaSystem.InsideSafeArea = distance <= area * 2;
 				if (_time < seconds * 60) return;
 				
-				flare.RemoveComponent<SphereCollider>();
 				flareLight.SetActive(false);
 				_wasDropped = false;
+				Destroy(flare, 10);
 				return;
 			}
 
@@ -82,7 +82,6 @@ namespace Items
 			if (!_isPickableObjectNotNull) return;
 
 			_pickableObject.OnDrop();
-			// flare.AddComponent<SphereCollider>().radius = area;
 			flare.RemoveComponent<PickableObject>();
 			
 			if (_isOutlineObjectNotNull)

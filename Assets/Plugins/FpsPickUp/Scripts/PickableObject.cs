@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Items;
+using UnityEngine;
 using ZeoFlow.Pickup.Interfaces;
 
 namespace ZeoFlow.Pickup
@@ -6,59 +7,67 @@ namespace ZeoFlow.Pickup
 	public class PickableObject : MonoBehaviour
 	{
 		public new GameObject gameObject;
+		public Item item;
+		public ItemFlags ItemFlags = ItemFlags.None;
 		public PhysicsSub physicsMenu = new PhysicsSub();
 		public ThrowingSystemMenu throwingSystem = new ThrowingSystemMenu();
 		public PlayerAttachSub playerAttachMenu = new PlayerAttachSub();
 		public OutlinerSub outlinerMenu = new OutlinerSub();
 		public PuzzleSub puzzleSub = new PuzzleSub();
-		
+
 		private bool _isAttached;
-		private bool _wasAttached;
-		private GameObject _newFlare;
+		private SyncItem _syncItem;
+
+		public bool IsAttached
+		{
+			set => _isAttached = value;
+		}
+
+		private void Start()
+		{
+			ItemFlags = ItemFlags.OnGround;
+		}
 
 		private void Update()
 		{
+			if (ItemFlags == ItemFlags.OnPlayer || ItemFlags == ItemFlags.OnDropped) return;
 			if (!_isAttached) return;
+			if (!ItemsManager.CanPickUp(item) && item != Item.None) return;
+			if (gameObject.GetComponent<SyncItem>() != null) return;
 
 			if (gameObject.GetComponent<IOnAttached>() != null)
-			{
 				gameObject.GetComponent<IOnAttached>().ONUpdate(playerAttachMenu);
-			}
 
-			var position = playerAttachMenu.playerObject.transform.position;
-			var positionOffset = playerAttachMenu.position;
-			position = new Vector3(
-				position.x + positionOffset.x,
-				position.y + positionOffset.y,
-				position.z + positionOffset.z
-			);
-			
-			var eulerAngles = playerAttachMenu.playerObject.transform.eulerAngles;
-			var rotationOffset = playerAttachMenu.rotation;
-			eulerAngles = new Vector3(
-				eulerAngles.x + rotationOffset.x,
-				eulerAngles.y + rotationOffset.y,
-				eulerAngles.z + rotationOffset.z
-			);
-			
 			if (playerAttachMenu.createNewObject)
 			{
-				if (_newFlare != null) return;
-				
-				_newFlare = Instantiate(gameObject, position, Quaternion.Euler(eulerAngles));
-				return;
+				var newFlare = Instantiate(gameObject, gameObject.transform.position,
+					Quaternion.Euler(gameObject.transform.eulerAngles));
+				newFlare.name = gameObject.name;
+				newFlare.GetComponent<PickableObject>().IsAttached = false;
+				newFlare.GetComponent<PickableObject>().gameObject = newFlare;
+				newFlare.transform.parent = GameObject.Find("Items").transform;
+
+				gameObject.name += "(Picked)";
+				_syncItem = gameObject.AddComponent<SyncItem>();
+				_syncItem.GameObject = gameObject;
+				_syncItem.AttachTo = playerAttachMenu.playerObject;
+				ItemsManager.AddItem(new ItemBean {ItemType = item, GameObject = gameObject});
+				Destroy(gameObject.GetComponent<PickableObject>());
+			}
+			else
+			{
+				_syncItem = gameObject.AddComponent<SyncItem>();
+				_syncItem.GameObject = gameObject;
+				_syncItem.AttachTo = playerAttachMenu.playerObject;
+				ItemsManager.AddItem(new ItemBean {ItemType = item, GameObject = gameObject});
 			}
 
-			gameObject.transform.position = position;
-			gameObject.transform.eulerAngles = eulerAngles;
+			ItemFlags = ItemFlags.OnPlayer;
 		}
 
 		public void OnMovement(bool isRight)
 		{
-			if (gameObject.GetComponent<IOnPuzzle>() != null)
-			{
-				gameObject.GetComponent<IOnPuzzle>().ONMovement(isRight);
-			}
+			if (gameObject.GetComponent<IOnPuzzle>() != null) gameObject.GetComponent<IOnPuzzle>().ONMovement(isRight);
 		}
 
 		public bool IsPuzzleMoving()
@@ -68,15 +77,18 @@ namespace ZeoFlow.Pickup
 
 		public void OnAttach()
 		{
+			if (ItemFlags == ItemFlags.OnPlayer || ItemFlags == ItemFlags.OnDropped) return;
 			_isAttached = true;
 		}
 
 		public void OnDrop()
 		{
+			ItemFlags = ItemFlags.OnDropped;
 			_isAttached = false;
-		}
-		
-		public GameObject NewFlare => _newFlare;
+			if (_syncItem == null) return;
 
+			_syncItem.OnDestroy();
+			ItemsManager.Remove(item);
+		}
 	}
 }

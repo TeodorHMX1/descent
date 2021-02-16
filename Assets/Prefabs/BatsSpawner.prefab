@@ -85,7 +85,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   roamers: []
-  posBuffer: {x: 0, y: 0, z: -21.072369}
+  posBuffer: {x: 0, y: 0, z: 0}
   updateDivisor: 1
   newDelta: 0
   updateCounter: 0
@@ -93,6 +93,6 @@ MonoBehaviour:
   groupChildToNewTransform: 0
   groupTransform: {fileID: 0}
   groupName: 
-  groupChildToFlock: 0
+  groupChildToFlock: 1
   startPosOffset: {x: 0, y: 0, z: 0}
   thisT: {fileID: 400000}
