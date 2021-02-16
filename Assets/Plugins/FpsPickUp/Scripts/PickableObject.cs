@@ -43,6 +43,8 @@ namespace ZeoFlow.Pickup
 			
 			if (playerAttachMenu.createNewObject)
 			{
+				if (_newFlare != null) return;
+				
 				_newFlare = Instantiate(gameObject, position, Quaternion.Euler(eulerAngles));
 				return;
 			}

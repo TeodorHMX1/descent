@@ -97,6 +97,8 @@ MonoBehaviour:
   flareBody: {fileID: 5702051545892216355}
   seconds: 20
   area: 2
+  player: {fileID: 0}
+  paranoiaSystem: {fileID: 0}
 --- !u!114 &849451540318378337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,6 +123,7 @@ MonoBehaviour:
     strength: 100
   playerAttachMenu:
     attachToPlayer: 1
+    createNewObject: 0
     playerObject: {fileID: 0}
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}
@@ -243,7 +246,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: e97a4be640426bf4fb37771d741f0a42, type: 3}
       propertyPath: m_Name
-      value: SMP_PRE_Flare_1024
+      value: FlareBody
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e97a4be640426bf4fb37771d741f0a42, type: 3}
       propertyPath: m_LocalPosition.x
