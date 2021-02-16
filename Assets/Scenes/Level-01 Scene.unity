@@ -6917,7 +6917,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameObject: {fileID: 515420529}
-  item: 0
   physicsMenu:
     objectDirection: 0
     placeObjectBack: 0
@@ -15514,7 +15513,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameObject: {fileID: 1040618739}
-  item: 1
   physicsMenu:
     objectDirection: 0
     placeObjectBack: 0
@@ -16822,7 +16820,7 @@ PrefabInstance:
     - target: {fileID: 849451540318378337, guid: 9b44bcea69b3e564298ad5dc09f83459,
         type: 3}
       propertyPath: playerAttachMenu.createNewObject
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 849451540318378337, guid: 9b44bcea69b3e564298ad5dc09f83459,
         type: 3}
