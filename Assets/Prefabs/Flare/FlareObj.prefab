@@ -26,7 +26,6 @@ GameObject:
   - component: {fileID: 5702051546319184199}
   - component: {fileID: 1739956671809332637}
   - component: {fileID: 107892304608210823}
-  - component: {fileID: 849451540318378337}
   m_Layer: 0
   m_Name: FlareObj
   m_TagString: Untagged
@@ -99,39 +98,6 @@ MonoBehaviour:
   area: 2
   player: {fileID: 0}
   paranoiaSystem: {fileID: 0}
---- !u!114 &849451540318378337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5702051546319184196}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1ef9ac377234ed78314d1cd5afa5309, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameObject: {fileID: 5702051546319184196}
-  physicsMenu:
-    objectDirection: 0
-    placeObjectBack: 0
-    placeDistance: 3
-    keepRotation: 0
-  throwingSystem:
-    enabled: 0
-    throwButton: 101
-    strength: 100
-  playerAttachMenu:
-    attachToPlayer: 1
-    createNewObject: 1
-    playerObject: {fileID: 0}
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0}
-  outlinerMenu:
-    enabled: 1
-    outline: {fileID: 4240984246632975348}
-  puzzleSub:
-    enabled: 0
 --- !u!1001 &5702051545814761317
 PrefabInstance:
   m_ObjectHideFlags: 0
