@@ -23,6 +23,7 @@ namespace Map
 		public GameObject area3;
 		public GameObject controlprompt;
 		public GameObject Controls;
+		public AudioClip scribble;
 		private bool _isarea1Null;
 		private bool _isarea2Null;
 		private bool _isarea3Null;
@@ -75,7 +76,12 @@ namespace Map
 			area3.SetActive(ColArea3);
 
 			if (InputManager.GetButtonDown("Map")) mapOpen = !mapOpen;
-			
+
+			if (InputManager.GetButtonDown("Map"))
+			{
+				GetComponent<AudioSource>().PlayOneShot(scribble, 1.0f);
+			}
+
 			if (_isrigidbodyPickUpNotNull) rigidbodyPickUp.hideCrosshair = mapOpen;
 
 			if (_ispauseNotNull)
@@ -117,7 +123,7 @@ namespace Map
 				{
 
 				Controlsvisible = !Controlsvisible;
-
+				GetComponent<AudioSource>().PlayOneShot(scribble, 1.0f);
 			}
 			if (Controlsvisible == true)
 			{
