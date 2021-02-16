@@ -3958,18 +3958,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1114200620}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &244171050 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 849451540318378337, guid: 9b44bcea69b3e564298ad5dc09f83459,
-    type: 3}
-  m_PrefabInstance: {fileID: 1114200620}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 244171049}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1ef9ac377234ed78314d1cd5afa5309, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &244171051 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 107892304608210823, guid: 9b44bcea69b3e564298ad5dc09f83459,
@@ -6118,7 +6106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1ef9ac377234ed78314d1cd5afa5309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObject: {fileID: 244171049}
+  gameObject: {fileID: 434562479}
   item: 2
   ItemFlags: 0
   physicsMenu:
@@ -6133,6 +6121,7 @@ MonoBehaviour:
   playerAttachMenu:
     attachToPlayer: 1
     createNewObject: 1
+    objectToAttach: {fileID: 244171049}
     playerObject: {fileID: 1485512739}
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}
@@ -7061,7 +7050,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameObject: {fileID: 515420529}
-  item: 0
+  item: 3
   ItemFlags: 0
   physicsMenu:
     objectDirection: 0
@@ -7075,6 +7064,7 @@ MonoBehaviour:
   playerAttachMenu:
     attachToPlayer: 1
     createNewObject: 0
+    objectToAttach: {fileID: 0}
     playerObject: {fileID: 1101355879}
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}
@@ -15674,6 +15664,7 @@ MonoBehaviour:
   playerAttachMenu:
     attachToPlayer: 1
     createNewObject: 0
+    objectToAttach: {fileID: 0}
     playerObject: {fileID: 104405699}
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}
@@ -16996,6 +16987,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlareObj
       objectReference: {fileID: 0}
+    - target: {fileID: 5702051546319184196, guid: 9b44bcea69b3e564298ad5dc09f83459,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5702051546319184197, guid: 9b44bcea69b3e564298ad5dc09f83459,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -17056,7 +17052,9 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 849451540318378337, guid: 9b44bcea69b3e564298ad5dc09f83459, type: 3}
+    - {fileID: 4240984246632975348, guid: 9b44bcea69b3e564298ad5dc09f83459, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9b44bcea69b3e564298ad5dc09f83459, type: 3}
 --- !u!1001 &1114224489
 PrefabInstance:
@@ -34780,7 +34778,7 @@ PrefabInstance:
         type: 3}
       propertyPath: pickableFlares
       value: 
-      objectReference: {fileID: 244171050}
+      objectReference: {fileID: 0}
     - target: {fileID: 9134340441428196452, guid: 0b529b61276858445a231b627fc1fef8,
         type: 3}
       propertyPath: pickablePickaxe

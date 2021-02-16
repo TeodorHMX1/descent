@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using ZeoFlow;
 using ZeoFlow.Pickup;
 using ZeoFlow.Pickup.Interfaces;
@@ -62,15 +63,12 @@ namespace Items
 			_lightPattern[0].Intensity = lightIntensity;
 		}
 
-		/// <summary>
-		///     <para> ONUpdate </para>
-		///     <author> @TeodorHMX1 </author>
-		/// </summary>
-		/// <param name="playerAttachMenu"></param>
-		public void ONUpdate(PlayerAttachSub playerAttachMenu)
+		private void Update()
 		{
-			attached = true;
+			if (!attached) return;
+
 			if (_isBoxColliderNotNull) _boxCollider.enabled = false;
+			
 			if (InputManager.GetButtonDown("Flashlight"))
 			{
 				if (!_outOfBattery && !helmetLight.enabled && !_paranoiaTriggered)
@@ -98,6 +96,16 @@ namespace Items
 			{
 				if (_index < _lightPattern.Length) Flashlight();
 			}
+		}
+
+		/// <summary>
+		///     <para> ONUpdate </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
+		/// <param name="playerAttachMenu"></param>
+		public void ONUpdate(PlayerAttachSub playerAttachMenu)
+		{
+			attached = true;
 		}
 
 		/// <summary>

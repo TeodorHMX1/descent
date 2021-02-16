@@ -66,7 +66,7 @@ namespace Items
 
 		public static void Remove(Item item)
 		{
-			if (item == Item.Flare) timeCountdown = 60;
+			if (item == Item.Flare) timeCountdown = 2;
 
 			foreach (var itemS in Items.ToList().Where(itemS => itemS.ItemType == item)) Items.Remove(itemS);
 			if (Items.Count == 0) return;

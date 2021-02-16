@@ -8,7 +8,7 @@ namespace ZeoFlow.Pickup
 	{
 		public new GameObject gameObject;
 		public Item item;
-		public ItemFlags ItemFlags = ItemFlags.None;
+		public ItemFlags itemFlags = ItemFlags.None;
 		public PhysicsSub physicsMenu = new PhysicsSub();
 		public ThrowingSystemMenu throwingSystem = new ThrowingSystemMenu();
 		public PlayerAttachSub playerAttachMenu = new PlayerAttachSub();
@@ -18,19 +18,17 @@ namespace ZeoFlow.Pickup
 		private bool _isAttached;
 		private SyncItem _syncItem;
 
-		public bool IsAttached
-		{
-			set => _isAttached = value;
-		}
+
+		private bool toBeDestroyed;
 
 		private void Start()
 		{
-			ItemFlags = ItemFlags.OnGround;
+			itemFlags = ItemFlags.OnGround;
 		}
 
 		private void Update()
 		{
-			if (ItemFlags == ItemFlags.OnPlayer || ItemFlags == ItemFlags.OnDropped) return;
+			if (itemFlags == ItemFlags.OnPlayer || itemFlags == ItemFlags.OnDropped) return;
 			if (!_isAttached) return;
 			if (!ItemsManager.CanPickUp(item) && item != Item.None) return;
 			if (gameObject.GetComponent<SyncItem>() != null) return;
@@ -40,33 +38,39 @@ namespace ZeoFlow.Pickup
 
 			if (playerAttachMenu.createNewObject)
 			{
+				var objToAttach = playerAttachMenu.objectToAttach;
+
 				if (item == Item.Flare && !ItemsManager.CanPickFlare())
 				{
+					toBeDestroyed = true;
 					return;
 				}
-				var newFlare = Instantiate(gameObject, gameObject.transform.position,
-					Quaternion.Euler(gameObject.transform.eulerAngles));
-				newFlare.name = gameObject.name;
-				newFlare.GetComponent<PickableObject>().IsAttached = false;
-				newFlare.GetComponent<PickableObject>().gameObject = newFlare;
-				newFlare.transform.parent = GameObject.Find("Items").transform;
 
-				gameObject.name += "(Picked)";
-				_syncItem = gameObject.AddComponent<SyncItem>();
-				_syncItem.GameObject = gameObject;
+				var newFlare = Instantiate(objToAttach, objToAttach.transform.position,
+					Quaternion.Euler(objToAttach.transform.eulerAngles));
+				newFlare.name = objToAttach.name;
+				newFlare.transform.parent = GameObject.Find("Items").transform;
+				_syncItem = newFlare.AddComponent<SyncItem>();
+				_syncItem.GameObject = newFlare;
 				_syncItem.AttachTo = playerAttachMenu.playerObject;
-				ItemsManager.AddItem(new ItemBean {ItemType = item, GameObject = gameObject});
-				Destroy(gameObject.GetComponent<PickableObject>());
+				ItemsManager.AddItem(new ItemBean {ItemType = item, GameObject = newFlare});
+				_isAttached = false;
+				if (!toBeDestroyed) return;
+
+				Destroy(newFlare);
+				ItemsManager.Remove(Item.Flare);
+				toBeDestroyed = false;
 			}
 			else
 			{
 				_syncItem = gameObject.AddComponent<SyncItem>();
 				_syncItem.GameObject = gameObject;
 				_syncItem.AttachTo = playerAttachMenu.playerObject;
-				ItemsManager.AddItem(new ItemBean {ItemType = item, GameObject = gameObject});
-			}
+				if (item == Item.Flashlight || item == Item.None) return;
 
-			ItemFlags = ItemFlags.OnPlayer;
+				ItemsManager.AddItem(new ItemBean {ItemType = item, GameObject = gameObject});
+				itemFlags = ItemFlags.OnPlayer;
+			}
 		}
 
 		public void OnMovement(bool isRight)
@@ -81,14 +85,14 @@ namespace ZeoFlow.Pickup
 
 		public void OnAttach()
 		{
-			if (ItemFlags == ItemFlags.OnPlayer || ItemFlags == ItemFlags.OnDropped) return;
+			if (itemFlags == ItemFlags.OnPlayer || itemFlags == ItemFlags.OnDropped) return;
 			_isAttached = true;
 		}
 
 		public void OnDrop()
 		{
 			gameObject.name = gameObject.name.Replace("(Picked)", "(Dropped)");
-			ItemFlags = ItemFlags.OnDropped;
+			itemFlags = ItemFlags.OnDropped;
 			_isAttached = false;
 			if (_syncItem == null) return;
 

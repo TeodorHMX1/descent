@@ -39,7 +39,10 @@ namespace Items
 
 			_gameObject.transform.position = position;
 			_gameObject.transform.eulerAngles = eulerAngles;
-			gameObject.GetComponentInChildren<OutlineObject>().enabled = false;
+			if (gameObject.GetComponentInChildren<OutlineObject>() != null)
+			{
+				gameObject.GetComponentInChildren<OutlineObject>().enabled = false;
+			}
 		}
 	}
 }

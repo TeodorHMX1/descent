@@ -10,6 +10,7 @@ namespace ZeoFlow.Pickup
 	{
 		public bool attachToPlayer;
 		public bool createNewObject;
+		public GameObject objectToAttach;
 		public GameObject playerObject;
 		public Vector3 position;
 		public Vector3 rotation;

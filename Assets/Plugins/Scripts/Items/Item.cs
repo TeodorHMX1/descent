@@ -4,6 +4,7 @@
 	{
 		None,
 		Pickaxe,
-		Flare
+		Flare,
+		Flashlight
 	}
 }

@@ -13,7 +13,7 @@ namespace Items
 	///     <para> FlareManage </para>
 	///     <author> @TeodorHMX1 </author>
 	/// </summary>
-	public class FlareManage : MonoBehaviour, IOnAttached
+	public class FlareManage : MonoBehaviour
 	{
 
 		[Header("Flare Data")]
@@ -31,25 +31,17 @@ namespace Items
 		public ParanoiaSystem paranoiaSystem;
 		
 		private bool _isAttached;
-		private PickableObject _pickableObject;
-		private bool _isPickableObjectNotNull;
-		private OutlineObject _outlineObject;
-		private bool _isOutlineObjectNotNull;
 		private bool _wasDropped;
 		private int _time;
 
 		private void Start()
 		{
+			_isAttached = true;
 			flareLight.SetActive(false);
-			_pickableObject = GetComponent<PickableObject>();
-			_isPickableObjectNotNull = _pickableObject != null;
-			_outlineObject = flareBody.GetComponent<OutlineObject>();
-			_isOutlineObjectNotNull = _outlineObject != null;
 		}
 
 		private void Update()
 		{
-			
 			if (Time.timeScale == 0) return;
 			
 			if (_wasDropped)
@@ -78,16 +70,9 @@ namespace Items
 			
 			flareLight.SetActive(true);
 			_wasDropped = true;
-
-			if (!_isPickableObjectNotNull) return;
-
-			_pickableObject.OnDrop();
-			flare.RemoveComponent<PickableObject>();
-			
-			if (_isOutlineObjectNotNull)
-			{
-				flareBody.RemoveComponent<OutlineObject>();
-			}
+			_isAttached = false;
+			ItemsManager.Remove(Item.Flare);
+			GetComponent<SyncItem>().OnDestroy();
 		}
 
 		/// <summary>
@@ -99,17 +84,6 @@ namespace Items
 		{
 			if (collision.gameObject.name != "Player") return;
 		}
-
-		/// <summary>
-		///     <para> ONUpdate </para>
-		///     <author> @TeodorHMX1 </author>
-		/// </summary>
-		/// <param name="playerAttachMenu"></param>
-		public void ONUpdate(PlayerAttachSub playerAttachMenu)
-		{
-			_isAttached = true;
-		}
-
-		public bool IsAttached => _isAttached;
+		
 	}
 }
