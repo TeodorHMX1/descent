@@ -17,33 +17,52 @@ namespace Items
 		public PickableObject pickableFlares;
 		
 		private int _index;
-
-		private readonly List<Item> _items = new List<Item>
+		private static List<Item> Items = new List<Item>
 		{
 			Item.None
 		};
+
+		private static ItemsManager _mInstance;
+
+		public static bool CanPickUp(Item item)
+		{
+			return !Items.Contains(item);
+		}
+		
+		private void Awake()
+		{
+			if (_mInstance == null)
+			{
+				_mInstance = this;
+			}
+			else
+			{
+				Debug.LogWarning("You have multiple InputManager instances in the scene!", gameObject);
+				Destroy(this);
+			}
+		}
 
 		private void Update()
 		{
 			if (pickaxeObject.activeSelf && flaresObject.activeSelf &&
 				pickaxeManage.IsAttached && flareManage.IsAttached)
 			{
-				if (!_items.Contains(Item.Pickaxe))
+				if (!Items.Contains(Item.Pickaxe))
 				{
-					_index = _items.Count;
+					_index = Items.Count;
 					pickaxeObject.SetActive(true);
 					flaresObject.SetActive(false);
 				}
-				else if (!_items.Contains(Item.Flare))
+				else if (!Items.Contains(Item.Flare))
 				{
-					_index = _items.Count;
+					_index = Items.Count;
 					pickaxeObject.SetActive(false);
 					flaresObject.SetActive(true);
 				}
 			}
 
-			if (pickaxeManage.IsAttached && !_items.Contains(Item.Pickaxe)) _items.Add(Item.Pickaxe);
-			if (flareManage.IsAttached && !_items.Contains(Item.Flare)) _items.Add(Item.Flare);
+			if (pickaxeManage.IsAttached && !Items.Contains(Item.Pickaxe)) Items.Add(Item.Pickaxe);
+			if (flareManage.IsAttached && !Items.Contains(Item.Flare)) Items.Add(Item.Flare);
 
 			var switchType = GETSwitchType();
 			switch (switchType)
@@ -53,20 +72,20 @@ namespace Items
 				case SwitchType.Down:
 				{
 					_index--;
-					if (_index < 0) _index = _items.Count - 1;
+					if (_index < 0) _index = Items.Count - 1;
 					break;
 				}
 				case SwitchType.Top:
 				{
 					_index++;
-					if (_index == _items.Count) _index = 0;
+					if (_index == Items.Count) _index = 0;
 					break;
 				}
 				default:
 					throw new ArgumentOutOfRangeException();
 			}
 
-			switch (_items[_index])
+			switch (Items[_index])
 			{
 				case Item.None:
 					if (pickaxeManage.IsAttached) pickaxeObject.SetActive(false);

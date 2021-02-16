@@ -13,7 +13,8 @@ namespace ZeoFlow.Pickup
 		public PuzzleSub puzzleSub = new PuzzleSub();
 		
 		private bool _isAttached;
-		private GameObject newFlare;
+		private bool _wasAttached;
+		private GameObject _newFlare;
 
 		private void Update()
 		{
@@ -42,7 +43,7 @@ namespace ZeoFlow.Pickup
 			
 			if (playerAttachMenu.createNewObject)
 			{
-				newFlare = Instantiate(gameObject, position, Quaternion.Euler(eulerAngles));
+				_newFlare = Instantiate(gameObject, position, Quaternion.Euler(eulerAngles));
 				return;
 			}
 
@@ -73,7 +74,7 @@ namespace ZeoFlow.Pickup
 			_isAttached = false;
 		}
 		
-		public GameObject NewFlare => newFlare;
-		
+		public GameObject NewFlare => _newFlare;
+
 	}
 }
