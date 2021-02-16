@@ -11,11 +11,11 @@ namespace Items
 		private static readonly List<ItemBean> Items = new List<ItemBean>();
 		private static ItemsManager _mInstance;
 
-		private static int timeCountdown;
+		private static int _timeCountdown;
 
 		public static bool CanPickFlare()
 		{
-			return timeCountdown <= 0;
+			return _timeCountdown <= 0;
 		}
 
 		private void Awake()
@@ -26,20 +26,19 @@ namespace Items
 			}
 			else
 			{
-				Debug.LogWarning("You have multiple InputManager instances in the scene!", gameObject);
+				Debug.LogWarning("You have multiple ItemsManager instances in the scene!", gameObject);
 				Destroy(this);
 			}
 		}
 
 		private void Update()
 		{
-			if (timeCountdown > 0) timeCountdown--;
-
+			
 			if (Time.timeScale == 0) return;
+			if (_timeCountdown > 0) _timeCountdown--;
 			if (Items.Count == 0 || Items.Count == 1) return;
 
 			var switchType = GETSwitchType();
-			var isToTop = false;
 			switch (switchType)
 			{
 				case SwitchType.None:
@@ -66,7 +65,7 @@ namespace Items
 
 		public static void Remove(Item item)
 		{
-			if (item == Item.Flare) timeCountdown = 2;
+			if (item == Item.Flare) _timeCountdown = 2;
 
 			foreach (var itemS in Items.ToList().Where(itemS => itemS.ItemType == item)) Items.Remove(itemS);
 			if (Items.Count == 0) return;

@@ -6108,7 +6108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameObject: {fileID: 434562479}
   item: 2
-  ItemFlags: 0
+  itemFlags: 0
   physicsMenu:
     objectDirection: 0
     placeObjectBack: 0
@@ -7051,7 +7051,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameObject: {fileID: 515420529}
   item: 3
-  ItemFlags: 0
+  itemFlags: 0
   physicsMenu:
     objectDirection: 0
     placeObjectBack: 0
@@ -15650,8 +15650,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameObject: {fileID: 1040618739}
-  item: 0
-  ItemFlags: 0
+  item: 1
+  itemFlags: 0
   physicsMenu:
     objectDirection: 0
     placeObjectBack: 0
