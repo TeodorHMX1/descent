@@ -94,7 +94,7 @@ namespace Items
 			switch (switchType)
 			{
 				case SwitchType.Down:
-					Items[activeIndex - 1 < 0 ? Items.Count : activeIndex - 1].GameObject.SetActive(true);
+					Items[activeIndex - 1 < 0 ? Items.Count - 1 : activeIndex - 1].GameObject.SetActive(true);
 					break;
 				case SwitchType.Top:
 					Items[activeIndex + 1 == Items.Count ? 0 : activeIndex + 1].GameObject.SetActive(true);
