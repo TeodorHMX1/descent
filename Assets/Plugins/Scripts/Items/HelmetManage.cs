@@ -16,6 +16,7 @@ namespace Items
 		public float lightIntensity = 1f;
 		public bool attached = false;
 		public AudioClip Torch;
+		public AudioSource AudioSource;
 
 		// unity 1 = 1frame
 		private readonly FlashPattern[] _lightPattern =
@@ -74,7 +75,7 @@ namespace Items
 			{
 				if (!_outOfBattery && !helmetLight.enabled && !_paranoiaTriggered)
 				{
-					GetComponent<AudioSource>().PlayOneShot(Torch, 1.0f);
+					AudioSource.PlayOneShot(Torch, 1f);
 					_index = 0;
 					_timer = 0;
 					helmetLight.enabled = true;
@@ -82,7 +83,7 @@ namespace Items
 				}
 				else if (helmetLight.enabled)
 				{
-					GetComponent<AudioSource>().PlayOneShot(Torch, 1.0f);
+					AudioSource.PlayOneShot(Torch, 1f);
 					_index = 0;
 					_timer = 0;
 					helmetLight.enabled = false;

@@ -2635,15 +2635,15 @@ PrefabInstance:
     - target: {fileID: 1853356150, guid: 0b529b61276858445a231b627fc1fef8, type: 3}
       propertyPath: area1
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 216788520}
     - target: {fileID: 1853356150, guid: 0b529b61276858445a231b627fc1fef8, type: 3}
       propertyPath: area2
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1596688574}
     - target: {fileID: 1853356150, guid: 0b529b61276858445a231b627fc1fef8, type: 3}
       propertyPath: area3
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1680902541}
     - target: {fileID: 1853356150, guid: 0b529b61276858445a231b627fc1fef8, type: 3}
       propertyPath: updatetext
       value: 
@@ -35339,6 +35339,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 921182743}
     m_Modifications:
+    - target: {fileID: 515420531, guid: 9ef668b089bde684e933ed96d309e47c, type: 3}
+      propertyPath: Torch
+      value: 
+      objectReference: {fileID: 8300000, guid: 01fdcb0c66e78bd41a1462d671fb58a6, type: 3}
+    - target: {fileID: 515420531, guid: 9ef668b089bde684e933ed96d309e47c, type: 3}
+      propertyPath: AudioSource
+      value: 
+      objectReference: {fileID: 2143190926}
     - target: {fileID: 515420532, guid: 9ef668b089bde684e933ed96d309e47c, type: 3}
       propertyPath: playerAttachMenu.playerObject
       value: 
@@ -37504,6 +37512,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd993ef46c5344cd8aa5fec9f7005882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &2143190926 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 6632460921508470297, guid: 0b529b61276858445a231b627fc1fef8,
+    type: 3}
+  m_PrefabInstance: {fileID: 177247846}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2145043906 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 063d33dc5e374fd4e91805b6fcfd688f,
