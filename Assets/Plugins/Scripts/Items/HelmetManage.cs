@@ -6,199 +6,192 @@ using ZeoFlow.Pickup.Interfaces;
 
 namespace Items
 {
-	/// <summary>
-	///     <para> HelmetManage </para>
-	///     <author> @TeodorHMX1 </author>
-	/// </summary>
-	public class HelmetManage : MonoBehaviour, IOnAttached
-	{
+    /// <summary>
+    ///     <para> HelmetManage </para>
+    ///     <author> @TeodorHMX1 </author>
+    /// </summary>
+    public class HelmetManage : MonoBehaviour, IOnAttached
+    {
+        // unity 1 = 1frame
+        private readonly FlashPattern[] _lightPattern =
+        {
+            // initial battery capacity
+            new FlashPattern {IsDark = false, Time = 100, Intensity = 1f},
 
-		// unity 1 = 1frame
-		private readonly FlashPattern[] _lightPattern =
-		{
-			// initial battery capacity
-			new FlashPattern {IsDark = false, Time = 100, Intensity = 1f},
+            // light pattern (first light then dark and so on)
+            new FlashPattern {IsDark = false, Time = 120, Intensity = 1f},
+            new FlashPattern {IsDark = true, Time = 10, Intensity = 0f},
+            new FlashPattern {IsDark = false, Time = 120, Intensity = 0.8f},
+            new FlashPattern {IsDark = true, Time = 35, Intensity = 0f},
+            new FlashPattern {IsDark = false, Time = 60, Intensity = 0.4f},
 
-			// light pattern (first light then dark and so on)
-			new FlashPattern {IsDark = false, Time = 120, Intensity = 1f},
-			new FlashPattern {IsDark = true, Time = 10, Intensity = 0f},
-			new FlashPattern {IsDark = false, Time = 120, Intensity = 0.8f},
-			new FlashPattern {IsDark = true, Time = 35, Intensity = 0f},
-			new FlashPattern {IsDark = false, Time = 60, Intensity = 0.4f},
+            // end pattern
+            new FlashPattern {IsDark = true, Time = 0}
+        };
 
-			// end pattern
-			new FlashPattern {IsDark = true, Time = 0}
-		};
-		
-		public enum HelmetState
-		{
-			
-		}
-		
-		public Light helmetLight;
-		public float lightIntensity = 1f;
-		public bool attached;
-		public AudioClip torchOn;
-		public AudioClip torchOff;
+        private enum FlashlightState
+        {
+            None = 0,
+            Triggered = 1,
+            AnimationStarted = 2,
+            OutOfBattery = 3
+        }
 
-		private BoxCollider _boxCollider;
-		private int _index;
-		private bool _isBoxColliderNotNull;
-		private bool _outOfBattery;
-		private bool _batteryShowStarted;
-		private bool _paranoiaTriggered;
-		private int _timer;
+        public Light helmetLight;
+        public float lightIntensity = 1f;
+        public bool attached;
+        public AudioClip torchOn;
+        public AudioClip torchOff;
 
-		/// <summary>
-		///     <para> HelmetManage </para>
-		///     <author> @TeodorHMX1 </author>
-		/// </summary>
-		public HelmetManage()
-		{
-			_timer = 0;
-			_index = 0;
-		}
+        private BoxCollider _boxCollider;
+        private int _index;
+        private bool _isBoxColliderNotNull;
+        private bool _outOfBattery;
+        private int _timer;
+        private FlashlightState _flashlightState = FlashlightState.None;
+        private bool FlashlightOn { get; set; }
 
-		/// <summary>
-		///     <para> Start </para>
-		///     <author> @TeodorHMX1 </author>
-		/// </summary>
-		private void Start()
-		{
-			_boxCollider = GetComponent<BoxCollider>();
-			_isBoxColliderNotNull = _boxCollider != null;
+        /// <summary>
+        ///     <para> Start </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        private void Start()
+        {
+            _boxCollider = GetComponent<BoxCollider>();
+            _isBoxColliderNotNull = _boxCollider != null;
 
-			_lightPattern[0].Intensity = lightIntensity;
-		}
-		
-		/// <summary>
-		///     <para> Update </para>
-		///     <author> @TeodorHMX1 </author>
-		/// </summary>
-		private void Update()
-		{
+            _lightPattern[0].Intensity = lightIntensity;
+            FlashlightOn = helmetLight.enabled;
+        }
 
-			if (Time.timeScale == 0.0f || !attached) return;
+        /// <summary>
+        ///     <para> Update </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        private void Update()
+        {
+            if (Time.timeScale == 0.0f || !attached) return;
 
-			if (_isBoxColliderNotNull) _boxCollider.enabled = false;
+            if (_isBoxColliderNotNull) _boxCollider.enabled = false;
 
-			Debug.Log("CanApplyEffect: " + CanApplyEffect() + ", IsHelmetLightOn: " + IsHelmetLightOn() + ", outOfBattery: " + _outOfBattery);
-			
-			if (InputManager.GetButtonDown("Flashlight"))
-			{
-				if (!_outOfBattery && !helmetLight.enabled)
-				{
-					new AudioBuilder()
-						.WithClip(torchOn)
-						.WithName("Torch_Toggle")
-						.WithVolume(SoundVolume.Normal)
-						.Play();
-					_index = 0;
-					_timer = 0;
-					helmetLight.enabled = true;
-					helmetLight.intensity = _lightPattern[0].Intensity;
-				}
-				else if (helmetLight.enabled)
-				{
-					new AudioBuilder()
-						.WithClip(torchOff)
-						.WithName("Torch_Toggle")
-						.WithVolume(SoundVolume.Normal)
-						.Play();
-					_index = 0;
-					_timer = 0;
-					helmetLight.enabled = false;
-					if (_paranoiaTriggered)
-					{
-						_outOfBattery = true;
-					}
-				}
-			}
+            if (InputManager.GetButtonDown("Flashlight"))
+            {
+                if (!FlashlightOn && _flashlightState <= FlashlightState.Triggered)
+                {
+                    new AudioBuilder()
+                        .WithClip(torchOn)
+                        .WithName("Torch_Toggle")
+                        .WithVolume(SoundVolume.Normal)
+                        .Play();
+                    helmetLight.enabled = true;
+                    FlashlightOn = true;
+                    if (_flashlightState == FlashlightState.Triggered)
+                    {
+                        _flashlightState = FlashlightState.AnimationStarted;
+                        _index = 0;
+                        _timer = 0;
+                    }
+                }
+                else
+                {
+                    new AudioBuilder()
+                        .WithClip(torchOff)
+                        .WithName("Torch_Toggle")
+                        .WithVolume(SoundVolume.Normal)
+                        .Play();
+                    helmetLight.enabled = false;
+                    FlashlightOn = false;
+                    if (_flashlightState == FlashlightState.Triggered ||
+                        _flashlightState == FlashlightState.AnimationStarted)
+                    {
+                        _flashlightState = FlashlightState.OutOfBattery;
+                    }
+                }
+            }
 
-			if (!_paranoiaTriggered) return;
+            if (_flashlightState == FlashlightState.AnimationStarted)
+            {
+                FlashlightEffect();
+            }
+        }
 
-			if (_outOfBattery) return;
-			if (_index < _lightPattern.Length) Flashlight();
-		}
+        /// <summary>
+        ///     <para> ONUpdate </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        /// <param name="playerAttachMenu"></param>
+        public void ONUpdate(PlayerAttachSub playerAttachMenu)
+        {
+            attached = true;
+        }
 
-		/// <summary>
-		///     <para> ONUpdate </para>
-		///     <author> @TeodorHMX1 </author>
-		/// </summary>
-		/// <param name="playerAttachMenu"></param>
-		public void ONUpdate(PlayerAttachSub playerAttachMenu)
-		{
-			attached = true;
-		}
+        /// <summary>
+        ///     <para> FlashlightEffect </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        private void FlashlightEffect()
+        {
+            _timer++;
+            if (_timer < _lightPattern[_index].Time) return;
+            _timer = 0;
 
-		/// <summary>
-		///     <para> Flashlight </para>
-		///     <author> @TeodorHMX1 </author>
-		/// </summary>
-		private void Flashlight()
-		{
-			_timer++;
-			_batteryShowStarted = true;
-			if (_timer < _lightPattern[_index].Time) return;
-			_timer = 0;
+            _index++;
+            if (_index < _lightPattern.Length)
+            {
+                helmetLight.enabled = !_lightPattern[_index].IsDark;
+                FlashlightOn = !_lightPattern[_index].IsDark;
+                helmetLight.intensity = _lightPattern[_index].Intensity;
+                return;
+            }
 
-			_index++;
-			if (_index < _lightPattern.Length)
-			{
-				helmetLight.enabled = !_lightPattern[_index].IsDark;
-				helmetLight.intensity = _lightPattern[_index].Intensity;
-				return;
-			}
+            _index = 0;
+            helmetLight.enabled = false;
+            FlashlightOn = false;
+            helmetLight.intensity = 0;
+            _flashlightState = FlashlightState.OutOfBattery;
+        }
 
-			_index = 0;
-			_outOfBattery = true;
-			helmetLight.enabled = false;
-			helmetLight.intensity = 0;
-		}
+        /// <summary>
+        ///     <para> CanApplyEffect </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        /// <returns param="_outOfBattery"></returns>
+        public bool CanApplyEffect()
+        {
+            return _flashlightState == FlashlightState.OutOfBattery
+                   || _flashlightState == FlashlightState.None && !FlashlightOn;
+        }
 
-		/// <summary>
-		///     <para> CanApplyEffect </para>
-		///     <author> @TeodorHMX1 </author>
-		/// </summary>
-		/// <returns param="_outOfBattery"></returns>
-		public bool CanApplyEffect()
-		{
-			return _paranoiaTriggered && (!helmetLight.enabled && !_outOfBattery || _outOfBattery);
-		}
+        /// <summary>
+        ///     <para> IsHelmetLightOn </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        /// <returns param="FlashlightOn"></returns>
+        public bool IsHelmetLightOn()
+        {
+            return FlashlightOn;
+        }
 
-		/// <summary>
-		///     <para> IsHelmetLightOn </para>
-		///     <author> @TeodorHMX1 </author>
-		/// </summary>
-		/// <returns param="_helmetLight.enabled"></returns>
-		public bool IsHelmetLightOn()
-		{
-			return helmetLight.enabled && !_batteryShowStarted;
-		}
+        /// <summary>
+        ///     <para> SetParanoiaTriggered </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        public void SetParanoiaTriggered()
+        {
+            if (_flashlightState >= FlashlightState.Triggered) return;
+            _flashlightState = FlashlightOn ? FlashlightState.AnimationStarted : FlashlightState.Triggered;
+            if (_flashlightState != FlashlightState.AnimationStarted) return;
+            _index = 0;
+            _timer = 0;
+        }
 
-		/// <summary>
-		///     <para> SetParanoiaTriggered </para>
-		///     <author> @TeodorHMX1 </author>
-		/// </summary>
-		public void SetParanoiaTriggered()
-		{
-			if (_paranoiaTriggered) return;
-
-			_paranoiaTriggered = true;
-			_index = 0;
-			_timer = 0;
-		}
-
-		/// <summary>
-		///     <para> DisableParanoiaTriggered </para>
-		///     <author> @TeodorHMX1 </author>
-		/// </summary>
-		public void DisableParanoiaTriggered()
-		{
-			if (!_paranoiaTriggered) return;
-
-			_paranoiaTriggered = false;
-			_outOfBattery = false;
-		}
-	}
+        /// <summary>
+        ///     <para> DisableParanoiaTriggered </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        public void DisableParanoiaTriggered()
+        {
+            _flashlightState = FlashlightState.None;
+        }
+    }
 }

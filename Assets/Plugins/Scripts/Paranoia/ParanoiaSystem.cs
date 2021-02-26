@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Filters;
 using Override;
 using UnityEngine;
@@ -104,13 +105,22 @@ namespace Paranoia
 					break;
 				case ParanoiaState.Outside:
 					OnCancelEffect();
+			
+					if (_isHelmetObjNotNull)
+					{
+						effectSub.helmetObj.DisableParanoiaTriggered();
+					}
 					break;
 				case ParanoiaState.SafeArea:
 					OnCancelEffect();
+			
+					if (_isHelmetObjNotNull)
+					{
+						effectSub.helmetObj.DisableParanoiaTriggered();
+					}
 					break;
 				default:
-					OnCancelEffect();
-					break;
+					throw new ArgumentOutOfRangeException();
 			}
 		}
 
@@ -143,11 +153,6 @@ namespace Paranoia
 			_filterParanoia.saturation = _saturationAlpha;
 			_filterParanoiaDark.alpha = _darkAlpha;
 			_filterIllusions.fade = _fadeAlpha;
-			
-			if (_isHelmetObjNotNull)
-			{
-				effectSub.helmetObj.DisableParanoiaTriggered();
-			}
 		}
 
 		/// <summary>
