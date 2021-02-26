@@ -31997,7 +31997,7 @@ PrefabInstance:
     - target: {fileID: 1210101553485912103, guid: 12793e7668563f3439c21daca06d87a0,
         type: 3}
       propertyPath: RandomTips
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1210101553485912103, guid: 12793e7668563f3439c21daca06d87a0,
         type: 3}
@@ -32007,7 +32007,7 @@ PrefabInstance:
     - target: {fileID: 1210101553485912103, guid: 12793e7668563f3439c21daca06d87a0,
         type: 3}
       propertyPath: ShowDescription
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1210101553485912103, guid: 12793e7668563f3439c21daca06d87a0,
         type: 3}
@@ -32907,6 +32907,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1116323079}
     m_Modifications:
+    - target: {fileID: 2681180657996896042, guid: db10330a74701974db3bf096c3d9470b,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1394565842}
     - target: {fileID: 3068149455414523130, guid: db10330a74701974db3bf096c3d9470b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -32992,6 +32997,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3216788377191730008, guid: db10330a74701974db3bf096c3d9470b,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1394565842}
+    - target: {fileID: 5697480722863558438, guid: db10330a74701974db3bf096c3d9470b,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1394565842}
+    - target: {fileID: 5926796741381723265, guid: db10330a74701974db3bf096c3d9470b,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1394565842}
     - target: {fileID: 7581306250452545051, guid: db10330a74701974db3bf096c3d9470b,
         type: 3}
       propertyPath: m_AnchorMax.x
