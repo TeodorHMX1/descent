@@ -232,8 +232,8 @@ MonoBehaviour:
   helmetLight: {fileID: 1000147350}
   lightIntensity: 1
   attached: 0
-  Torch: {fileID: 0}
-  AudioSource: {fileID: 0}
+  torchOn: {fileID: 8300000, guid: 01fdcb0c66e78bd41a1462d671fb58a6, type: 3}
+  torchOff: {fileID: 8300000, guid: 01fdcb0c66e78bd41a1462d671fb58a6, type: 3}
 --- !u!114 &515420532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,7 +381,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: cd6fb125f3d628640bed92327f90caa0,
         type: 3}
       propertyPath: m_Name
-      value: helmet Variant
+      value: helmet
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: cd6fb125f3d628640bed92327f90caa0,
         type: 3}

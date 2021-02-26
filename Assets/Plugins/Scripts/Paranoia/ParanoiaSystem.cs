@@ -157,27 +157,20 @@ namespace Paranoia
 		private void OnParanoiaEffect()
 		{
 			if (!effectSub.enabled) return;
-
-			if (_isHelmetObjNotNull)
+			
+			if (_isHelmetObjNotNull && effectSub.helmetObj.attached)
 			{
-				if (effectSub.helmetObj.attached)
+				if (effectSub.helmetObj.CanApplyEffect())
 				{
-					if (effectSub.helmetObj.CanApplyEffect())
-					{
-						ApplyParanoiaEffect();
-					}
-					else
-					{
-						if (effectSub.helmetObj.IsHelmetLightOn())
-						{
-							OnCancelEffect();
-						}
-						effectSub.helmetObj.SetParanoiaTriggered();
-					}
+					ApplyParanoiaEffect();
 				}
 				else
 				{
-					ApplyParanoiaEffect();
+					if (effectSub.helmetObj.IsHelmetLightOn())
+					{
+						OnCancelEffect();
+					}
+					effectSub.helmetObj.SetParanoiaTriggered();
 				}
 			}
 			else

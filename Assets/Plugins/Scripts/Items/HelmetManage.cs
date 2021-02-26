@@ -1,5 +1,4 @@
-﻿using System;
-using Override;
+﻿using Override;
 using UnityEngine;
 using ZeoFlow;
 using ZeoFlow.Pickup;
@@ -13,10 +12,6 @@ namespace Items
 	/// </summary>
 	public class HelmetManage : MonoBehaviour, IOnAttached
 	{
-		public Light helmetLight;
-		public float lightIntensity = 1f;
-		public bool attached = false;
-		public AudioClip Torch;
 
 		// unity 1 = 1frame
 		private readonly FlashPattern[] _lightPattern =
@@ -34,12 +29,23 @@ namespace Items
 			// end pattern
 			new FlashPattern {IsDark = true, Time = 0}
 		};
+		
+		public enum HelmetState
+		{
+			
+		}
+		
+		public Light helmetLight;
+		public float lightIntensity = 1f;
+		public bool attached;
+		public AudioClip torchOn;
+		public AudioClip torchOff;
 
 		private BoxCollider _boxCollider;
 		private int _index;
 		private bool _isBoxColliderNotNull;
 		private bool _outOfBattery;
-
+		private bool _batteryShowStarted;
 		private bool _paranoiaTriggered;
 		private int _timer;
 
@@ -64,19 +70,26 @@ namespace Items
 
 			_lightPattern[0].Intensity = lightIntensity;
 		}
-
+		
+		/// <summary>
+		///     <para> Update </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		private void Update()
 		{
-			if (!attached) return;
+
+			if (Time.timeScale == 0.0f || !attached) return;
 
 			if (_isBoxColliderNotNull) _boxCollider.enabled = false;
+
+			Debug.Log("CanApplyEffect: " + CanApplyEffect() + ", IsHelmetLightOn: " + IsHelmetLightOn() + ", outOfBattery: " + _outOfBattery);
 			
 			if (InputManager.GetButtonDown("Flashlight"))
 			{
 				if (!_outOfBattery && !helmetLight.enabled)
 				{
 					new AudioBuilder()
-						.WithClip(Torch)
+						.WithClip(torchOn)
 						.WithName("Torch_Toggle")
 						.WithVolume(SoundVolume.Normal)
 						.Play();
@@ -88,7 +101,7 @@ namespace Items
 				else if (helmetLight.enabled)
 				{
 					new AudioBuilder()
-						.WithClip(Torch)
+						.WithClip(torchOff)
 						.WithName("Torch_Toggle")
 						.WithVolume(SoundVolume.Normal)
 						.Play();
@@ -125,6 +138,7 @@ namespace Items
 		private void Flashlight()
 		{
 			_timer++;
+			_batteryShowStarted = true;
 			if (_timer < _lightPattern[_index].Time) return;
 			_timer = 0;
 
@@ -133,7 +147,6 @@ namespace Items
 			{
 				helmetLight.enabled = !_lightPattern[_index].IsDark;
 				helmetLight.intensity = _lightPattern[_index].Intensity;
-				Debug.Log("here...");
 				return;
 			}
 
@@ -160,7 +173,7 @@ namespace Items
 		/// <returns param="_helmetLight.enabled"></returns>
 		public bool IsHelmetLightOn()
 		{
-			return helmetLight.enabled;
+			return helmetLight.enabled && !_batteryShowStarted;
 		}
 
 		/// <summary>
@@ -174,7 +187,6 @@ namespace Items
 			_paranoiaTriggered = true;
 			_index = 0;
 			_timer = 0;
-			// _outOfBattery = !helmetLight.enabled;
 		}
 
 		/// <summary>
