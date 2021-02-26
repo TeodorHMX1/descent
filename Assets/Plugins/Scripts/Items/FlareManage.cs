@@ -25,7 +25,7 @@ namespace Items
 		[Tooltip("The seconds after the flare will be disabled")]
 		[Range(10, 30)]
 		public int seconds = 20;
-		[Range(1, 10)]
+		[Range(1, 20)]
 		public int area = 2;
 		public GameObject player;
 		public ParanoiaSystem paranoiaSystem;
@@ -53,7 +53,11 @@ namespace Items
 					GetComponent<Rigidbody>().freezeRotation = true;
 				}
 
-				var distance = Vector3.Distance(player.transform.position, transform.position);
+				var flareTransform = transform;
+				var playerPosition = player.transform.position;
+				var flarePos = new Vector3(flareTransform.position.x, playerPosition.y, flareTransform.position.z);
+				var distance = Vector3.Distance(playerPosition, flarePos);
+				Debug.Log("distance: " + distance);
 				paranoiaSystem.InsideSafeArea = distance <= area * 2;
 				if (_time < seconds * 60) return;
 				

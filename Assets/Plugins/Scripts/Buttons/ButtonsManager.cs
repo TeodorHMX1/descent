@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using Override;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Buttons
@@ -16,7 +18,7 @@ namespace Buttons
 		public void ChangeScene(string newLevel)
 		{
 			Resume();
-			SceneManager.LoadScene(newLevel);
+			LoadScene.LoadingOperation = SceneManager.LoadSceneAsync(newLevel);
 		}
 
 		/// <summary>

@@ -22,10 +22,10 @@ namespace Items
 		private readonly FlashPattern[] _lightPattern =
 		{
 			// initial battery capacity
-			new FlashPattern {IsDark = false, Time = 300, Intensity = 1f},
+			new FlashPattern {IsDark = false, Time = 100, Intensity = 1f},
 
 			// light pattern (first light then dark and so on)
-			new FlashPattern {IsDark = false, Time = 200, Intensity = 1f},
+			new FlashPattern {IsDark = false, Time = 120, Intensity = 1f},
 			new FlashPattern {IsDark = true, Time = 10, Intensity = 0f},
 			new FlashPattern {IsDark = false, Time = 120, Intensity = 0.8f},
 			new FlashPattern {IsDark = true, Time = 35, Intensity = 0f},
@@ -73,7 +73,7 @@ namespace Items
 			
 			if (InputManager.GetButtonDown("Flashlight"))
 			{
-				if (!_outOfBattery && !helmetLight.enabled && !_paranoiaTriggered)
+				if (!_outOfBattery && !helmetLight.enabled)
 				{
 					AudioSource.PlayOneShot(Torch, 1f);
 					_index = 0;
@@ -127,6 +127,7 @@ namespace Items
 			{
 				helmetLight.enabled = !_lightPattern[_index].IsDark;
 				helmetLight.intensity = _lightPattern[_index].Intensity;
+				Debug.Log("here...");
 				return;
 			}
 
@@ -137,13 +138,23 @@ namespace Items
 		}
 
 		/// <summary>
-		///     <para> IsOutOfBattery </para>
+		///     <para> CanApplyEffect </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
 		/// <returns param="_outOfBattery"></returns>
-		public bool IsOutOfBattery()
+		public bool CanApplyEffect()
 		{
-			return _outOfBattery;
+			return _paranoiaTriggered && (!helmetLight.enabled && !_outOfBattery || _outOfBattery);
+		}
+
+		/// <summary>
+		///     <para> IsHelmetLightOn </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
+		/// <returns param="_helmetLight.enabled"></returns>
+		public bool IsHelmetLightOn()
+		{
+			return helmetLight.enabled;
 		}
 
 		/// <summary>
@@ -157,7 +168,7 @@ namespace Items
 			_paranoiaTriggered = true;
 			_index = 0;
 			_timer = 0;
-			_outOfBattery = !helmetLight.enabled;
+			// _outOfBattery = !helmetLight.enabled;
 		}
 
 		/// <summary>

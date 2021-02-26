@@ -100,7 +100,7 @@ namespace ZeoFlow.PlayerMovement
 		//Reload scene;
 		public void RestartScene()
 		{
-			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+			SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
 		}
 
 		//Quit game;

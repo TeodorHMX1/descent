@@ -20,7 +20,7 @@ namespace Puzzle
 		private bool _isMoving;
 		private float _rotateByCurrent;
 		private Vector3 _startAngle;
-
+		public AudioClip Puzzelnoise;
 		/// <summary>
 		///     <para> Start </para>
 		///     <author> @TeodorHMX1 </author>
@@ -91,6 +91,7 @@ namespace Puzzle
 		{
 			if (_isMoving) return;
 			_isMoving = true;
+			GetComponent<AudioSource>().PlayOneShot(Puzzelnoise, 1.0f);
 
 			_rotateByCurrent = !toRight ? rotationSpeed : rotationSpeed * -1;
 		}

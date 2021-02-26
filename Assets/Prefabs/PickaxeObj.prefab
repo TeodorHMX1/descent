@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!111 &7859906256799004417
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7048862158317382240}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: b1e7e548f04edcd498c884d329e10cbc, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: b1e7e548f04edcd498c884d329e10cbc, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &7859906256799004416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7048862158317382240}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb27ea59190c47d99a4891b3f5ad7a27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &7859906255977764302
 GameObject:
   m_ObjectHideFlags: 0
@@ -80,6 +110,7 @@ MonoBehaviour:
   gameObject: {fileID: 7859906255977764302}
   item: 1
   itemFlags: 0
+  guiText: Pick pickaxe
   physicsMenu:
     objectDirection: 0
     placeObjectBack: 0
@@ -101,6 +132,7 @@ MonoBehaviour:
     outline: {fileID: 7859906256799004416}
   puzzleSub:
     enabled: 0
+  Itemcollect: {fileID: 8300000, guid: 83326ed8426fdfc44969a0860091307e, type: 3}
 --- !u!114 &7859906255977764299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,36 +245,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!111 &7859906256799004417
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7048862158317382240}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: b1e7e548f04edcd498c884d329e10cbc, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: b1e7e548f04edcd498c884d329e10cbc, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 0
-  m_AnimatePhysics: 0
-  m_CullingType: 0
---- !u!114 &7859906256799004416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7048862158317382240}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb27ea59190c47d99a4891b3f5ad7a27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  color: 0
-  eraseRenderer: 0
 --- !u!1001 &7859906256410924849
 PrefabInstance:
   m_ObjectHideFlags: 0

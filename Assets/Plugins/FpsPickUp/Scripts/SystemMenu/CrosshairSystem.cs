@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ZeoFlow.Pickup
 {
@@ -12,5 +13,7 @@ namespace ZeoFlow.Pickup
 		public Texture2D onAble;
 		public Texture2D onGrab;
 		public Texture2D onPuzzle;
+		[Tooltip("On Able Show ")]
+		public Text guiText;
 	}
 }

@@ -1,5 +1,7 @@
-﻿using Items;
+﻿using System;
+using Items;
 using UnityEngine;
+using UnityEngine.Serialization;
 using ZeoFlow.Pickup.Interfaces;
 
 namespace ZeoFlow.Pickup
@@ -9,11 +11,13 @@ namespace ZeoFlow.Pickup
 		public new GameObject gameObject;
 		public Item item;
 		public ItemFlags itemFlags = ItemFlags.None;
+		public string guiText = string.Empty;
 		public PhysicsSub physicsMenu = new PhysicsSub();
 		public ThrowingSystemMenu throwingSystem = new ThrowingSystemMenu();
 		public PlayerAttachSub playerAttachMenu = new PlayerAttachSub();
 		public OutlinerSub outlinerMenu = new OutlinerSub();
 		public PuzzleSub puzzleSub = new PuzzleSub();
+		public AudioClip Itemcollect;
 
 		private bool _isAttached;
 		private SyncItem _syncItem;
@@ -87,6 +91,7 @@ namespace ZeoFlow.Pickup
 		{
 			if (itemFlags == ItemFlags.OnPlayer || itemFlags == ItemFlags.OnDropped) return;
 			_isAttached = true;
+			GetComponent<AudioSource>().PlayOneShot(Itemcollect, 1.0f);
 		}
 
 		public void OnDrop()

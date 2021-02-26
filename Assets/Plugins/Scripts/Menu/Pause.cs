@@ -108,12 +108,12 @@ namespace Menu
 		}
 
 		/// <summary>
-		///     <para> LoadScene </para>
+		///     <para> LoadSceneAsync </para>
 		/// </summary>
-		public void LoadScene()
+		public void LoadSceneAsync()
 		{
 			Time.timeScale = 1f;
-			SceneManager.LoadScene(newLevel);
+			SceneManager.LoadSceneAsync(newLevel);
 		}
 	}
 }

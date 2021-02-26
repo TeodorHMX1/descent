@@ -15,6 +15,7 @@ namespace Paranoia
 		public List<ParanoiaTrigger> paranoiaTriggers = new List<ParanoiaTrigger>();
 		public EffectSub effectSub = new EffectSub();
 		
+		
 		private AudioSource _audioSource;
 		private float _darkAlpha;
 		private float _fadeAlpha;
@@ -35,6 +36,7 @@ namespace Paranoia
 		private void Start()
 		{
 			_audioSource = GetComponent<AudioSource>();
+			_audioSource.Stop();
 			_isAudioSourceNotNull = _audioSource != null;
 			_isHelmetObjNotNull = effectSub.helmetObj != null;
 			
@@ -50,7 +52,6 @@ namespace Paranoia
 
 			_filterIllusions = effectSub.camera.AddComponent<FilterIllusions>();
 			_filterIllusions.fade = _fadeAlpha;
-			_filterIllusions.enabled = false;
 		}
 
 		/// <summary>
@@ -60,6 +61,7 @@ namespace Paranoia
 		private void Update()
 		{
 			if (player == null) return;
+			if (Time.timeScale == 0) return;
 
 			switch (numberOfEntrances)
 			{
@@ -118,22 +120,22 @@ namespace Paranoia
 		/// </summary>
 		private void OnCancelEffect()
 		{
+			_audioSource.Stop();
 			if (_darkAlpha > 0f)
 				_darkAlpha -= 0.006f;
 			else
 				_darkAlpha = 0.0f;
 			if (_saturationAlpha > 1.0f)
-				_saturationAlpha -= 0.006f;
+				_saturationAlpha -= 0.0006f;
 			else
 				_saturationAlpha = 1.0f;
 			if (_fadeAlpha > 0.0f)
 			{
-				_fadeAlpha -= 0.006f;
+				_fadeAlpha -= 0.0003f;
 			}
 			else
 			{
 				_fadeAlpha = 0.0f;
-				_filterIllusions.enabled = false;
 			}
 
 			_filterParanoia.brightness = 1.0f;
@@ -160,12 +162,16 @@ namespace Paranoia
 			{
 				if (effectSub.helmetObj.attached)
 				{
-					if (effectSub.helmetObj.IsOutOfBattery())
+					if (effectSub.helmetObj.CanApplyEffect())
 					{
 						ApplyParanoiaEffect();
 					}
 					else
 					{
+						if (effectSub.helmetObj.IsHelmetLightOn())
+						{
+							OnCancelEffect();
+						}
 						effectSub.helmetObj.SetParanoiaTriggered();
 					}
 				}
@@ -186,26 +192,24 @@ namespace Paranoia
 		/// </summary>
 		private void ApplyParanoiaEffect()
 		{
+			_audioSource.Play();
 			if (effectSub.musicEnabled)
 				if (_isAudioSourceNotNull)
 					foreach (var audioClip in effectSub.audioClips)
-						_audioSource.PlayOneShot(audioClip, effectSub.audioClipVolume);
+						_audioSource.Play();
 
-			if (effectSub.cameraEffectEnabled)
-			{
-				if (_darkAlpha < 1.75f) _darkAlpha += 0.002f;
-				if (_saturationAlpha < 1.2f) _saturationAlpha += 0.0025f;
-				if (_fadeAlpha < 0.2f) _fadeAlpha += 0.001f;
-				_filterParanoiaDark.alpha = _darkAlpha;
-				_filterParanoia.saturation = _saturationAlpha;
-				_filterIllusions.fade = _fadeAlpha;
-				_filterIllusions.enabled = true;
-			}
+			if (!effectSub.cameraEffectEnabled) return;
+			if (_darkAlpha < 1f) _darkAlpha += 0.002f;
+			if (_saturationAlpha < 1.2f) _saturationAlpha += 0.0025f;
+			if (_fadeAlpha < 0.2f) _fadeAlpha += 0.00001f;
+			_filterParanoiaDark.alpha = _darkAlpha;
+			_filterParanoia.saturation = _saturationAlpha;
+			_filterIllusions.fade = _fadeAlpha;
+			_filterIllusions.coloredChange = 2.0f;
 		}
 
 		public bool InsideSafeArea
 		{
-			get => _insideSafeArea;
 			set => _insideSafeArea = value;
 		}
 	}
