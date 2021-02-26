@@ -5,115 +5,122 @@ using ZeoFlow.PlayerMovement;
 
 namespace Menu
 {
-	/// <summary>
-	///     <para> Pause </para>
-	///     <author> @TeodorHMX1 </author>
-	/// </summary>
-	public class Pause : MonoBehaviour
-	{
-		public bool isPaused;
-		public GameObject pauseMenu;
-		public GameObject optionsMenu;
-		public string newLevel;
-		public MouseCursorLock mouseCursorLock;
+    /// <summary>
+    ///     <para> Pause </para>
+    ///     <author> @TeodorHMX1 </author>
+    /// </summary>
+    public class Pause : MonoBehaviour
+    {
+        public bool isPaused;
+        public GameObject pauseMenu;
+        public GameObject optionsMenu;
+        public MouseCursorLock mouseCursorLock;
 
-		/// <summary>
-		///     <para> Start </para>
-		///     <author> @TeodorHMX1 </author>
-		/// </summary>
-		private void Start()
-		{
-			pauseMenu.SetActive(false);
-			optionsMenu.SetActive(false);
-		}
+        private bool _mainMenu;
 
-		/// <summary>
-		///     <para> Update </para>
-		///     <author> @TeodorHMX1 </author>
-		/// </summary>
-		private void Update()
-		{
-			var pausePressed = InputManager.GetButtonDown("PauseMenu");
-			switch (pausePressed)
-			{
-				case true when !isPaused:
-					isPaused = true;
-					break;
-				case true when pauseMenu.activeSelf && isPaused:
-					isPaused = false;
-					break;
-			}
-			mouseCursorLock.SetPaused(isPaused);
+        /// <summary>
+        ///     <para> Start </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        private void Start()
+        {
+            pauseMenu.SetActive(false);
+            optionsMenu.SetActive(false);
+        }
 
-			if (isPaused)
-				Paused();
-			else
-				Resume();
-		}
+        /// <summary>
+        ///     <para> Update </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        private void Update()
+        {
+            if (_mainMenu) return;
 
-		/// <summary>
-		///     <para> OnResume </para>
-		///     <author> @TeodorHMX1 </author>
-		/// </summary>
-		public void OnResume()
-		{
-			isPaused = false;
-			pauseMenu.SetActive(false);
-		}
+            var pausePressed = InputManager.GetButtonDown("PauseMenu");
+            switch (pausePressed)
+            {
+                case true when !isPaused:
+                    isPaused = true;
+                    break;
+                case true when pauseMenu.activeSelf && isPaused:
+                    isPaused = false;
+                    break;
+            }
 
-		/// <summary>
-		///     <para> OnOptions </para>
-		///     <author> @TeodorHMX1 </author>
-		/// </summary>
-		public void OnOptions()
-		{
-			pauseMenu.SetActive(false);
-			optionsMenu.SetActive(true);
-		}
+            mouseCursorLock.SetPaused(isPaused);
 
-		/// <summary>
-		///     <para> OnOptionsClosed </para>
-		///     <author> @TeodorHMX1 </author>
-		/// </summary>
-		public void OnOptionsClosed()
-		{
-			pauseMenu.SetActive(true);
-			optionsMenu.SetActive(false);
-		}
+            if (isPaused)
+                Paused();
+            else
+                Resume();
+        }
 
-		/// <summary>
-		///     <para> Resume </para>
-		///     <author> @TeodorHMX1 </author>
-		/// </summary>
-		private void Resume()
-		{
-			if (pauseMenu.activeSelf)
-			{
-				pauseMenu.SetActive(false);
-			}
-			Time.timeScale = 1f;
-		}
+        /// <summary>
+        ///     <para> OnResume </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        public void OnResume()
+        {
+            isPaused = false;
+            pauseMenu.SetActive(false);
+        }
 
-		/// <summary>
-		///     <para> Paused </para>
-		///     <author> @TeodorHMX1 </author>
-		/// </summary>
-		private void Paused()
-		{
-			if (!optionsMenu.activeSelf)
-			{
-				pauseMenu.SetActive(true);
-			}
-			Time.timeScale = 0f;
-		}
+        /// <summary>
+        ///     <para> OnOptions </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        public void OnOptions()
+        {
+            pauseMenu.SetActive(false);
+            optionsMenu.SetActive(true);
+        }
 
-		/// <summary>
-		///     <para> LoadSceneAsync </para>
-		/// </summary>
-		public void LoadSceneAsync()
-		{
-			Time.timeScale = 1f;
-			SceneManager.LoadSceneAsync(newLevel);
-		}
-	}
+        /// <summary>
+        ///     <para> OnOptionsClosed </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        public void OnOptionsClosed()
+        {
+            pauseMenu.SetActive(true);
+            optionsMenu.SetActive(false);
+        }
+
+        /// <summary>
+        ///     <para> Resume </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        private void Resume()
+        {
+            if (pauseMenu.activeSelf)
+            {
+                pauseMenu.SetActive(false);
+            }
+
+            Time.timeScale = 1f;
+        }
+
+        /// <summary>
+        ///     <para> Paused </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        private void Paused()
+        {
+            if (!optionsMenu.activeSelf)
+            {
+                pauseMenu.SetActive(true);
+            }
+
+            Time.timeScale = 0f;
+        }
+
+        /// <summary>
+        ///     <para> IOnMainMenu </para>
+        /// </summary>
+        public void IOnMainMenu()
+        {
+            _mainMenu = true;
+            pauseMenu.SetActive(false);
+            optionsMenu.SetActive(false);
+        }
+    }
 }

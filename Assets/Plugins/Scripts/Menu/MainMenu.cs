@@ -38,5 +38,14 @@ namespace Menu
 			mainMenu.SetActive(false);
 			optionsMenu.SetActive(true);
 		}
+
+		/// <summary>
+		///     <para> IOnPlay </para>
+		/// </summary>
+		public void IOnPlay()
+		{
+			mainMenu.SetActive(false);
+			optionsMenu.SetActive(false);
+		}
 	}
 }
