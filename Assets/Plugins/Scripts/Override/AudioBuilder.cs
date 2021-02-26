@@ -9,6 +9,7 @@ namespace Override
         private SoundVolume _volume = SoundVolume.Normal;
         private string _name;
         private AudioSource _audioSource;
+        private float _speed = 1f;
 
         public AudioClip Clip
         {
@@ -34,6 +35,13 @@ namespace Override
             set => _audioSource = value;
         }
 
+        public float Speed
+        {
+            get => _speed;
+            set => _speed = value;
+        }
+
+
         public AudioBuilder WithClip(AudioClip clip)
         {
             Clip = clip;
@@ -55,6 +63,12 @@ namespace Override
         public AudioBuilder WithAudioSource(AudioSource audioSource)
         {
             AudioSource = audioSource;
+            return this;
+        }
+
+        public AudioBuilder WithSpeed(float speed)
+        {
+            Speed = speed;
             return this;
         }
 
@@ -93,7 +107,7 @@ namespace Override
             else
             {
                 if (Name == null) return;
-                AudioInstance.PlaySound(Clip, Volume, Name, oneAtOnce);
+                AudioInstance.PlaySound(Clip, Volume, Name, Speed, oneAtOnce);
             }
         }
     }
