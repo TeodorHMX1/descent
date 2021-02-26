@@ -21706,7 +21706,7 @@ PrefabInstance:
         type: 3}
       propertyPath: effectSub.audioClips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: 99ab8a4503de1f448ad764a5c4cdf9cc, type: 3}
+      objectReference: {fileID: 8300000, guid: 62450cdffc9d07342ba810c44d58f74b, type: 3}
     - target: {fileID: 7631892124183925867, guid: a2dc7e6858b377b4d9fa7d773eb921c5,
         type: 3}
       propertyPath: effectSub.enabled

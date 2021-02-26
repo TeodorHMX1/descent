@@ -57,7 +57,6 @@ namespace Items
 				var playerPosition = player.transform.position;
 				var flarePos = new Vector3(flareTransform.position.x, playerPosition.y, flareTransform.position.z);
 				var distance = Vector3.Distance(playerPosition, flarePos);
-				Debug.Log("distance: " + distance);
 				paranoiaSystem.InsideSafeArea = distance <= area * 2;
 				if (_time < seconds * 60) return;
 				

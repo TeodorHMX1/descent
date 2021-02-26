@@ -58,7 +58,7 @@ namespace Override
             return this;
         }
 
-        public void Play()
+        public void Play(bool oneAtOnce = false)
         {
             if (Clip == null)
             {
@@ -68,6 +68,13 @@ namespace Override
             
             if (AudioSource != null)
             {
+                if (oneAtOnce)
+                {
+                    if (AudioSource.isPlaying)
+                    {
+                        return;
+                    }
+                }
                 switch (Volume)
                 {
                     case SoundVolume.Loud:
@@ -86,7 +93,7 @@ namespace Override
             else
             {
                 if (Name == null) return;
-                AudioInstance.PlayV2(Clip, Volume, Name);
+                AudioInstance.PlaySound(Clip, Volume, Name, oneAtOnce);
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Filters;
+using Override;
 using UnityEngine;
 
 namespace Paranoia
@@ -191,11 +192,16 @@ namespace Paranoia
 		/// </summary>
 		private void ApplyParanoiaEffect()
 		{
-			_audioSource.Play();
 			if (effectSub.musicEnabled)
 				if (_isAudioSourceNotNull)
 					foreach (var audioClip in effectSub.audioClips)
-						_audioSource.Play();
+					{
+						new AudioBuilder()
+							.WithClip(audioClip)
+							.WithName("ParanoiaEffect_" + audioClip.name)
+							.WithVolume(SoundVolume.Normal)
+							.Play(true);
+					}
 
 			if (!effectSub.cameraEffectEnabled) return;
 			if (_darkAlpha < 1f) _darkAlpha += 0.002f;

@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEditor;
 using UnityEngine;
 
 namespace Override
@@ -21,47 +20,13 @@ namespace Override
 			return PlayerPrefs.GetFloat(Constants.Options.Sound, 1.0f);
 		}
 
-		public static void PlaySound(AudioBuilder audioBuilder)
-		{
-			_audioSource.PlayOneShot(audioBuilder.Clip, GetSoundVolume() * 1f);
-		}
-
-		public void PlayLoud(AudioClip audio)
-		{
-			_audioSource.PlayOneShot(audio, GetSoundVolume() * 1f);
-		}
-
-		public void PlayNormal(AudioClip audio)
-		{
-			_audioSource.PlayOneShot(audio, GetSoundVolume() * .8f);
-		}
-
-		public void PlayWeak(AudioClip audio)
-		{
-			_audioSource.PlayOneShot(audio, GetSoundVolume() * .6f);
-		}
-
-		public static void  PlayOneShot(AudioClip audio, SoundVolume volume)
-		{
-			switch (volume)
-			{
-				case SoundVolume.Loud:
-					_audioSource.PlayOneShot(audio, GetSoundVolume() * 1f);
-					break;
-				case SoundVolume.Normal:
-					_audioSource.PlayOneShot(audio, GetSoundVolume() * .8f);
-					break;
-				case SoundVolume.Weak:
-					_audioSource.PlayOneShot(audio, GetSoundVolume() * .6f);
-					break;
-				default:
-					throw new ArgumentOutOfRangeException(nameof(volume), volume, null);
-			}
-		}
-
-		public static void  PlayV2(AudioClip audio, SoundVolume volume, string name)
+		public static void PlaySound(AudioClip audio, SoundVolume volume, string name, bool oneAtOnce)
 		{
 			_audioSource = GetAudioSource(name);
+			if (_audioSource.isPlaying && oneAtOnce)
+			{
+				return;
+			}
 			switch (volume)
 			{
 				case SoundVolume.Loud:
