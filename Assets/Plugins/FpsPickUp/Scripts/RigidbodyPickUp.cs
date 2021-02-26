@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Override;
+using UnityEngine;
 
 namespace ZeoFlow.Pickup
 {
@@ -316,7 +317,11 @@ namespace ZeoFlow.Pickup
                 _throwingSystem = _playerObject.throwingSystem;
                 if (audioSystem.enabled)
                 {
-                    GetComponent<AudioSource>().PlayOneShot(audioSystem.pickedUpAudio);
+                    new AudioBuilder()
+                        .WithClip(audioSystem.pickedUpAudio)
+                        .WithName("RigidBodyPickUp_PickedUp")
+                        .WithVolume(SoundVolume.Normal)
+                        .Play();
                     audioSystem.letGoFired = false;
                 }
 
@@ -347,7 +352,11 @@ namespace ZeoFlow.Pickup
 
             if (audioSystem.enabled && audioSystem.objectHeldAudio != null)
             {
-                GetComponent<AudioSource>().PlayOneShot(audioSystem.objectHeldAudio);
+                new AudioBuilder()
+                    .WithClip(audioSystem.objectHeldAudio)
+                    .WithName("RigidBodyPickUp_ObjectHeld")
+                    .WithVolume(SoundVolume.Normal)
+                    .Play();
             }
 
             /*Checking the distance between the player and the object held.
@@ -499,7 +508,11 @@ namespace ZeoFlow.Pickup
                 .AddForce(playerCam.transform.forward * _throwingSystem.strength);
             if (audioSystem.enabled)
             {
-                GetComponent<AudioSource>().PlayOneShot(audioSystem.throwAudio);
+                new AudioBuilder()
+                    .WithClip(audioSystem.throwAudio)
+                    .WithName("RigidBodyPickUp_ThrowAudio")
+                    .WithVolume(SoundVolume.Normal)
+                    .Play();
             }
         }
 

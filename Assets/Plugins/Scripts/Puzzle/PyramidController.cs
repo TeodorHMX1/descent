@@ -1,4 +1,5 @@
 ﻿using System;
+using Override;
 using UnityEngine;
 using ZeoFlow.Pickup.Interfaces;
 
@@ -91,7 +92,11 @@ namespace Puzzle
 		{
 			if (_isMoving) return;
 			_isMoving = true;
-			GetComponent<AudioSource>().PlayOneShot(Puzzelnoise, 1.0f);
+			new AudioBuilder()
+				.WithClip(Puzzelnoise)
+				.WithName("Pyramid_PuzzleRotation")
+				.WithVolume(SoundVolume.Normal)
+				.Play();
 
 			_rotateByCurrent = !toRight ? rotationSpeed : rotationSpeed * -1;
 		}

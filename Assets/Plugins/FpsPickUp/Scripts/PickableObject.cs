@@ -1,5 +1,6 @@
 ﻿using System;
 using Items;
+using Override;
 using UnityEngine;
 using UnityEngine.Serialization;
 using ZeoFlow.Pickup.Interfaces;
@@ -91,7 +92,11 @@ namespace ZeoFlow.Pickup
 		{
 			if (itemFlags == ItemFlags.OnPlayer || itemFlags == ItemFlags.OnDropped) return;
 			_isAttached = true;
-			GetComponent<AudioSource>().PlayOneShot(Itemcollect, 1.0f);
+			new AudioBuilder()
+				.WithClip(Itemcollect)
+				.WithName("FootstepSound")
+				.WithVolume(SoundVolume.Normal)
+				.Play();
 		}
 
 		public void OnDrop()

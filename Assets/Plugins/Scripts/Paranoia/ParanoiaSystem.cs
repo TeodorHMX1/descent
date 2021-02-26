@@ -15,7 +15,6 @@ namespace Paranoia
 		public List<ParanoiaTrigger> paranoiaTriggers = new List<ParanoiaTrigger>();
 		public EffectSub effectSub = new EffectSub();
 		
-		
 		private AudioSource _audioSource;
 		private float _darkAlpha;
 		private float _fadeAlpha;

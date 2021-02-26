@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Override
 {
@@ -10,33 +9,27 @@ namespace Override
 	public class AudioManager : MonoBehaviour
 	{
 
-		private static AudioManager _mInstance;
-		private static GameObject _gameObject;
-		private static List<AudioSource> _audioSources = new List<AudioSource>();
+		private static AudioSource _audioSource;
 
-		public static void PlayOneShot(AudioClip audio, SoundVolume volume = SoundVolume.Normal)
+		public void PlayLoud(AudioClip audio)
 		{
-			var audioSource = _gameObject.AddComponent<AudioSource>();
-			audioSource.PlayOneShot(audio, 1f);
-			_audioSources.Add(audioSource);
+			_audioSource.PlayOneShot(audio, AudioInstance.GetSoundVolume() * 1f);
 		}
 
-		public static float GetSoundVolume()
+		public void PlayNormal(AudioClip audio)
 		{
-			return PlayerPrefs.GetFloat(Constants.Options.Sound, 1.0f);
+			_audioSource.PlayOneShot(audio, AudioInstance.GetSoundVolume() * .8f);
 		}
-		
+
+		public void PlayWeak(AudioClip audio)
+		{
+			_audioSource.PlayOneShot(audio, AudioInstance.GetSoundVolume() * .6f);
+		}
+
 		private void Awake()
 		{
-			if (_mInstance == null)
-			{
-				_mInstance = this;
-				_gameObject = gameObject;
-			}
-			else
-			{
-				Destroy(this);
-			}
+			if (GetComponent<AudioSource>() == null) gameObject.AddComponent<AudioSource>();
+			_audioSource = GetComponent<AudioSource>();
 		}
 	}
 }

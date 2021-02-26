@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-using ZeoFlow;
-using ZeoFlow.PlayerMovement;
 
 namespace Menu
 {

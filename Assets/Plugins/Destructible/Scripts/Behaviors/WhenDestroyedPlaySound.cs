@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Override;
+using UnityEngine;
 
 namespace Destructible
 {
@@ -35,7 +36,12 @@ namespace Destructible
 			var audioSource = audioObj.AddComponent<AudioSource>();
 			var destroyAfter = audioObj.AddComponent<DestroyAfter>();
 			destroyAfter.seconds = 5f; // Destroy the audio source object after X seconds.
-			audioSource.PlayOneShot(clip); // Play the audio clip.
+			new AudioBuilder()
+				.WithClip(clip)
+				.WithName("ToDestroy")
+				.WithVolume(SoundVolume.Normal)
+				.WithAudioSource(audioSource)
+				.Play();
 		}
 	}
 }

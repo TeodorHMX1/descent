@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Override;
 using UnityEngine;
 
 namespace ZeoFlow.PlayerMovement
@@ -102,21 +103,31 @@ namespace ZeoFlow.PlayerMovement
 		void PlayFootstepSound(float _movementSpeed)
 		{
 			int _footStepClipIndex = Random.Range(0, footStepClips.Length);
-			audioSource.PlayOneShot(footStepClips[_footStepClipIndex],
-				audioClipVolume + audioClipVolume *
-				Random.Range(-RelativeRandomizedVolumeRange, RelativeRandomizedVolumeRange));
+			new AudioBuilder()
+				.WithClip(footStepClips[_footStepClipIndex])
+				.WithName("FootstepSound")
+				.WithVolume(SoundVolume.Weak)
+				.Play();
 		}
 
 		void OnLand(Vector3 _v)
 		{
 			//Play land audio clip;
-			audioSource.PlayOneShot(landClip, audioClipVolume);
+			new AudioBuilder()
+				.WithClip(landClip)
+				.WithName("FootstepSound")
+				.WithVolume(SoundVolume.Normal)
+				.Play();
 		}
 
 		void OnJump(Vector3 _v)
 		{
 			//Play jump audio clip;
-			audioSource.PlayOneShot(jumpClip, audioClipVolume);
+			new AudioBuilder()
+				.WithClip(jumpClip)
+				.WithName("FootstepSound")
+				.WithVolume(SoundVolume.Normal)
+				.Play();
 		}
 	}
 }

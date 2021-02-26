@@ -1,5 +1,6 @@
 ﻿using System;
 using Destructible;
+using Override;
 using UnityEngine;
 using Walls;
 using ZeoFlow.Pickup;
@@ -50,7 +51,11 @@ namespace Items
 			if (animator.isPlaying) return;
 			
 			animator.Play(Constants.Animations.PickaxeSwing);
-			_audioData.PlayOneShot(sound);
+			new AudioBuilder()
+				.WithClip(sound)
+				.WithName("Pickaxe_Swing")
+				.WithVolume(SoundVolume.Normal)
+				.Play();
 			Invoke(nameof(BroadcastMeleeDamage), .2f);
 		}
 

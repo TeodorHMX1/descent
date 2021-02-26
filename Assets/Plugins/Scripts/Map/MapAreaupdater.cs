@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Override;
+using UnityEngine;
 
 namespace Map
 {
@@ -56,21 +57,33 @@ namespace Map
 					MapScript2.ColArea1 = true;
 					_currentTime = StartTime;
 					Debug.Log("Area one update");
-					GetComponent<AudioSource>().PlayOneShot(scribble, 1.0f);
+					new AudioBuilder()
+						.WithClip(scribble)
+						.WithName("MapArea_Updater")
+						.WithVolume(SoundVolume.Normal)
+						.Play();
 					Destroy(area1);
 					break;
 				case "Update area 2":
 					MapScript2.ColArea2 = true;
 					_currentTime = StartTime;
 					Debug.Log("Area two update");
-					GetComponent<AudioSource>().PlayOneShot(scribble, 1.0f);
+					new AudioBuilder()
+						.WithClip(scribble)
+						.WithName("MapArea_Updater")
+						.WithVolume(SoundVolume.Normal)
+						.Play();
 					Destroy(area2);
 					break;
 				case "Update area 3":
 					MapScript2.ColArea3 = true;
 					_currentTime = StartTime;
 					Debug.Log("Area three update");
-					GetComponent<AudioSource>().PlayOneShot(scribble, 1.0f);
+					new AudioBuilder()
+						.WithClip(scribble)
+						.WithName("MapArea_Updater")
+						.WithVolume(SoundVolume.Normal)
+						.Play();
 					Destroy(area3);
 					break;
 			}

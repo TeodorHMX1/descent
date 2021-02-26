@@ -82,7 +82,11 @@ namespace Map
 
             if (InputManager.GetButtonDown("Map"))
             {
-                GetComponent<AudioSource>().PlayOneShot(scribble, 1.0f);
+                new AudioBuilder()
+                    .WithClip(scribble)
+                    .WithName("ToggleMap_Sound")
+                    .WithVolume(SoundVolume.Normal)
+                    .Play();
             }
 
             if (_isrigidbodyPickUpNotNull) rigidbodyPickUp.hideCrosshair = mapOpen;
@@ -126,10 +130,14 @@ namespace Map
             if (InputManager.GetButtonDown("ToggleControls"))
             {
                 Controlsvisible = !Controlsvisible;
-                AudioManager.PlayOneShot(scribble);
+                new AudioBuilder()
+                    .WithClip(scribble)
+                    .WithName("ToggleControls")
+                    .WithVolume(SoundVolume.Normal)
+                    .Play();
             }
 
-            if (Controlsvisible == true)
+            if (Controlsvisible)
             {
                 controlprompt.SetActive(false);
                 Controls.SetActive(true);

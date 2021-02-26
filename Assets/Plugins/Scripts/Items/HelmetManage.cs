@@ -1,4 +1,5 @@
 ﻿using System;
+using Override;
 using UnityEngine;
 using ZeoFlow;
 using ZeoFlow.Pickup;
@@ -16,7 +17,6 @@ namespace Items
 		public float lightIntensity = 1f;
 		public bool attached = false;
 		public AudioClip Torch;
-		public AudioSource AudioSource;
 
 		// unity 1 = 1frame
 		private readonly FlashPattern[] _lightPattern =
@@ -75,7 +75,11 @@ namespace Items
 			{
 				if (!_outOfBattery && !helmetLight.enabled)
 				{
-					AudioSource.PlayOneShot(Torch, 1f);
+					new AudioBuilder()
+						.WithClip(Torch)
+						.WithName("Torch_Toggle")
+						.WithVolume(SoundVolume.Normal)
+						.Play();
 					_index = 0;
 					_timer = 0;
 					helmetLight.enabled = true;
@@ -83,7 +87,11 @@ namespace Items
 				}
 				else if (helmetLight.enabled)
 				{
-					AudioSource.PlayOneShot(Torch, 1f);
+					new AudioBuilder()
+						.WithClip(Torch)
+						.WithName("Torch_Toggle")
+						.WithVolume(SoundVolume.Normal)
+						.Play();
 					_index = 0;
 					_timer = 0;
 					helmetLight.enabled = false;
@@ -96,10 +104,8 @@ namespace Items
 
 			if (!_paranoiaTriggered) return;
 
-			if (!_outOfBattery)
-			{
-				if (_index < _lightPattern.Length) Flashlight();
-			}
+			if (_outOfBattery) return;
+			if (_index < _lightPattern.Length) Flashlight();
 		}
 
 		/// <summary>
