@@ -125,6 +125,7 @@ MonoBehaviour:
     onAble: {fileID: 2800000, guid: e64a602b08db10d41983fd9449fef2fa, type: 3}
     onGrab: {fileID: 0}
     onPuzzle: {fileID: 2800000, guid: 1feb2ee70e732fe4c8fb9435f70fea03, type: 3}
+    guiText: {fileID: 0}
   audioSystem:
     enabled: 1
     pickedUpAudio: {fileID: 0}
@@ -249,7 +250,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8737868230645114331}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.13, z: 0}
+  m_LocalPosition: {x: 0, y: 0.145, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6711203492807119545}

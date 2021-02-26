@@ -102,6 +102,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3068149456878441085}
+  - {fileID: 3068149456228644844}
   m_Father: {fileID: 3068149456345135737}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -727,6 +728,7 @@ GameObject:
   - component: {fileID: 3068149455540281674}
   - component: {fileID: 3068149455540281673}
   - component: {fileID: 3068149455540281672}
+  - component: {fileID: 666794111272361949}
   m_Layer: 0
   m_Name: input_field
   m_TagString: Untagged
@@ -816,6 +818,35 @@ MonoBehaviour:
   m_allowAnalogButton: 0
   m_joystick: 0
   m_rebindType: 0
+--- !u!114 &666794111272361949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068149455540281678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_MethodName: PlayWeak
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8300000, guid: 5de378a42916bd14aa8fc12697def710,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &3068149455546886162
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,6 +859,7 @@ GameObject:
   - component: {fileID: 3068149455546886158}
   - component: {fileID: 3068149455546886157}
   - component: {fileID: 3068149455546886156}
+  - component: {fileID: 586459673008745433}
   m_Layer: 0
   m_Name: input_field
   m_TagString: Untagged
@@ -917,6 +949,35 @@ MonoBehaviour:
   m_allowAnalogButton: 0
   m_joystick: 0
   m_rebindType: 0
+--- !u!114 &586459673008745433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068149455546886162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_MethodName: PlayWeak
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8300000, guid: 5de378a42916bd14aa8fc12697def710,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &3068149455605845144
 GameObject:
   m_ObjectHideFlags: 0
@@ -1007,6 +1068,7 @@ GameObject:
   - component: {fileID: 3068149455680548111}
   - component: {fileID: 3068149455680548110}
   - component: {fileID: 3068149455680548109}
+  - component: {fileID: 7142577970679344191}
   m_Layer: 0
   m_Name: title_panel
   m_TagString: Untagged
@@ -1125,6 +1187,35 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7142577970679344191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068149455680548115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_MethodName: PlayWeak
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8300000, guid: 5de378a42916bd14aa8fc12697def710,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &3068149455681285333
 GameObject:
   m_ObjectHideFlags: 0
@@ -1794,6 +1885,7 @@ GameObject:
   - component: {fileID: 3068149456019070251}
   - component: {fileID: 3068149456019070250}
   - component: {fileID: 3068149456019070249}
+  - component: {fileID: 8501273318882655733}
   m_Layer: 0
   m_Name: input_field
   m_TagString: Untagged
@@ -1883,6 +1975,35 @@ MonoBehaviour:
   m_allowAnalogButton: 0
   m_joystick: 0
   m_rebindType: 0
+--- !u!114 &8501273318882655733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068149456019070255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_MethodName: PlayWeak
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8300000, guid: 5de378a42916bd14aa8fc12697def710,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &3068149456108054212
 GameObject:
   m_ObjectHideFlags: 0
@@ -2010,6 +2131,7 @@ GameObject:
   - component: {fileID: 3068149456194056543}
   - component: {fileID: 3068149456194056542}
   - component: {fileID: 3068149456194056541}
+  - component: {fileID: 2734270167386927210}
   m_Layer: 0
   m_Name: input_field
   m_TagString: Untagged
@@ -2099,6 +2221,35 @@ MonoBehaviour:
   m_allowAnalogButton: 0
   m_joystick: 0
   m_rebindType: 0
+--- !u!114 &2734270167386927210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068149456194056547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_MethodName: PlayWeak
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8300000, guid: 5de378a42916bd14aa8fc12697def710,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &3068149456221872185
 GameObject:
   m_ObjectHideFlags: 0
@@ -2111,6 +2262,7 @@ GameObject:
   - component: {fileID: 3068149456221872181}
   - component: {fileID: 3068149456221872180}
   - component: {fileID: 3068149456221872187}
+  - component: {fileID: 3841323565355934366}
   m_Layer: 0
   m_Name: input_field
   m_TagString: Untagged
@@ -2200,6 +2352,35 @@ MonoBehaviour:
   m_allowAnalogButton: 0
   m_joystick: 0
   m_rebindType: 0
+--- !u!114 &3841323565355934366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068149456221872185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_MethodName: PlayWeak
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8300000, guid: 5de378a42916bd14aa8fc12697def710,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &3068149456222526978
 GameObject:
   m_ObjectHideFlags: 0
@@ -2279,12 +2460,12 @@ RectTransform:
   - {fileID: 3068149456145079799}
   - {fileID: 3068149456474767775}
   - {fileID: 3068149455414523128}
-  m_Father: {fileID: 3068149456345135737}
+  m_Father: {fileID: 3068149455369322248}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -237.00003}
+  m_AnchoredPosition: {x: 0, y: -0.000030517578}
   m_SizeDelta: {x: 1300, y: 600}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &3068149456228644846
@@ -2492,6 +2673,7 @@ GameObject:
   - component: {fileID: 3068149456301442922}
   - component: {fileID: 3068149456301442921}
   - component: {fileID: 3068149456301442920}
+  - component: {fileID: 2375813561562495997}
   m_Layer: 0
   m_Name: input_field
   m_TagString: Untagged
@@ -2581,6 +2763,35 @@ MonoBehaviour:
   m_allowAnalogButton: 0
   m_joystick: 0
   m_rebindType: 0
+--- !u!114 &2375813561562495997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068149456301442926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_MethodName: PlayWeak
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8300000, guid: 5de378a42916bd14aa8fc12697def710,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &3068149456307123845
 GameObject:
   m_ObjectHideFlags: 0
@@ -2593,6 +2804,7 @@ GameObject:
   - component: {fileID: 3068149456307123841}
   - component: {fileID: 3068149456307123840}
   - component: {fileID: 3068149456307123847}
+  - component: {fileID: 8107947537022848911}
   m_Layer: 0
   m_Name: input_field
   m_TagString: Untagged
@@ -2682,6 +2894,35 @@ MonoBehaviour:
   m_allowAnalogButton: 0
   m_joystick: 0
   m_rebindType: 0
+--- !u!114 &8107947537022848911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068149456307123845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_MethodName: PlayWeak
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8300000, guid: 5de378a42916bd14aa8fc12697def710,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &3068149456345135736
 GameObject:
   m_ObjectHideFlags: 0
@@ -2713,7 +2954,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 3068149455369322248}
-  - {fileID: 3068149456228644844}
   m_Father: {fileID: 3068149456838953344}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3822,6 +4062,7 @@ GameObject:
   - component: {fileID: 3068149456747773884}
   - component: {fileID: 3068149456747773763}
   - component: {fileID: 3068149456747773762}
+  - component: {fileID: 4683708615891458243}
   m_Layer: 0
   m_Name: input_field
   m_TagString: Untagged
@@ -3911,6 +4152,35 @@ MonoBehaviour:
   m_allowAnalogButton: 0
   m_joystick: 0
   m_rebindType: 0
+--- !u!114 &4683708615891458243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068149456747773760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_MethodName: PlayWeak
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8300000, guid: 5de378a42916bd14aa8fc12697def710,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &3068149456791334675
 GameObject:
   m_ObjectHideFlags: 0
@@ -4048,6 +4318,7 @@ GameObject:
   - component: {fileID: 3068149456878441080}
   - component: {fileID: 3068149456878441087}
   - component: {fileID: 3068149456878441086}
+  - component: {fileID: 2716939179530503881}
   m_Layer: 0
   m_Name: title_panel
   m_TagString: Untagged
@@ -4166,6 +4437,35 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2716939179530503881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068149456878441084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_MethodName: PlayWeak
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8300000, guid: 5de378a42916bd14aa8fc12697def710,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &3068149456879420639
 GameObject:
   m_ObjectHideFlags: 0
@@ -4567,6 +4867,7 @@ GameObject:
   - component: {fileID: 3068149457244109057}
   - component: {fileID: 3068149457244109056}
   - component: {fileID: 3068149457244109063}
+  - component: {fileID: 6091451910190894570}
   m_Layer: 0
   m_Name: input_field
   m_TagString: Untagged
@@ -4656,6 +4957,35 @@ MonoBehaviour:
   m_allowAnalogButton: 0
   m_joystick: 0
   m_rebindType: 0
+--- !u!114 &6091451910190894570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068149457244109061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_MethodName: PlayWeak
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8300000, guid: 5de378a42916bd14aa8fc12697def710,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &3068149457249114301
 GameObject:
   m_ObjectHideFlags: 0
@@ -4861,6 +5191,7 @@ GameObject:
   - component: {fileID: 3068149457323723072}
   - component: {fileID: 3068149457323723079}
   - component: {fileID: 3068149457323723078}
+  - component: {fileID: 957080299619908828}
   m_Layer: 0
   m_Name: input_field
   m_TagString: Untagged
@@ -4950,6 +5281,35 @@ MonoBehaviour:
   m_allowAnalogButton: 0
   m_joystick: 0
   m_rebindType: 0
+--- !u!114 &957080299619908828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068149457323723076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_MethodName: PlayWeak
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8300000, guid: 5de378a42916bd14aa8fc12697def710,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &3068149457336463604
 GameObject:
   m_ObjectHideFlags: 0
@@ -5301,6 +5661,7 @@ GameObject:
   - component: {fileID: 3068149457416545357}
   - component: {fileID: 3068149457416545356}
   - component: {fileID: 3068149457416545363}
+  - component: {fileID: 4419607410247792076}
   m_Layer: 0
   m_Name: input_field
   m_TagString: Untagged
@@ -5390,6 +5751,35 @@ MonoBehaviour:
   m_allowAnalogButton: 0
   m_joystick: 0
   m_rebindType: 0
+--- !u!114 &4419607410247792076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3068149457416545361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_MethodName: PlayWeak
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8300000, guid: 5de378a42916bd14aa8fc12697def710,
+              type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &3068149455398631182
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5731,6 +6121,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7315ae18c361e5c458b2c3d9ced502fa, type: 3}
+--- !u!224 &4294039012564469524 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1225889595264826257, guid: 7315ae18c361e5c458b2c3d9ced502fa,
+    type: 3}
+  m_PrefabInstance: {fileID: 3068149455955459205}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7581306250764316979 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4873585782734523830, guid: 7315ae18c361e5c458b2c3d9ced502fa,
@@ -5743,12 +6139,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &4294039012564469524 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1225889595264826257, guid: 7315ae18c361e5c458b2c3d9ced502fa,
-    type: 3}
-  m_PrefabInstance: {fileID: 3068149455955459205}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3068149456420181360
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5908,6 +6298,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7315ae18c361e5c458b2c3d9ced502fa, type: 3}
+--- !u!224 &4294039012909313761 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1225889595264826257, guid: 7315ae18c361e5c458b2c3d9ced502fa,
+    type: 3}
+  m_PrefabInstance: {fileID: 3068149456420181360}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7581306252235544774 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4873585782734523830, guid: 7315ae18c361e5c458b2c3d9ced502fa,
@@ -5920,12 +6316,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &4294039012909313761 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1225889595264826257, guid: 7315ae18c361e5c458b2c3d9ced502fa,
-    type: 3}
-  m_PrefabInstance: {fileID: 3068149456420181360}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3068149457060054347
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6085,6 +6475,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7315ae18c361e5c458b2c3d9ced502fa, type: 3}
+--- !u!224 &4294039013616271066 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1225889595264826257, guid: 7315ae18c361e5c458b2c3d9ced502fa,
+    type: 3}
+  m_PrefabInstance: {fileID: 3068149457060054347}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7581306251860396285 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4873585782734523830, guid: 7315ae18c361e5c458b2c3d9ced502fa,
@@ -6097,12 +6493,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &4294039013616271066 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1225889595264826257, guid: 7315ae18c361e5c458b2c3d9ced502fa,
-    type: 3}
-  m_PrefabInstance: {fileID: 3068149457060054347}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4515855417138758857
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6257,6 +6647,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7315ae18c361e5c458b2c3d9ced502fa, type: 3}
+--- !u!224 &3434195397815254872 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1225889595264826257, guid: 7315ae18c361e5c458b2c3d9ced502fa,
+    type: 3}
+  m_PrefabInstance: {fileID: 4515855417138758857}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &9010012775507642751 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4873585782734523830, guid: 7315ae18c361e5c458b2c3d9ced502fa,
@@ -6269,9 +6665,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &3434195397815254872 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1225889595264826257, guid: 7315ae18c361e5c458b2c3d9ced502fa,
-    type: 3}
-  m_PrefabInstance: {fileID: 4515855417138758857}
-  m_PrefabAsset: {fileID: 0}
