@@ -44,7 +44,7 @@ namespace Bats
 			{
 				if (!landingChild.gameObject.activeInHierarchy) StartCoroutine(ReleaseFlockChild(0.0f, 0.0f));
 
-				var distance = Vector3.Distance(landingChild._thisT.position, thisT.position);
+				var distance = Vector3.Distance(landingChild.thisT.position, thisT.position);
 
 				if (distance < 5 && distance > .5f)
 				{
@@ -60,7 +60,7 @@ namespace Bats
 					landingChild.targetSpeed = landingChild.spawner.maxSpeed * .5f;
 					landingChild.wayPoint = thisT.position;
 					landingChild.damping = controller.landingTurnSpeedModifier;
-					landingChild._avoid = false;
+					landingChild.avoid = false;
 				}
 				else if (distance <= .5f)
 				{
@@ -76,7 +76,7 @@ namespace Bats
 					if (distance > .01f)
 					{
 						landingChild.targetSpeed = landingChild.spawner.minSpeed * controller.landingSpeedModifier;
-						landingChild._thisT.position += (thisT.position - landingChild._thisT.position) *
+						landingChild.thisT.position += (thisT.position - landingChild.thisT.position) *
 														Time.deltaTime * landingChild.speed *
 														controller.landingSpeedModifier;
 					}
@@ -84,12 +84,12 @@ namespace Bats
 					landingChild.move = false;
 					_lerpCounter++;
 
-					var rot = landingChild._thisT.rotation;
+					var rot = landingChild.thisT.rotation;
 					var rotE = rot.eulerAngles;
-					rotE.y = Mathf.LerpAngle(landingChild._thisT.rotation.eulerAngles.y, thisT.rotation.eulerAngles.y,
+					rotE.y = Mathf.LerpAngle(landingChild.thisT.rotation.eulerAngles.y, thisT.rotation.eulerAngles.y,
 						_lerpCounter * Time.deltaTime * .005f);
 					rot.eulerAngles = rotE;
-					landingChild._thisT.rotation = rot;
+					landingChild.thisT.rotation = rot;
 
 					landingChild.damping = controller.landingTurnSpeedModifier;
 				}
@@ -114,7 +114,7 @@ namespace Bats
 			Gizmos.color = Color.yellow;
 
 			if (landingChild != null && landing)
-				Gizmos.DrawLine(thisT.position, landingChild._thisT.position);
+				Gizmos.DrawLine(thisT.position, landingChild.thisT.position);
 			if (thisT.rotation.eulerAngles.x != 0 || thisT.rotation.eulerAngles.z != 0)
 				thisT.eulerAngles = new Vector3(0.0f, thisT.eulerAngles.y, 0.0f);
 			Gizmos.DrawWireCube(new Vector3(thisT.position.x, thisT.position.y, thisT.position.z),
@@ -149,31 +149,31 @@ namespace Bats
 						{
 							if (fChild == null &&
 								controller.maxBirdDistance >
-								Vector3.Distance(child._thisT.position, thisT.position) &&
-								controller.minBirdDistance < Vector3.Distance(child._thisT.position, thisT.position))
+								Vector3.Distance(child.thisT.position, thisT.position) &&
+								controller.minBirdDistance < Vector3.Distance(child.thisT.position, thisT.position))
 							{
 								fChild = child;
 								if (!controller.takeClosest) break;
 							}
-							else if (fChild != null && Vector3.Distance(fChild._thisT.position, thisT.position) >
-								Vector3.Distance(child._thisT.position, thisT.position))
+							else if (fChild != null && Vector3.Distance(fChild.thisT.position, thisT.position) >
+								Vector3.Distance(child.thisT.position, thisT.position))
 							{
 								fChild = child;
 							}
 						}
 						else
 						{
-							if (fChild == null && child._thisT.position.y > thisT.position.y &&
+							if (fChild == null && child.thisT.position.y > thisT.position.y &&
 								controller.maxBirdDistance >
-								Vector3.Distance(child._thisT.position, thisT.position) &&
-								controller.minBirdDistance < Vector3.Distance(child._thisT.position, thisT.position))
+								Vector3.Distance(child.thisT.position, thisT.position) &&
+								controller.minBirdDistance < Vector3.Distance(child.thisT.position, thisT.position))
 							{
 								fChild = child;
 								if (!controller.takeClosest) break;
 							}
-							else if (fChild != null && child._thisT.position.y > thisT.position.y &&
-									 Vector3.Distance(fChild._thisT.position, thisT.position) >
-									 Vector3.Distance(child._thisT.position, thisT.position))
+							else if (fChild != null && child.thisT.position.y > thisT.position.y &&
+									 Vector3.Distance(fChild.thisT.position, thisT.position) >
+									 Vector3.Distance(child.thisT.position, thisT.position))
 							{
 								fChild = child;
 							}
@@ -233,7 +233,7 @@ namespace Bats
 					landing = true;
 
 					landingChild.landing = true;
-					landingChild._thisT.position = thisT.position;
+					landingChild.thisT.position = thisT.position;
 					landingChild.model.GetComponent<Animation>().Play(landingChild.spawner.idleAnimation);
 					StartCoroutine(ReleaseFlockChild(controller.autoDismountDelay.x, controller.autoDismountDelay.y));
 				}
@@ -259,13 +259,13 @@ namespace Bats
 				_lerpCounter = 0;
 				if (controller.featherPS != null)
 				{
-					controller.featherPS.position = landingChild._thisT.position;
+					controller.featherPS.position = landingChild.thisT.position;
 					controller.featherPS.GetComponent<ParticleSystem>().Emit(Random.Range(0, 3));
 				}
 
 				landing = false;
 				_idle = false;
-				landingChild._avoid = true;
+				landingChild.avoid = true;
 
 				landingChild.damping = landingChild.spawner.maxDamping;
 				landingChild.model.GetComponent<Animation>().CrossFade(landingChild.spawner.flapAnimation, .2f);

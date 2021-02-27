@@ -16,13 +16,15 @@ namespace Items
         private readonly FlashPattern[] _lightPattern =
         {
             // initial battery capacity
-            new FlashPattern {IsDark = false, Time = 100, Intensity = 1f},
+            new FlashPattern {IsDark = false, Time = 400, Intensity = 1f},
 
             // light pattern (first light then dark and so on)
             new FlashPattern {IsDark = false, Time = 120, Intensity = 1f},
             new FlashPattern {IsDark = true, Time = 10, Intensity = 0f},
             new FlashPattern {IsDark = false, Time = 120, Intensity = 0.8f},
             new FlashPattern {IsDark = true, Time = 35, Intensity = 0f},
+            new FlashPattern {IsDark = false, Time = 100, Intensity = 0.6f},
+            new FlashPattern {IsDark = true, Time = 50, Intensity = 0f},
             new FlashPattern {IsDark = false, Time = 60, Intensity = 0.4f},
 
             // end pattern

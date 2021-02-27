@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+// ReSharper disable once CheckNamespace
 namespace Bats
 {
 	/// <summary>
@@ -90,7 +91,7 @@ namespace Bats
 				if (updateDivisor > 1)
 				{
 					updateCounter++;
-					updateCounter = updateCounter % updateDivisor;
+					updateCounter %= updateDivisor;
 					newDelta = Time.deltaTime * updateDivisor;
 				}
 				else
@@ -126,7 +127,7 @@ namespace Bats
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
 		/// <param name="amount"></param>
-		public void AddChild(int amount)
+		private void AddChild(int amount)
 		{
 			if (groupChildToNewTransform) InstantiateGroup();
 			for (var i = 0; i < amount; i++)
@@ -143,7 +144,7 @@ namespace Bats
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
 		/// <param name="obj"></param>
-		public void AddChildToParent(Transform obj)
+		private void AddChildToParent(Transform obj)
 		{
 			if (groupChildToFlock)
 			{
@@ -159,7 +160,7 @@ namespace Bats
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
 		/// <param name="amount"></param>
-		public void RemoveChild(int amount)
+		private void RemoveChild(int amount)
 		{
 			for (var i = 0; i < amount; i++)
 			{
@@ -173,7 +174,7 @@ namespace Bats
 		///     <para> InstantiateGroup </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public void InstantiateGroup()
+		private void InstantiateGroup()
 		{
 			if (groupTransform != null) return;
 			var g = new GameObject();
@@ -194,7 +195,7 @@ namespace Bats
 		///     <para> UpdateChildAmount </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public void UpdateChildAmount()
+		private void UpdateChildAmount()
 		{
 			if (childAmount >= 0 && childAmount < roamers.Count)
 			{

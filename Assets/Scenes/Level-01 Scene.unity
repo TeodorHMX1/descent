@@ -8678,7 +8678,7 @@ GameObject:
   - component: {fileID: 479208876}
   - component: {fileID: 479208875}
   m_Layer: 5
-  m_Name: Alpha tutorial buttons
+  m_Name: Full Controls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8698,10 +8698,10 @@ RectTransform:
   m_Father: {fileID: 1555722565}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -664, y: -352}
-  m_SizeDelta: {x: 500, y: 320}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 550, y: 70}
+  m_SizeDelta: {x: 1000, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &479208875
 MonoBehaviour:
@@ -27360,7 +27360,7 @@ GameObject:
   - component: {fileID: 1469593599}
   - component: {fileID: 1469593598}
   m_Layer: 5
-  m_Name: Controls prompt
+  m_Name: Minimized Controls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41406,6 +41406,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc4e43a6840122c438b503e069f5ac6a, type: 3}
+--- !u!1 &2121469801 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8615552267309181299, guid: 77f84b7a245c2a441a4759ee48d0a8dd,
+    type: 3}
+  m_PrefabInstance: {fileID: 8615552266832738981}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2121469802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121469801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54152020529443aa988eb47e2baaf978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fullControls: {fileID: 479208875}
+  minimizedControls: {fileID: 1469593598}
 --- !u!4 &2123745987 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fc4e43a6840122c438b503e069f5ac6a,

@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Bats
 {
@@ -40,9 +42,9 @@ namespace Bats
 
 		[HideInInspector] public float _avoidDistance;
 
-		[HideInInspector] public bool _avoid = true;
+		[HideInInspector] public bool avoid = true;
 
-		public Transform _thisT;
+		public Transform thisT;
 		private bool _instantiated;
 		private int _lerpCounter;
 		private float _soarTimer;
@@ -57,54 +59,45 @@ namespace Bats
 			FindRequiredComponents();
 			Wander(0.0f);
 			SetRandomScale();
-			_thisT.position = findWaypoint();
+			thisT.position = FindWaypoint();
 			RandomizeStartAnimationFrame();
 			InitAvoidanceValues();
 			speed = spawner.minSpeed;
 			spawner.activeChildren++;
 			_instantiated = true;
-			if (spawner.updateDivisor > 1)
-			{
-				var _updateSeedCap = spawner.updateDivisor - 1;
-				_updateNextSeed++;
-				_updateSeed = _updateNextSeed;
-				_updateNextSeed = _updateNextSeed % _updateSeedCap;
-			}
+			if (spawner.updateDivisor <= 1) return;
+			var updateSeedCap = spawner.updateDivisor - 1;
+			_updateNextSeed++;
+			_updateSeed = _updateNextSeed;
+			_updateNextSeed %= updateSeedCap;
 		}
 
 		/// <summary>
-		///     <para> Start </para>
+		///     <para> Update </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
 		public void Update()
 		{
-			if (spawner.updateDivisor <= 1 || spawner.updateCounter == _updateSeed)
-			{
-				SoarTimeLimit();
-				CheckForDistanceToWaypoint();
-				RotationBasedOnWaypointOrAvoidance();
-				LimitRotationOfModel();
-			}
+			if (spawner.updateDivisor > 1 && spawner.updateCounter != _updateSeed) return;
+			SoarTimeLimit();
+			CheckForDistanceToWaypoint();
+			RotationBasedOnWaypointOrAvoidance();
+			LimitRotationOfModel();
 		}
 
 		/// <summary>
-		///     <para> Start </para>
+		///     <para> OnEnable </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
 		public void OnEnable()
 		{
-			if (_instantiated)
-			{
-				spawner.activeChildren++;
-				if (landing)
-					model.GetComponent<Animation>().Play(spawner.idleAnimation);
-				else
-					model.GetComponent<Animation>().Play(spawner.flapAnimation);
-			}
+			if (!_instantiated) return;
+			spawner.activeChildren++;
+			model.GetComponent<Animation>().Play(landing ? spawner.idleAnimation : spawner.flapAnimation);
 		}
 
 		/// <summary>
-		///     <para> Start </para>
+		///     <para> OnDisable </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
 		public void OnDisable()
@@ -114,33 +107,33 @@ namespace Bats
 		}
 
 		/// <summary>
-		///     <para> Start </para>
+		///     <para> FindRequiredComponents </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public void FindRequiredComponents()
+		private void FindRequiredComponents()
 		{
-			if (_thisT == null) _thisT = transform;
-			if (model == null) model = _thisT.Find("Model").gameObject;
+			if (thisT == null) thisT = transform;
+			if (model == null) model = thisT.Find("Model").gameObject;
 			if (modelT == null) modelT = model.transform;
 		}
 
 		/// <summary>
-		///     <para> Start </para>
+		///     <para> RandomizeStartAnimationFrame </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public void RandomizeStartAnimationFrame()
+		private void RandomizeStartAnimationFrame()
 		{
 			foreach (AnimationState state in model.GetComponent<Animation>()) state.time = Random.value * state.length;
 		}
 
 		/// <summary>
-		///     <para> Start </para>
+		///     <para> InitAvoidanceValues </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public void InitAvoidanceValues()
+		private void InitAvoidanceValues()
 		{
 			_avoidValue = Random.Range(.3f, .1f);
-			if (spawner.birdAvoidDistanceMax != spawner.birdAvoidDistanceMin)
+			if (Math.Abs(spawner.birdAvoidDistanceMax - spawner.birdAvoidDistanceMin) > 0)
 			{
 				_avoidDistance = Random.Range(spawner.birdAvoidDistanceMax, spawner.birdAvoidDistanceMin);
 				return;
@@ -150,134 +143,126 @@ namespace Bats
 		}
 
 		/// <summary>
-		///     <para> Start </para>
+		///     <para> SetRandomScale </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public void SetRandomScale()
+		private void SetRandomScale()
 		{
 			var sc = Random.Range(spawner.minScale, spawner.maxScale);
-			_thisT.localScale = new Vector3(sc, sc, sc);
+			thisT.localScale = new Vector3(sc, sc, sc);
 		}
 
 		/// <summary>
-		///     <para> Start </para>
+		///     <para> SoarTimeLimit </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		//Soar Timeout - Limits how long a bird can soar
-		public void SoarTimeLimit()
+		private void SoarTimeLimit()
 		{
-			if (soar && spawner.soarMaxTime > 0)
+			if (!soar || !(spawner.soarMaxTime > 0)) return;
+			if (_soarTimer > spawner.soarMaxTime)
 			{
-				if (_soarTimer > spawner.soarMaxTime)
-				{
-					Flap();
-					_soarTimer = 0.0f;
-				}
-				else
-				{
-					_soarTimer += spawner.newDelta;
-				}
-			}
-		}
-
-		/// <summary>
-		///     <para> Start </para>
-		///     <author> @TeodorHMX1 </author>
-		/// </summary>
-		public void CheckForDistanceToWaypoint()
-		{
-			if (!landing && (_thisT.position - wayPoint).magnitude < spawner.waypointDistance + stuckCounter)
-			{
-				Wander(0.0f);
-				stuckCounter = 0.0f;
-			}
-			else if (!landing)
-			{
-				stuckCounter += spawner.newDelta;
+				Flap();
+				_soarTimer = 0.0f;
 			}
 			else
 			{
-				stuckCounter = 0.0f;
+				_soarTimer += spawner.newDelta;
 			}
 		}
 
 		/// <summary>
-		///     <para> Start </para>
+		///     <para> CheckForDistanceToWaypoint </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public void RotationBasedOnWaypointOrAvoidance()
+		private void CheckForDistanceToWaypoint()
 		{
-			var lookit = wayPoint - _thisT.position;
-			if (targetSpeed > -1 && lookit != Vector3.zero)
+			switch (landing)
 			{
-				var rotation = Quaternion.LookRotation(lookit);
+				case false when (thisT.position - wayPoint).magnitude < spawner.waypointDistance + stuckCounter:
+					Wander(0.0f);
+					stuckCounter = 0.0f;
+					break;
+				case false:
+					stuckCounter += spawner.newDelta;
+					break;
+				default:
+					stuckCounter = 0.0f;
+					break;
+			}
+		}
 
-				_thisT.rotation = Quaternion.Slerp(_thisT.rotation, rotation, spawner.newDelta * damping);
+		/// <summary>
+		///     <para> RotationBasedOnWaypointOrAvoidance </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
+		private void RotationBasedOnWaypointOrAvoidance()
+		{
+			var lookIt = wayPoint - thisT.position;
+			if (targetSpeed > -1 && lookIt != Vector3.zero)
+			{
+				var rotation = Quaternion.LookRotation(lookIt);
+
+				thisT.rotation = Quaternion.Slerp(thisT.rotation, rotation, spawner.newDelta * damping);
 			}
 
 			if (spawner.childTriggerPos)
-				if ((_thisT.position - spawner.posBuffer).magnitude < 1)
+				if ((thisT.position - spawner.posBuffer).magnitude < 1)
 					spawner.SetFlockRandomPosition();
 			speed = Mathf.Lerp(speed, targetSpeed, _lerpCounter * spawner.newDelta * .05f);
 			_lerpCounter++;
-			if (move)
-			{
-				_thisT.position += _thisT.forward * speed * spawner.newDelta;
-				if (_avoid && spawner.birdAvoid)
-					Avoidance();
-			}
+			if (!move) return;
+			thisT.position += thisT.forward * (speed * spawner.newDelta);
+			if (avoid && spawner.birdAvoid)
+				Avoidance();
 		}
 
 		/// <summary>
-		///     <para> Start </para>
+		///     <para> Avoidance </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public bool Avoidance()
+		private bool Avoidance()
 		{
-			var hit = new RaycastHit();
 			var fwd = modelT.forward;
 			var r = false;
-			var rot = Quaternion.identity;
-			var rotE = Vector3.zero;
-			var pos = Vector3.zero;
-			pos = _thisT.position;
-			rot = _thisT.rotation;
-			rotE = _thisT.rotation.eulerAngles;
-			if (Physics.Raycast(_thisT.position, fwd + modelT.right * _avoidValue, out hit, _avoidDistance,
+			var pos = thisT.position;
+			var rotation = thisT.rotation;
+			var rot = rotation;
+			var rotE = rotation.eulerAngles;
+			if (Physics.Raycast(thisT.position, fwd + modelT.right * _avoidValue, out _, _avoidDistance,
 				spawner.avoidanceMask))
 			{
 				rotE.y -= spawner.birdAvoidHorizontalForce * spawner.newDelta * damping;
 				rot.eulerAngles = rotE;
-				_thisT.rotation = rot;
+				thisT.rotation = rot;
 				r = true;
 			}
-			else if (Physics.Raycast(_thisT.position, fwd + modelT.right * -_avoidValue, out hit, _avoidDistance,
+			else if (Physics.Raycast(thisT.position, fwd + modelT.right * -_avoidValue, out _, _avoidDistance,
 				spawner.avoidanceMask))
 			{
 				rotE.y += spawner.birdAvoidHorizontalForce * spawner.newDelta * damping;
 				rot.eulerAngles = rotE;
-				_thisT.rotation = rot;
+				thisT.rotation = rot;
 				r = true;
 			}
 
-			if (spawner.birdAvoidDown && !landing && Physics.Raycast(_thisT.position, -Vector3.up, out hit,
+			if (spawner.birdAvoidDown && !landing && Physics.Raycast(thisT.position, -Vector3.up, out _,
 				_avoidDistance, spawner.avoidanceMask))
 			{
 				rotE.x -= spawner.birdAvoidVerticalForce * spawner.newDelta * damping;
 				rot.eulerAngles = rotE;
-				_thisT.rotation = rot;
+				thisT.rotation = rot;
 				pos.y += spawner.birdAvoidVerticalForce * spawner.newDelta * .01f;
-				_thisT.position = pos;
+				thisT.position = pos;
 				r = true;
 			}
-			else if (spawner.birdAvoidUp && !landing && Physics.Raycast(_thisT.position, Vector3.up, out hit,
+			else if (spawner.birdAvoidUp && !landing && Physics.Raycast(thisT.position, Vector3.up, out _,
 				_avoidDistance, spawner.avoidanceMask))
 			{
 				rotE.x += spawner.birdAvoidVerticalForce * spawner.newDelta * damping;
 				rot.eulerAngles = rotE;
-				_thisT.rotation = rot;
+				thisT.rotation = rot;
 				pos.y -= spawner.birdAvoidVerticalForce * spawner.newDelta * .01f;
-				_thisT.position = pos;
+				thisT.position = pos;
 				r = true;
 			}
 
@@ -285,19 +270,17 @@ namespace Bats
 		}
 
 		/// <summary>
-		///     <para> Start </para>
+		///     <para> LimitRotationOfModel </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public void LimitRotationOfModel()
+		private void LimitRotationOfModel()
 		{
-			var rot = Quaternion.identity;
-			var rotE = Vector3.zero;
-			rot = modelT.localRotation;
-			rotE = rot.eulerAngles;
-			if ((soar && spawner.flatSoar || spawner.flatFly && !soar) && wayPoint.y > _thisT.position.y ||
+			var rot = modelT.localRotation;
+			var rotE = rot.eulerAngles;
+			if ((soar && spawner.flatSoar || spawner.flatFly && !soar) && wayPoint.y > thisT.position.y ||
 				landing)
 			{
-				rotE.x = Mathf.LerpAngle(modelT.localEulerAngles.x, -_thisT.localEulerAngles.x,
+				rotE.x = Mathf.LerpAngle(modelT.localEulerAngles.x, -thisT.localEulerAngles.x,
 					_lerpCounter * spawner.newDelta * .75f);
 				rot.eulerAngles = rotE;
 				modelT.localRotation = rot;
@@ -316,13 +299,11 @@ namespace Bats
 		/// </summary>
 		public void Wander(float delay)
 		{
-			if (!landing)
-			{
-				damping = Random.Range(spawner.minDamping, spawner.maxDamping);
-				targetSpeed = Random.Range(spawner.minSpeed, spawner.maxSpeed);
-				_lerpCounter = 0;
-				Invoke("SetRandomMode", delay);
-			}
+			if (landing) return;
+			damping = Random.Range(spawner.minDamping, spawner.maxDamping);
+			targetSpeed = Random.Range(spawner.minSpeed, spawner.maxSpeed);
+			_lerpCounter = 0;
+			Invoke(nameof(SetRandomMode), delay);
 		}
 
 		/// <summary>
@@ -331,7 +312,7 @@ namespace Bats
 		/// </summary>
 		public void SetRandomMode()
 		{
-			CancelInvoke("SetRandomMode");
+			CancelInvoke(nameof(SetRandomMode));
 			if (!dived && Random.value < spawner.soarFrequency)
 				Soar();
 			else if (!dived && Random.value < spawner.diveFrequency)
@@ -341,26 +322,24 @@ namespace Bats
 		}
 
 		/// <summary>
-		///     <para> Start </para>
+		///     <para> Flap </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
 		public void Flap()
 		{
-			if (move)
-			{
-				if (model != null) model.GetComponent<Animation>().CrossFade(spawner.flapAnimation, .5f);
-				soar = false;
-				animationSpeed();
-				wayPoint = findWaypoint();
-				dived = false;
-			}
+			if (!move) return;
+			if (model != null) model.GetComponent<Animation>().CrossFade(spawner.flapAnimation, .5f);
+			soar = false;
+			AnimationSpeed();
+			wayPoint = FindWaypoint();
+			dived = false;
 		}
 
 		/// <summary>
-		///     <para> Start </para>
+		///     <para> FindWaypoint </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public Vector3 findWaypoint()
+		private Vector3 FindWaypoint()
 		{
 			var t = Vector3.zero;
 			t.x = Random.Range(-spawner.spawnSphere, spawner.spawnSphere) + spawner.posBuffer.x;
@@ -370,41 +349,39 @@ namespace Bats
 		}
 
 		/// <summary>
-		///     <para> Start </para>
+		///     <para> Soar </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public void Soar()
+		private void Soar()
 		{
-			if (move)
-			{
-				model.GetComponent<Animation>().CrossFade(spawner.soarAnimation, 1.5f);
-				wayPoint = findWaypoint();
-				soar = true;
-			}
+			if (!move) return;
+			model.GetComponent<Animation>().CrossFade(spawner.soarAnimation, 1.5f);
+			wayPoint = FindWaypoint();
+			soar = true;
 		}
 
 		/// <summary>
-		///     <para> Start </para>
+		///     <para> Dive </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public void Dive()
+		private void Dive()
 		{
 			if (spawner.soarAnimation != null)
 				model.GetComponent<Animation>().CrossFade(spawner.soarAnimation, 1.5f);
 			else
 				foreach (AnimationState state in model.GetComponent<Animation>())
-					if (_thisT.position.y < wayPoint.y + 25)
+					if (thisT.position.y < wayPoint.y + 25)
 						state.speed = 0.1f;
-			wayPoint = findWaypoint();
+			wayPoint = FindWaypoint();
 			wayPoint.y -= spawner.diveValue;
 			dived = true;
 		}
 
 		/// <summary>
-		///     <para> Start </para>
+		///     <para> AnimationSpeed </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
-		public void animationSpeed()
+		private void AnimationSpeed()
 		{
 			foreach (AnimationState state in model.GetComponent<Animation>())
 				if (!dived && !landing)

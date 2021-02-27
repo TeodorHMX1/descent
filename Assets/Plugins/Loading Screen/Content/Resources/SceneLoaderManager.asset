@@ -36,7 +36,7 @@ MonoBehaviour:
       Description: 
       SkipType: 3
       LoadingType: 0
-      FakeLoadingTime: 20
+      FakeLoadingTime: 30
       Backgrounds: []
     - SceneName: Level-02 Scene
       SceneAsset: {fileID: 102900000, guid: 396f5e11804805a41aaee24120d54f26, type: 3}
