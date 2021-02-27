@@ -94,8 +94,8 @@ namespace ZeoFlow.Pickup
 			_isAttached = true;
 			new AudioBuilder()
 				.WithClip(Itemcollect)
-				.WithName("FootstepSound")
-				.WithVolume(SoundVolume.Normal)
+				.WithName("PickableObject_OnAttach")
+				.WithVolume(SoundVolume.Weak)
 				.Play();
 		}
 

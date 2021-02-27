@@ -87,6 +87,16 @@ namespace ZeoFlow.Pickup
 
         private void Update()
         {
+            if (Time.timeScale == 0f)
+            {
+                if (outlinerMenu != null)
+                {
+                    if (outlinerMenu.enabled)
+                    {
+                        outlinerMenu.outline.enabled = false;
+                    }
+                }
+            }
             if (!_isPuzzleFocused) return;
 
             var inputX = InputManager.GetAxisRaw(mouseHorizontalAxis);

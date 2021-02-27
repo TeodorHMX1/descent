@@ -78,6 +78,7 @@ namespace Items
             {
                 if (!FlashlightOn && _flashlightState <= FlashlightState.Triggered)
                 {
+                    helmetLight.intensity = _lightPattern[0].Intensity;
                     new AudioBuilder()
                         .WithClip(torchOn)
                         .WithName("Torch_Toggle")
