@@ -5362,6 +5362,7 @@ MonoBehaviour:
   brightness: {fileID: 7581306252235544774}
   contrast: {fileID: 7581306250764316979}
   sound: {fileID: 7581306251206654648}
+  elementToShow: {fileID: 0}
 --- !u!1 &3068149457350449970
 GameObject:
   m_ObjectHideFlags: 0
@@ -5936,7 +5937,7 @@ PrefabInstance:
     - target: {fileID: 4873585782734523830, guid: 7315ae18c361e5c458b2c3d9ced502fa,
         type: 3}
       propertyPath: m_MaxValue
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4873585783033281387, guid: 7315ae18c361e5c458b2c3d9ced502fa,
         type: 3}

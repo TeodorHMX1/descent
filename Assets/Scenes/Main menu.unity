@@ -2309,6 +2309,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3068149457336463605, guid: db10330a74701974db3bf096c3d9470b,
+        type: 3}
+      propertyPath: elementToShow
+      value: 
+      objectReference: {fileID: 491690603}
     - target: {fileID: 3068149457336463606, guid: db10330a74701974db3bf096c3d9470b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2533,6 +2538,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 7581306251206654648, guid: db10330a74701974db3bf096c3d9470b,
+        type: 3}
+      propertyPath: m_MaxValue
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7581306251243621283, guid: db10330a74701974db3bf096c3d9470b,
         type: 3}

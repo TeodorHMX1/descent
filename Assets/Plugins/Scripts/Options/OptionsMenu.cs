@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
+using ZeoFlow;
 
 namespace Options
 {
@@ -22,12 +24,19 @@ namespace Options
 		[SerializeField] private Slider contrast;
 		[SerializeField] private Slider sound;
 
+		[Header("Cancel Action")]
+		public GameObject elementToShow;
+
+		private bool _isElementToShowNotNull;
+
+
 		/// <summary>
 		///     <para> Start </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>
 		private void Start()
 		{
+			_isElementToShowNotNull = elementToShow != null;
 			if (graphicsContent != null)
 			{
 				graphicsContent.SetActive(true);
@@ -61,6 +70,22 @@ namespace Options
 			{
 				sound.value = PlayerPrefs.GetFloat(Constants.Options.Sound, 1.0f);
 				sound.onValueChanged.AddListener(IOnSound);
+			}
+		}
+		
+		/// <summary>
+		///     <para> Update </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
+		private void Update()
+		{
+			if (InputManager.GetButtonDown("PauseMenu"))
+			{
+				if (_isElementToShowNotNull)
+				{
+					elementToShow.SetActive(true);
+					gameObject.SetActive(false);
+				}
 			}
 		}
 
