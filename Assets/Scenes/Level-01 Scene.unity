@@ -25513,6 +25513,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27e68f5342006db4b86164b7446d3403, type: 3}
+--- !u!1 &1367054224 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1250271426816458977, guid: 12793e7668563f3439c21daca06d87a0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1773840063}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &1367054228
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367054224}
+  m_Enabled: 1
+  m_Alpha: 0.5
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &1367180083
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33570,6 +33588,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1838939933}
     m_Modifications:
+    - target: {fileID: 1209638836932727777, guid: 12793e7668563f3439c21daca06d87a0,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1210101553485912103, guid: 12793e7668563f3439c21daca06d87a0,
         type: 3}
       propertyPath: SkipType
@@ -33624,6 +33647,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1250271426816458977, guid: 12793e7668563f3439c21daca06d87a0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1250744829160380931, guid: 12793e7668563f3439c21daca06d87a0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1251031651620344507, guid: 12793e7668563f3439c21daca06d87a0,
         type: 3}
