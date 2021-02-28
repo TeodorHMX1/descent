@@ -73,6 +73,7 @@ namespace ZeoFlow.Pickup
                 {
                     crosshairsSystem.onPuzzle = Resources.Load<Texture2D>("Crosshair/crosshair_puzzle");
                 }
+
                 _isGuiHolderNotNull = crosshairsSystem.guiHolder != null;
                 if (_isGuiHolderNotNull)
                 {
@@ -80,9 +81,6 @@ namespace ZeoFlow.Pickup
                     textTemp = Instantiate(textTemp);
                     var obj = Instantiate(textTemp, new Vector3(0, 0, 0), Quaternion.identity);
                     obj.transform.SetParent(crosshairsSystem.guiHolder.transform, false);
-                    var position = obj.transform.position;
-                    position = new Vector3(position.x, height / 2 - 20, position.z);
-                    obj.transform.position = position;
                     obj.name = "TextHolder";
                     _guiText = obj.GetComponent<TextMeshProUGUI>();
                 }
@@ -114,7 +112,7 @@ namespace ZeoFlow.Pickup
                     }
                 }
             }
-            
+
             if (!_isPuzzleFocused) return;
 
             var inputX = InputManager.GetAxisRaw(mouseHorizontalAxis);
@@ -326,6 +324,7 @@ namespace ZeoFlow.Pickup
                     {
                         _timeStartedMovement = 0;
                     }
+
                     return;
                 }
 
@@ -438,6 +437,7 @@ namespace ZeoFlow.Pickup
                 {
                     _guiText.enabled = false;
                 }
+
                 return;
             }
 
@@ -455,6 +455,7 @@ namespace ZeoFlow.Pickup
                     {
                         _guiText.enabled = false;
                     }
+
                     break;
                 //Object Is Being Held Crosshair
                 case true when _isObjectHeld:
@@ -468,6 +469,7 @@ namespace ZeoFlow.Pickup
                     {
                         _guiText.enabled = false;
                     }
+
                     break;
                 //Object Can Be Held Crosshair
                 case true when _objectCan:
@@ -481,6 +483,7 @@ namespace ZeoFlow.Pickup
                     {
                         _guiText.enabled = true;
                     }
+
                     if (_outlinerMenu != null)
                     {
                         if (_outlinerMenu.enabled)
@@ -508,6 +511,7 @@ namespace ZeoFlow.Pickup
                                     _outlinerMenu = null;
                                 }
                             }
+
                             if (_isGuiHolderNotNull)
                             {
                                 _guiText.enabled = false;
@@ -521,6 +525,7 @@ namespace ZeoFlow.Pickup
                                 crosshairsSystem.onDefault);
                         }
                     }
+
                     break;
                 }
             }

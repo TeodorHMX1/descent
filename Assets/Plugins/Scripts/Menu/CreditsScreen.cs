@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Menu
 {
@@ -9,13 +10,17 @@ namespace Menu
     /// </summary>
     public class CreditsScreen : MonoBehaviour
     {
-        public Animation animationCredits;
+        [Header("Animator")]
+        public CreditsTrigger creditsTrigger;
+        public GameObject animationHolder;
 
         [Header("Main Menu Items")]
         public GameObject mainMenu;
         public GameObject optionsMenu;
+
+        [Header("Customization")] [Range(.1f, 2f)]
+        public float speed = 1f;
         
-        private AnimationClip _animationClip;
         private AnimationClip _clip;
 
         /// <summary>
@@ -24,19 +29,13 @@ namespace Menu
         /// </summary>
         private void OnEnable()
         {
-            // create a new AnimationClip
-            _clip = new AnimationClip {legacy = true};
-
-            // create a curve to move the GameObject and assign to the clip
-            var keys = new Keyframe[2];
-            keys[0] = new Keyframe(0.0f, -1030f);
-            keys[1] = new Keyframe(26.0f, 1340f);
-            var curve = new AnimationCurve(keys);
-            _clip.SetCurve("", typeof(Transform), "localPosition.y", curve);
-            
-            // now animate the GameObject
-            animationCredits.AddClip(_clip, _clip.name);
-            animationCredits.Play(_clip.name);
+            var position = animationHolder.transform.localPosition;
+            position = new Vector3(
+                position.x,
+                - 1290f,
+                position.z
+            );
+            animationHolder.transform.localPosition = position;
         }
 
         /// <summary>
@@ -45,7 +44,38 @@ namespace Menu
         /// </summary>
         private void Update()
         {
-            if (animationCredits.isPlaying) return;
+            var position = animationHolder.transform.localPosition;
+            switch (creditsTrigger.TriggerState)
+            {
+                case TriggerState.Default:
+                    position = new Vector3(
+                        position.x,
+                        position.y+1 * speed,
+                        position.z
+                    );
+                    animationHolder.transform.localPosition = position;
+                    break;
+                case TriggerState.OnPause:
+                    animationHolder.transform.localPosition = position;
+                    break;
+                case TriggerState.OnResume:
+                    animationHolder.transform.localPosition = position;
+                    creditsTrigger.TriggerState = TriggerState.Default;
+                    break;
+                case TriggerState.OnDrag:
+                    position = new Vector3(
+                        position.x,
+                        position.y + (creditsTrigger.DragSpeed * speed),
+                        position.z
+                    );
+                    animationHolder.transform.localPosition = position;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            if (!(position.y > 1410f)) return;
+            
             mainMenu.SetActive(true);
             optionsMenu.SetActive(false);
             gameObject.SetActive(false);
