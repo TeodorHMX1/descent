@@ -10,7 +10,6 @@ namespace Menu
     public class CreditsScreen : MonoBehaviour
     {
         public Animation animationCredits;
-        public GameObject creditsHolder;
 
         [Header("Main Menu Items")]
         public GameObject mainMenu;
@@ -30,8 +29,8 @@ namespace Menu
 
             // create a curve to move the GameObject and assign to the clip
             var keys = new Keyframe[2];
-            keys[0] = new Keyframe(0.0f, -1050f);
-            keys[1] = new Keyframe(16.0f, 660f);
+            keys[0] = new Keyframe(0.0f, -1030f);
+            keys[1] = new Keyframe(26.0f, 1340f);
             var curve = new AnimationCurve(keys);
             _clip.SetCurve("", typeof(Transform), "localPosition.y", curve);
             
