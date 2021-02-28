@@ -94,7 +94,7 @@ namespace ZeoFlow.Pickup
 				.WithClip(Itemcollect)
 				.WithName("PickableObject_OnAttach")
 				.WithVolume(SoundVolume.Weak)
-				.Play();
+				.Play(true);
 		}
 
 		public void OnDrop()
