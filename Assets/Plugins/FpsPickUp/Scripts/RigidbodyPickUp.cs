@@ -310,6 +310,7 @@ namespace ZeoFlow.Pickup
                 if (pickedObject.gameObject != hit.collider.gameObject) continue;
                 if (!(Vector3.Distance(hit.collider.gameObject.transform.position,
                     playerCam.transform.position) <= maxDistanceGrab)) continue;
+                if (_isPuzzleFocused && pickedObject.gameObject != _objectHeld) return;
 
                 _playerObject = hit.collider.GetComponent<PickableObject>();
                 _puzzleSub = _playerObject.puzzleSub;

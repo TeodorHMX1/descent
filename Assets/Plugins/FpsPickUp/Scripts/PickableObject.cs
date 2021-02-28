@@ -38,6 +38,8 @@ namespace ZeoFlow.Pickup
 
 			if (gameObject.GetComponent<IOnAttached>() != null)
 				gameObject.GetComponent<IOnAttached>().ONUpdate(playerAttachMenu);
+			
+			ItemsManager.Unlock(item);
 
 			if (playerAttachMenu.createNewObject)
 			{

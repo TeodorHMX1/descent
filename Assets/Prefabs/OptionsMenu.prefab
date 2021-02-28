@@ -298,7 +298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b10d4af0b50e8647844d1f5aa69e3b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_defaultInputProfile: {fileID: 4900000, guid: fae568f18bc79f740958e084bdf1c92b,
+  m_defaultInputProfile: {fileID: 4900000, guid: 79fa10f1fd0aa1947886a2e97fcca2b2,
     type: 3}
   m_controlSchemeName: KeyboardAndMouse
 --- !u!114 &2681180657996896042
@@ -6105,7 +6105,7 @@ PrefabInstance:
     - target: {fileID: 4873585782734523830, guid: 7315ae18c361e5c458b2c3d9ced502fa,
         type: 3}
       propertyPath: m_MinValue
-      value: 0.1
+      value: 0.95
       objectReference: {fileID: 0}
     - target: {fileID: 4873585782734523830, guid: 7315ae18c361e5c458b2c3d9ced502fa,
         type: 3}
@@ -6121,6 +6121,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: IOnContrast
+      objectReference: {fileID: 0}
+    - target: {fileID: 4873585782734523830, guid: 7315ae18c361e5c458b2c3d9ced502fa,
+        type: 3}
+      propertyPath: m_MaxValue
+      value: 1.05
       objectReference: {fileID: 0}
     - target: {fileID: 4873585783033281387, guid: 7315ae18c361e5c458b2c3d9ced502fa,
         type: 3}
@@ -6288,7 +6293,7 @@ PrefabInstance:
     - target: {fileID: 4873585782734523830, guid: 7315ae18c361e5c458b2c3d9ced502fa,
         type: 3}
       propertyPath: m_MinValue
-      value: 0.1
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 4873585782734523830, guid: 7315ae18c361e5c458b2c3d9ced502fa,
         type: 3}
@@ -6304,6 +6309,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Value
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4873585782734523830, guid: 7315ae18c361e5c458b2c3d9ced502fa,
+        type: 3}
+      propertyPath: m_MaxValue
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 4873585783033281387, guid: 7315ae18c361e5c458b2c3d9ced502fa,
         type: 3}

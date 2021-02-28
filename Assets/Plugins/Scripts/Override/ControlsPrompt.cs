@@ -1,4 +1,5 @@
 ﻿using System;
+using Items;
 using Map;
 using TMPro;
 using UnityEngine;
@@ -18,7 +19,7 @@ namespace Override
         [Header("Minimized Controls")] public GameObject minimizedControls;
         public TextMeshProUGUI minimizedControlsContent;
 
-        [Header("Options")] [Range(1, 8)] public int hideFullControls = 5;
+        [Header("Options")] [Range(1, 20)] public int hideFullControls = 5;
         public AudioClip toggleSound;
 
         private bool _controlsVisible;
@@ -39,12 +40,22 @@ namespace Override
             minimizedControlsContent.enabled = Time.timeScale != 0f;
             fullControlsContent.enabled = Time.timeScale != 0f;
 
-            var controlsContent = "\"" + InputManager.GetKeyName("Jump") + "\" - Jump\n";
-            controlsContent += "\"" + InputManager.GetKeyName("Run") + "\" - Run\n";
+            var controlsContent = "\"" + InputManager.GetKeyName("Run") + "\" - Run\n";
+            controlsContent += "\"" + InputManager.GetKeyName("Jump") + "\" - Jump\n";
             controlsContent += "\"" + InputManager.GetKeyName("Interact") + "\" - Interact\n";
-            controlsContent += "\"" + InputManager.GetKeyName("Map") + "\" - Show/Hide the Map\n";
-            controlsContent += "\"" + InputManager.GetKeyName("Flashlight") + "\" - Switch Flashlight On/Off\n";
-            controlsContent += "\"" + InputManager.GetKeyName("SwitchTool") + "\" - Switch Element in Hand\n";
+            if (ItemsManager.Unlocked(Item.Map))
+            {
+                controlsContent += "\"" + InputManager.GetKeyName("Map") + "\" - Show/Hide the Map\n";
+            }
+            if (ItemsManager.Unlocked(Item.Pickaxe) || ItemsManager.Unlocked(Item.Flare))
+            {
+                controlsContent += "\"" + InputManager.GetKeyName("InteractHUD") + "\" - Use the Tool\n";
+                controlsContent += "\"" + InputManager.GetKeyName("SwitchTool") + "\" - Switch Element in Hand\n";
+            }
+            if (ItemsManager.Unlocked(Item.Flashlight))
+            {
+                controlsContent += "\"" + InputManager.GetKeyName("Flashlight") + "\" - Switch Flashlight On/Off\n";
+            }
             controlsContent += "\"" + InputManager.GetKeyName("PauseMenu") + "\" - Pause Game\n";
 
             minimizedControlsContent.text = "Press \"" + InputManager.GetKeyName("ToggleControls") + "\" for controls";

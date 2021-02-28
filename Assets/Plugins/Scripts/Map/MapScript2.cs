@@ -27,9 +27,9 @@ namespace Map
         private bool _isArea3Null;
         private bool _isRigidbodyPickUpNotNull;
         private bool _isPauseNotNull;
-        
+
         private static MapScript2 _mInstance;
-        
+
         private void Awake()
         {
             if (_mInstance == null)
@@ -83,18 +83,16 @@ namespace Map
         /// </summary>
         private void Update()
         {
+            if (Time.timeScale == 0f) return;
             if (_isArea1Null || _isArea2Null || _isArea3Null) return;
 
             area1.SetActive(ColArea1);
-
             area2.SetActive(ColArea2);
-
             area3.SetActive(ColArea3);
-
-            if (InputManager.GetButtonDown("Map")) mapOpen = !mapOpen;
 
             if (InputManager.GetButtonDown("Map"))
             {
+                mapOpen = !mapOpen;
                 new AudioBuilder()
                     .WithClip(scribble)
                     .WithName("ToggleMap_Sound")

@@ -5,6 +5,7 @@
 		None,
 		Pickaxe,
 		Flare,
-		Flashlight
+		Flashlight,
+		Map
 	}
 }
