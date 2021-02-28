@@ -1,8 +1,6 @@
-﻿using System;
-using Items;
+﻿using Items;
 using Override;
 using UnityEngine;
-using UnityEngine.Serialization;
 using ZeoFlow.Pickup.Interfaces;
 
 namespace ZeoFlow.Pickup

@@ -114,6 +114,7 @@ namespace ZeoFlow.Pickup
                     }
                 }
             }
+            
             if (!_isPuzzleFocused) return;
 
             var inputX = InputManager.GetAxisRaw(mouseHorizontalAxis);
@@ -141,12 +142,15 @@ namespace ZeoFlow.Pickup
                 _isRightMovement = true;
             }
 
-            if (_timeStartedMovement < 15) return;
+            if (_timeStartedMovement < 10) return;
 
             if (_playerObject == null) return;
 
             var isRight = _isRightMovement && !_isLeftMovement;
             _playerObject.OnMovement(isRight);
+            _isLeftMovement = false;
+            _isRightMovement = false;
+            _timeStartedMovement = 0;
             _isPuzzleFocused = false;
         }
 
@@ -322,7 +326,6 @@ namespace ZeoFlow.Pickup
                     {
                         _timeStartedMovement = 0;
                     }
-
                     return;
                 }
 

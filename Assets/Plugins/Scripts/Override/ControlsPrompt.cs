@@ -6,30 +6,28 @@ using ZeoFlow;
 
 namespace Override
 {
-	/// <summary>
-	///     <para> ControlsPrompt </para>
-	///     <author> @TeodorHMX1 </author>
-	/// </summary>
-	public class ControlsPrompt : MonoBehaviour
+    /// <summary>
+    ///     <para> ControlsPrompt </para>
+    ///     <author> @TeodorHMX1 </author>
+    /// </summary>
+    public class ControlsPrompt : MonoBehaviour
     {
-	    [Header("Full Controls")]
-	    public GameObject fullControls;
-	    public TextMeshProUGUI fullControlsContent;
-	    
-	    [Header("Minimized Controls")]
-	    public GameObject minimizedControls;
+        [Header("Full Controls")] public GameObject fullControls;
+        public TextMeshProUGUI fullControlsContent;
+
+        [Header("Minimized Controls")] public GameObject minimizedControls;
         public TextMeshProUGUI minimizedControlsContent;
-        
-        [Header("Options")]
-        [Range(1, 8)] public int hideFullControls = 5;
+
+        [Header("Options")] [Range(1, 8)] public int hideFullControls = 5;
         public AudioClip toggleSound;
-        
+
         private bool _controlsVisible;
+        private int timerAutoHide;
 
         private void Start()
         {
-	        fullControls.SetActive(false);
-	        minimizedControls.SetActive(true);
+            fullControls.SetActive(false);
+            minimizedControls.SetActive(true);
         }
 
         /// <summary>
@@ -54,30 +52,41 @@ namespace Override
 
             if (MapScript2.IsMapOpened())
             {
-	            minimizedControls.SetActive(false);
-	            fullControls.SetActive(false);
-	            return;
+                minimizedControls.SetActive(false);
+                fullControls.SetActive(false);
+                return;
             }
+
+            if (timerAutoHide == hideFullControls * 60)
+            {
+                _controlsVisible = false;
+            }
+            else
+            {
+                timerAutoHide++;
+            }
+
 
             if (InputManager.GetButtonDown("ToggleControls"))
             {
-	            _controlsVisible = !_controlsVisible;
-	            new AudioBuilder()
-		            .WithClip(toggleSound)
-		            .WithName("ToggleControls")
-		            .WithVolume(SoundVolume.Normal)
-		            .Play();
+                _controlsVisible = !_controlsVisible;
+                new AudioBuilder()
+                    .WithClip(toggleSound)
+                    .WithName("ToggleControls")
+                    .WithVolume(SoundVolume.Normal)
+                    .Play();
+                if (_controlsVisible) timerAutoHide = 0;
             }
 
             if (_controlsVisible)
             {
-	            minimizedControls.SetActive(false);
-	            fullControls.SetActive(true);
+                minimizedControls.SetActive(false);
+                fullControls.SetActive(true);
             }
             else
             {
-	            fullControls.SetActive(false);
-	            minimizedControls.SetActive(true);
+                fullControls.SetActive(false);
+                minimizedControls.SetActive(true);
             }
         }
     }

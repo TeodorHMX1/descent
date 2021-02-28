@@ -234,6 +234,7 @@ MonoBehaviour:
   attached: 0
   torchOn: {fileID: 8300000, guid: 01fdcb0c66e78bd41a1462d671fb58a6, type: 3}
   torchOff: {fileID: 8300000, guid: 01fdcb0c66e78bd41a1462d671fb58a6, type: 3}
+  objMeshRenderer: {fileID: 2722415571711115623}
 --- !u!114 &515420532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,6 +427,12 @@ Transform:
 --- !u!1 &8608532092666349620 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4444558461230370346, guid: cd6fb125f3d628640bed92327f90caa0,
+    type: 3}
+  m_PrefabInstance: {fileID: 5393509202938971678}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2722415571711115623 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8006958694806783865, guid: cd6fb125f3d628640bed92327f90caa0,
     type: 3}
   m_PrefabInstance: {fileID: 5393509202938971678}
   m_PrefabAsset: {fileID: 0}

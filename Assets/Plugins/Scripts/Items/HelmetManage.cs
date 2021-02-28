@@ -1,5 +1,6 @@
 ﻿using Override;
 using UnityEngine;
+using UnityEngine.Rendering;
 using ZeoFlow;
 using ZeoFlow.Pickup;
 using ZeoFlow.Pickup.Interfaces;
@@ -12,6 +13,13 @@ namespace Items
     /// </summary>
     public class HelmetManage : MonoBehaviour, IOnAttached
     {
+        public Light helmetLight;
+        public float lightIntensity = 1f;
+        public bool attached;
+        public AudioClip torchOn;
+        public AudioClip torchOff;
+        public MeshRenderer objMeshRenderer;
+
         // unity 1 = 1frame
         private readonly FlashPattern[] _lightPattern =
         {
@@ -31,26 +39,12 @@ namespace Items
             new FlashPattern {IsDark = true, Time = 0}
         };
 
-        private enum FlashlightState
-        {
-            None = 0,
-            Triggered = 1,
-            AnimationStarted = 2,
-            OutOfBattery = 3
-        }
-
-        public Light helmetLight;
-        public float lightIntensity = 1f;
-        public bool attached;
-        public AudioClip torchOn;
-        public AudioClip torchOff;
-
         private BoxCollider _boxCollider;
+        private FlashlightState _flashlightState = FlashlightState.None;
         private int _index;
         private bool _isBoxColliderNotNull;
         private bool _outOfBattery;
         private int _timer;
-        private FlashlightState _flashlightState = FlashlightState.None;
         private bool FlashlightOn { get; set; }
 
         /// <summary>
@@ -106,16 +100,11 @@ namespace Items
                     FlashlightOn = false;
                     if (_flashlightState == FlashlightState.Triggered ||
                         _flashlightState == FlashlightState.AnimationStarted)
-                    {
                         _flashlightState = FlashlightState.OutOfBattery;
-                    }
                 }
             }
 
-            if (_flashlightState == FlashlightState.AnimationStarted)
-            {
-                FlashlightEffect();
-            }
+            if (_flashlightState == FlashlightState.AnimationStarted) FlashlightEffect();
         }
 
         /// <summary>
@@ -125,7 +114,9 @@ namespace Items
         /// <param name="playerAttachMenu"></param>
         public void ONUpdate(PlayerAttachSub playerAttachMenu)
         {
+            if (attached) return;
             attached = true;
+            objMeshRenderer.shadowCastingMode = ShadowCastingMode.Off;
         }
 
         /// <summary>
@@ -195,6 +186,14 @@ namespace Items
         public void DisableParanoiaTriggered()
         {
             _flashlightState = FlashlightState.None;
+        }
+
+        private enum FlashlightState
+        {
+            None = 0,
+            Triggered = 1,
+            AnimationStarted = 2,
+            OutOfBattery = 3
         }
     }
 }

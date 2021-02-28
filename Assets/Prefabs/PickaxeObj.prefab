@@ -149,6 +149,7 @@ MonoBehaviour:
   swingKey: 323
   meleeArea: {fileID: 0}
   sound: {fileID: 8300000, guid: 8a12b5a292e8e984ca06828ba1a3e10c, type: 3}
+  objMeshRenderer: {fileID: 8850253562410486709}
 --- !u!82 &7859906255977764298
 AudioSource:
   m_ObjectHideFlags: 0
@@ -354,6 +355,12 @@ GameObject:
 --- !u!4 &7681248042342887642 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 977203dc8d247d549af82d505d11892a,
+    type: 3}
+  m_PrefabInstance: {fileID: 7859906256410924849}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8850253562410486709 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 977203dc8d247d549af82d505d11892a,
     type: 3}
   m_PrefabInstance: {fileID: 7859906256410924849}
   m_PrefabAsset: {fileID: 0}

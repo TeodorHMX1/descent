@@ -2,6 +2,7 @@
 using Destructible;
 using Paranoia;
 using UnityEngine;
+using UnityEngine.Rendering;
 using ZeoFlow;
 using ZeoFlow.Outline;
 using ZeoFlow.Pickup;
@@ -30,6 +31,9 @@ namespace Items
 		public GameObject player;
 		public ParanoiaSystem paranoiaSystem;
 		
+		[Header("Mesh Render")]
+		public MeshRenderer objMeshRenderer;
+		
 		private bool _isAttached;
 		private bool _wasDropped;
 		private int _time;
@@ -38,6 +42,7 @@ namespace Items
 		{
 			_isAttached = true;
 			flareLight.SetActive(false);
+			objMeshRenderer.shadowCastingMode = ShadowCastingMode.Off;
 		}
 
 		private void Update()
@@ -78,15 +83,5 @@ namespace Items
 			GetComponent<SyncItem>().OnDestroy();
 		}
 
-		/// <summary>
-		///     <para> OnTriggerEnter </para>
-		///     <author> @TeodorHMX1 </author>
-		/// </summary>
-		/// <param name="collision"></param>
-		private void OnTriggerEnter(Collider collision)
-		{
-			if (collision.gameObject.name != "Player") return;
-		}
-		
 	}
 }

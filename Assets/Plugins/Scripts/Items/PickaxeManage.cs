@@ -2,6 +2,7 @@
 using Destructible;
 using Override;
 using UnityEngine;
+using UnityEngine.Rendering;
 using Walls;
 using ZeoFlow.Pickup;
 using ZeoFlow.Pickup.Interfaces;
@@ -20,6 +21,7 @@ namespace Items
 		public KeyCode swingKey = KeyCode.Mouse0;
 		public MeleeArea meleeArea;
 		public AudioClip sound;
+		public MeshRenderer objMeshRenderer;
 
 		private bool _isAttached;
 		private AudioSource _audioData;
@@ -66,7 +68,9 @@ namespace Items
 		/// <param name="playerAttachMenu"></param>
 		public void ONUpdate(PlayerAttachSub playerAttachMenu)
 		{
-			_isAttached = true;
+            if (_isAttached) return;
+            _isAttached = true;
+            objMeshRenderer.shadowCastingMode = ShadowCastingMode.Off;
 		}
 
 		/// <summary>
