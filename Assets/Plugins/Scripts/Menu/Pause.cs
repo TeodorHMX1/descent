@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Items;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using ZeoFlow;
 using ZeoFlow.PlayerMovement;
@@ -119,6 +120,7 @@ namespace Menu
         public void IOnMainMenu()
         {
             _mainMenu = true;
+            ItemsManager.Clean();
             pauseMenu.SetActive(false);
             optionsMenu.SetActive(false);
         }

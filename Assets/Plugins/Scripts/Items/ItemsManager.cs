@@ -122,6 +122,12 @@ namespace Items
             }
         }
 
+        public static void Clean()
+        {
+            Items.Clear();
+            ItemsUnlocked.Clear();
+        }
+
         private SwitchType GETSwitchType()
         {
             if (InputManager.GetAxisRaw("SwitchTool") == 0) return SwitchType.None;
