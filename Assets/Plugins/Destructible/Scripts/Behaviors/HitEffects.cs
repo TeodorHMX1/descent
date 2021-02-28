@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Destructible
@@ -14,16 +15,7 @@ namespace Destructible
 
 		public void PlayEffect(HitBy weaponType, Vector3 hitPoint, Vector3 hitNormal)
 		{
-			GameObject effect = null;
-			foreach (var eff in effects)
-			{
-				if ((eff.hitBy & weaponType) > 0)
-				{
-					effect = eff.effect;
-					break;
-				}
-			}
-
+			var effect = (from eff in effects where (eff.hitBy & weaponType) > 0 select eff.effect).FirstOrDefault();
 			if (effect != null)
 				ObjectPool.Instance.Spawn(effect, hitPoint, Quaternion.LookRotation(hitNormal));
 		}

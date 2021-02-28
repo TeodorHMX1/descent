@@ -24,8 +24,6 @@
 	[System.Flags]
 	public enum HitBy
 	{
-		Bullet = (1 << 0),
-		Cannonball = (1 << 1),
 		Axe = (1 << 2)
 	}
 

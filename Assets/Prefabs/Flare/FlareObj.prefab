@@ -14,6 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: 0
   eraseRenderer: 0
+--- !u!64 &1702097452793916544
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5702051545892216355}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 7f5bea232d05923419aae205f70112ed, type: 3}
 --- !u!1 &5702051546319184196
 GameObject:
   m_ObjectHideFlags: 0
@@ -26,7 +40,6 @@ GameObject:
   - component: {fileID: 5702051546319184199}
   - component: {fileID: 1739956671809332637}
   - component: {fileID: 107892304608210823}
-  - component: {fileID: 5780847632704670774}
   m_Layer: 0
   m_Name: FlareObj
   m_TagString: Untagged
@@ -100,19 +113,7 @@ MonoBehaviour:
   player: {fileID: 0}
   paranoiaSystem: {fileID: 0}
   objMeshRenderer: {fileID: 5702051545894207715}
---- !u!65 &5780847632704670774
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5702051546319184196}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.2, y: 1, z: 0.2}
-  m_Center: {x: 0, y: -0.28, z: 0}
+  onGround: {fileID: 8300000, guid: 99ab8a4503de1f448ad764a5c4cdf9cc, type: 3}
 --- !u!1001 &5702051545814761317
 PrefabInstance:
   m_ObjectHideFlags: 0

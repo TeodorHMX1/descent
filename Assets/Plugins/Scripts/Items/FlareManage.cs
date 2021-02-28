@@ -1,5 +1,6 @@
 ﻿using System;
 using Destructible;
+using Override;
 using Paranoia;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -33,7 +34,11 @@ namespace Items
 		
 		[Header("Mesh Render")]
 		public MeshRenderer objMeshRenderer;
-		
+
+		[Header("Sounds")]
+		public AudioClip onGround;
+
+		private bool onGroundPlayed;
 		private bool _isAttached;
 		private bool _wasDropped;
 		private int _time;
@@ -83,5 +88,15 @@ namespace Items
 			GetComponent<SyncItem>().OnDestroy();
 		}
 
+		private void OnCollisionEnter()
+		{
+			if(onGroundPlayed || !_wasDropped) return;
+			onGroundPlayed = true;
+			new AudioBuilder()
+				.WithClip(onGround)
+				.WithName("Flare_OnDrop")
+				.WithVolume(SoundVolume.Weak)
+				.Play(true);
+		}
 	}
 }
