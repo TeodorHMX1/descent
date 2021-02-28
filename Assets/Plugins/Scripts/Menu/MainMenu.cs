@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using ZeoFlow;
 
 namespace Menu
 {
@@ -10,6 +12,7 @@ namespace Menu
 	{
 		public GameObject mainMenu;
 		public GameObject optionsMenu;
+		public GameObject creditsScreen;
 
 		/// <summary>
 		///     <para> Start </para>
@@ -19,6 +22,19 @@ namespace Menu
 		{
 			mainMenu.SetActive(true);
 			optionsMenu.SetActive(false);
+			creditsScreen.SetActive(false);
+		}
+
+		/// <summary>
+		///     <para> Update </para>
+		/// </summary>
+		private void Update()
+		{
+			if (!creditsScreen.activeSelf || !InputManager.GetButtonDown("PauseMenu")) return;
+			
+			mainMenu.SetActive(true);
+			optionsMenu.SetActive(false);
+			creditsScreen.SetActive(false);
 		}
 
 		/// <summary>
@@ -28,6 +44,7 @@ namespace Menu
 		{
 			mainMenu.SetActive(true);
 			optionsMenu.SetActive(false);
+			creditsScreen.SetActive(false);
 		}
 
 		/// <summary>
@@ -37,6 +54,7 @@ namespace Menu
 		{
 			mainMenu.SetActive(false);
 			optionsMenu.SetActive(true);
+			creditsScreen.SetActive(false);
 		}
 
 		/// <summary>
@@ -46,6 +64,17 @@ namespace Menu
 		{
 			mainMenu.SetActive(false);
 			optionsMenu.SetActive(false);
+			creditsScreen.SetActive(false);
+		}
+
+		/// <summary>
+		///     <para> IOnCreditsScreen </para>
+		/// </summary>
+		public void IOnCreditsScreen()
+		{
+			mainMenu.SetActive(false);
+			optionsMenu.SetActive(false);
+			creditsScreen.SetActive(true);
 		}
 	}
 }
