@@ -1,5 +1,7 @@
 ﻿using Override;
+using TMPro;
 using UnityEngine;
+using static UnityEngine.Screen;
 
 namespace ZeoFlow.Pickup
 {
@@ -35,10 +37,13 @@ namespace ZeoFlow.Pickup
         private PhysicsSub _physicsMenu = new PhysicsSub();
         private PuzzleSub _puzzleSub = new PuzzleSub();
         private ThrowingSystemMenu _throwingSystem = new ThrowingSystemMenu();
-        private bool isLeftMovement;
-        private bool isRightMovement;
-        private int timeStartedMovement;
-        private OutlinerSub outlinerMenu;
+        private bool _isLeftMovement;
+        private bool _isRightMovement;
+        private int _timeStartedMovement;
+        private OutlinerSub _outlinerMenu;
+        private PickableObject _playerObject;
+        private bool _isGuiHolderNotNull;
+        private TextMeshProUGUI _guiText;
 
         private void Start()
         {
@@ -68,7 +73,19 @@ namespace ZeoFlow.Pickup
                 {
                     crosshairsSystem.onPuzzle = Resources.Load<Texture2D>("Crosshair/crosshair_puzzle");
                 }
-                _isGuiTextNotNull = crosshairsSystem.guiText != null;
+                _isGuiHolderNotNull = crosshairsSystem.guiHolder != null;
+                if (_isGuiHolderNotNull)
+                {
+                    var textTemp = crosshairsSystem.guiPrefab;
+                    textTemp = Instantiate(textTemp);
+                    var obj = Instantiate(textTemp, new Vector3(0, 0, 0), Quaternion.identity);
+                    obj.transform.SetParent(crosshairsSystem.guiHolder.transform, false);
+                    var position = obj.transform.position;
+                    position = new Vector3(position.x, height / 2 - 20, position.z);
+                    obj.transform.position = position;
+                    obj.name = "TextHolder";
+                    _guiText = obj.GetComponent<TextMeshProUGUI>();
+                }
             }
 
             if (audioSystem.enabled)
@@ -89,11 +106,11 @@ namespace ZeoFlow.Pickup
         {
             if (Time.timeScale == 0f)
             {
-                if (outlinerMenu != null)
+                if (_outlinerMenu != null)
                 {
-                    if (outlinerMenu.enabled)
+                    if (_outlinerMenu.enabled)
                     {
-                        outlinerMenu.outline.enabled = false;
+                        _outlinerMenu.outline.enabled = false;
                     }
                 }
             }
@@ -103,32 +120,32 @@ namespace ZeoFlow.Pickup
 
             if (inputX < 0)
             {
-                if (timeStartedMovement != 0 && !isLeftMovement)
+                if (_timeStartedMovement != 0 && !_isLeftMovement)
                 {
-                    timeStartedMovement = 0;
+                    _timeStartedMovement = 0;
                 }
 
-                timeStartedMovement++;
-                isLeftMovement = true;
-                isRightMovement = false;
+                _timeStartedMovement++;
+                _isLeftMovement = true;
+                _isRightMovement = false;
             }
             else if (inputX > 0)
             {
-                if (timeStartedMovement != 0 && !isRightMovement)
+                if (_timeStartedMovement != 0 && !_isRightMovement)
                 {
-                    timeStartedMovement = 0;
+                    _timeStartedMovement = 0;
                 }
 
-                timeStartedMovement++;
-                isLeftMovement = false;
-                isRightMovement = true;
+                _timeStartedMovement++;
+                _isLeftMovement = false;
+                _isRightMovement = true;
             }
 
-            if (timeStartedMovement < 15) return;
+            if (_timeStartedMovement < 15) return;
 
             if (_playerObject == null) return;
 
-            var isRight = isRightMovement && !isLeftMovement;
+            var isRight = _isRightMovement && !_isLeftMovement;
             _playerObject.OnMovement(isRight);
             _isPuzzleFocused = false;
         }
@@ -172,11 +189,11 @@ namespace ZeoFlow.Pickup
                 if (_objectCan)
                 {
                     var pickableObject = hit.collider.gameObject.GetComponent<PickableObject>();
-                    if (_isGuiTextNotNull)
+                    if (_isGuiHolderNotNull)
                     {
                         if (pickableObject != null)
                         {
-                            crosshairsSystem.guiText.text = pickableObject.guiText;
+                            _guiText.text = pickableObject.guiText;
                         }
                     }
                 }
@@ -188,7 +205,7 @@ namespace ZeoFlow.Pickup
 
             if (_objectCan)
             {
-                outlinerMenu = hit.collider.GetComponent<PickableObject>().outlinerMenu;
+                _outlinerMenu = hit.collider.GetComponent<PickableObject>().outlinerMenu;
             }
 
             if (_isObjectHeld && _objectIsToggled)
@@ -219,7 +236,7 @@ namespace ZeoFlow.Pickup
             if (Input.GetKeyUp(pickupButton))
             {
                 _isPuzzleFocused = false;
-                timeStartedMovement = 0;
+                _timeStartedMovement = 0;
             }
 
             if (togglePickUp)
@@ -278,9 +295,6 @@ namespace ZeoFlow.Pickup
             }
         }
 
-        private PickableObject _playerObject;
-        private bool _isGuiTextNotNull;
-
         private void TryPickObject()
         {
             var playerAim = playerCam.GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
@@ -306,7 +320,7 @@ namespace ZeoFlow.Pickup
                     }
                     else
                     {
-                        timeStartedMovement = 0;
+                        _timeStartedMovement = 0;
                     }
 
                     return;
@@ -417,9 +431,9 @@ namespace ZeoFlow.Pickup
         {
             if (Cursor.lockState == CursorLockMode.None || hideCrosshair)
             {
-                if (_isGuiTextNotNull)
+                if (_isGuiHolderNotNull)
                 {
-                    crosshairsSystem.guiText.enabled = false;
+                    _guiText.enabled = false;
                 }
                 return;
             }
@@ -429,46 +443,46 @@ namespace ZeoFlow.Pickup
                 //Object Can Be Held Crosshair
                 case true when _isPuzzleFocused:
                     GUI.DrawTexture(new Rect(
-                            Screen.width / 2 - (crosshairsSystem.onPuzzle.width / 2),
-                            Screen.height / 2 - (crosshairsSystem.onPuzzle.height / 2),
+                            width / 2 - (crosshairsSystem.onPuzzle.width / 2),
+                            height / 2 - (crosshairsSystem.onPuzzle.height / 2),
                             crosshairsSystem.onPuzzle.width,
                             crosshairsSystem.onPuzzle.height),
                         crosshairsSystem.onPuzzle);
-                    if (_isGuiTextNotNull)
+                    if (_isGuiHolderNotNull)
                     {
-                        crosshairsSystem.guiText.enabled = false;
+                        _guiText.enabled = false;
                     }
                     break;
                 //Object Is Being Held Crosshair
                 case true when _isObjectHeld:
                     GUI.DrawTexture(new Rect(
-                            Screen.width / 2 - (crosshairsSystem.onGrab.width / 2),
-                            Screen.height / 2 - (crosshairsSystem.onGrab.height / 2),
+                            width / 2 - (crosshairsSystem.onGrab.width / 2),
+                            height / 2 - (crosshairsSystem.onGrab.height / 2),
                             crosshairsSystem.onGrab.width,
                             crosshairsSystem.onGrab.height),
                         crosshairsSystem.onGrab);
-                    if (_isGuiTextNotNull)
+                    if (_isGuiHolderNotNull)
                     {
-                        crosshairsSystem.guiText.enabled = false;
+                        _guiText.enabled = false;
                     }
                     break;
                 //Object Can Be Held Crosshair
                 case true when _objectCan:
                     GUI.DrawTexture(new Rect(
-                            Screen.width / 2 - (crosshairsSystem.onAble.width / 2),
-                            Screen.height / 2 - (crosshairsSystem.onAble.height / 2),
+                            width / 2 - (crosshairsSystem.onAble.width / 2),
+                            height / 2 - (crosshairsSystem.onAble.height / 2),
                             crosshairsSystem.onAble.width,
                             crosshairsSystem.onAble.height),
                         crosshairsSystem.onAble);
-                    if (_isGuiTextNotNull)
+                    if (_isGuiHolderNotNull)
                     {
-                        crosshairsSystem.guiText.enabled = true;
+                        _guiText.enabled = true;
                     }
-                    if (outlinerMenu != null)
+                    if (_outlinerMenu != null)
                     {
-                        if (outlinerMenu.enabled)
+                        if (_outlinerMenu.enabled)
                         {
-                            outlinerMenu.outline.enabled = true;
+                            _outlinerMenu.outline.enabled = true;
                         }
                     }
 
@@ -483,22 +497,22 @@ namespace ZeoFlow.Pickup
                         }
                         else
                         {
-                            if (outlinerMenu != null)
+                            if (_outlinerMenu != null)
                             {
-                                if (outlinerMenu.enabled)
+                                if (_outlinerMenu.enabled)
                                 {
-                                    outlinerMenu.outline.enabled = false;
-                                    outlinerMenu = null;
+                                    _outlinerMenu.outline.enabled = false;
+                                    _outlinerMenu = null;
                                 }
                             }
-                            if (_isGuiTextNotNull)
+                            if (_isGuiHolderNotNull)
                             {
-                                crosshairsSystem.guiText.enabled = false;
+                                _guiText.enabled = false;
                             }
 
                             GUI.DrawTexture(new Rect(
-                                    Screen.width / 2 - (crosshairsSystem.onDefault.width / 2),
-                                    Screen.height / 2 - (crosshairsSystem.onDefault.height / 2),
+                                    width / 2 - (crosshairsSystem.onDefault.width / 2),
+                                    height / 2 - (crosshairsSystem.onDefault.height / 2),
                                     crosshairsSystem.onDefault.width,
                                     crosshairsSystem.onDefault.height),
                                 crosshairsSystem.onDefault);
@@ -540,7 +554,7 @@ namespace ZeoFlow.Pickup
 
             _isObjectHeld = false;
             _isPuzzleFocused = false;
-            timeStartedMovement = 0;
+            _timeStartedMovement = 0;
             _physicsMenu.canPlaceBack = false;
             _objectHeld = null;
             _timeHeld = _intTimeHeld;

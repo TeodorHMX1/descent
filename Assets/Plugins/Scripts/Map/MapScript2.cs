@@ -14,7 +14,6 @@ namespace Map
         public static bool ColArea1;
         public static bool ColArea2;
         public static bool ColArea3;
-        public static bool Controlsvisible;
         public bool mapOpen;
         public Pause pause;
         public RigidbodyPickUp rigidbodyPickUp;
@@ -22,44 +21,58 @@ namespace Map
         public GameObject area1;
         public GameObject area2;
         public GameObject area3;
-        public GameObject controlprompt;
-        public GameObject Controls;
         public AudioClip scribble;
-        private bool _isarea1Null;
-        private bool _isarea2Null;
-        private bool _isarea3Null;
-        private bool _isrigidbodyPickUpNotNull;
-        private bool _ispauseNotNull;
+        private bool _isArea1Null;
+        private bool _isArea2Null;
+        private bool _isArea3Null;
+        private bool _isRigidbodyPickUpNotNull;
+        private bool _isPauseNotNull;
+        
+        private static MapScript2 _mInstance;
+        
+        private void Awake()
+        {
+            if (_mInstance == null)
+            {
+                _mInstance = this;
+            }
+            else
+            {
+                Destroy(this);
+            }
+        }
+
+        public static bool IsMapOpened()
+        {
+            return _mInstance != null && _mInstance.mapOpen;
+        }
 
         /// <summary>
         ///     <para> Start </para>
         /// </summary>
         private void Start()
         {
-            _ispauseNotNull = pause != null;
-            _isrigidbodyPickUpNotNull = rigidbodyPickUp != null;
-            _isarea1Null = area1 == null;
-            _isarea2Null = area2 == null;
-            _isarea3Null = area3 == null;
+            _isPauseNotNull = pause != null;
+            _isRigidbodyPickUpNotNull = rigidbodyPickUp != null;
+            _isArea1Null = area1 == null;
+            _isArea2Null = area2 == null;
+            _isArea3Null = area3 == null;
             mapOpen = false;
             ColArea1 = false;
             ColArea2 = false;
             ColArea3 = false;
-            Controlsvisible = false;
-            controlprompt.SetActive(true);
-            Controls.SetActive(false);
 
-            if (!_isarea1Null)
+            if (!_isArea1Null)
             {
                 area1.SetActive(false);
             }
 
-            if (!_isarea2Null)
+            if (!_isArea2Null)
             {
                 area2.SetActive(false);
             }
 
-            if (!_isarea3Null)
+            if (!_isArea3Null)
             {
                 area3.SetActive(false);
             }
@@ -70,7 +83,7 @@ namespace Map
         /// </summary>
         private void Update()
         {
-            if (_isarea1Null || _isarea2Null || _isarea3Null) return;
+            if (_isArea1Null || _isArea2Null || _isArea3Null) return;
 
             area1.SetActive(ColArea1);
 
@@ -89,9 +102,9 @@ namespace Map
                     .Play();
             }
 
-            if (_isrigidbodyPickUpNotNull) rigidbodyPickUp.hideCrosshair = mapOpen;
+            if (_isRigidbodyPickUpNotNull) rigidbodyPickUp.hideCrosshair = mapOpen;
 
-            if (_ispauseNotNull)
+            if (_isPauseNotNull)
             {
                 if (pause.isPaused)
                 {
@@ -126,40 +139,7 @@ namespace Map
                     Exit_Map();
                 }
             }
-
-            if (InputManager.GetButtonDown("ToggleControls"))
-            {
-                Controlsvisible = !Controlsvisible;
-                new AudioBuilder()
-                    .WithClip(scribble)
-                    .WithName("ToggleControls")
-                    .WithVolume(SoundVolume.Normal)
-                    .Play();
-            }
-
-            if (Controlsvisible)
-            {
-                controlprompt.SetActive(false);
-                Controls.SetActive(true);
-            }
-            else
-            {
-                controlprompt.SetActive(true);
-                Controls.SetActive(false);
-            }
         }
-
-        /// <summary>
-        ///		<para> OnTriggerEnter </para>
-        /// </summary>
-        /// <param name="collision"></param>
-        // public void OnTriggerEnter(Collision collision)
-        // {
-        // 	if (collision.gameObject.name == "Area1")
-        // 	{
-        // 		Debug.Log("Collision Detected");
-        // 	}
-        // }
 
         /// <summary>
         ///     <para> Exit_Map </para>
@@ -168,7 +148,6 @@ namespace Map
         {
             map.SetActive(false);
             mapOpen = false;
-            // Debug.Log("Exiting map");
         }
 
         /// <summary>
@@ -178,7 +157,6 @@ namespace Map
         {
             map.SetActive(true);
             mapOpen = true;
-            // Debug.Log("opening map");
         }
     }
 }

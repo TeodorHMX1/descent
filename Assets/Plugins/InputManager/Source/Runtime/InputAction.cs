@@ -1,4 +1,5 @@
 ﻿#region [Copyright (c) 2021 ZeoFlow S.R.L.]
+
 //	Distributed under the terms of an MIT-style license:
 //
 //	The MIT License
@@ -19,271 +20,252 @@
 //	PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
 //	FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, 
 //	ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
-using UnityEngine;
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using UnityEngine;
 
 namespace ZeoFlow
 {
-	[Serializable]
-	public class InputAction
-	{
-		public const int MAX_BINDINGS = 16;
+    [Serializable]
+    public class InputAction
+    {
+        public const int MAX_BINDINGS = 16;
 
-		[SerializeField]
-		private string m_name;
-		[SerializeField]
-		private string m_description;
-		[SerializeField]
-		private List<InputBinding> m_bindings;
+        [SerializeField] private string m_name;
 
-		public ReadOnlyCollection<InputBinding> Bindings
-		{
-			get { return m_bindings.AsReadOnly(); }
-		}
+        [SerializeField] private string m_description;
 
-		public string Name
-		{
-			get { return m_name; }
-			set
-			{
-				m_name = value;
-				if(Application.isPlaying)
-				{
-					Debug.LogWarning("You should not change the name of an input action at runtime");
-				}
-			}
-		}
+        [SerializeField] private List<InputBinding> m_bindings;
 
-		public string Description
-		{
-			get { return m_description; }
-			set { m_description = value; }
-		}
+        public InputAction() :
+            this("New Action")
+        {
+        }
 
-		public bool AnyInput
-		{
-			get
-			{
-				foreach(var binding in m_bindings)
-				{
-					if(binding.AnyInput)
-						return true;
-				}
+        public InputAction(string name)
+        {
+            m_name = name;
+            m_description = string.Empty;
+            m_bindings = new List<InputBinding>();
+        }
 
-				return false;
-			}
-		}
+        public ReadOnlyCollection<InputBinding> Bindings => m_bindings.AsReadOnly();
 
-		public InputAction() :
-			this("New Action") { }
-		
-		public InputAction(string name)
-		{
-			m_name = name;
-			m_description = string.Empty;
-			m_bindings = new List<InputBinding>();
-		}
-		
-		public void Initialize()
-		{
-			foreach(var binding in m_bindings)
-			{
-				binding.Initialize();
-			}
-		}
-		
-		public void Update(float deltaTime)
-		{
-			foreach(var binding in m_bindings)
-			{
-				binding.Update(deltaTime);
-			}
-		}
-		
-		public float GetAxis()
-		{
-			float? value = null;
-			foreach(var binding in m_bindings)
-			{
-				value = binding.GetAxis();
-				if(value.HasValue)
-					break;
-			}
+        public string Name
+        {
+            get => m_name;
+            set
+            {
+                m_name = value;
+                if (Application.isPlaying)
+                    Debug.LogWarning("You should not change the name of an input action at runtime");
+            }
+        }
 
-			return value ?? InputBinding.AXIS_NEUTRAL;
-		}
+        public string Description
+        {
+            get => m_description;
+            set => m_description = value;
+        }
 
-		///<summary>
-		///	Returns raw input with no sensitivity or smoothing applyed.
-		/// </summary>
-		public float GetAxisRaw()
-		{
-			float? value = null;
-			foreach(var binding in m_bindings)
-			{
-				value = binding.GetAxisRaw();
-				if(value.HasValue)
-					break;
-			}
+        public bool AnyInput
+        {
+            get
+            {
+                foreach (var binding in m_bindings)
+                    if (binding.AnyInput)
+                        return true;
 
-			return value ?? InputBinding.AXIS_NEUTRAL;
-		}
-		
-		public bool GetButton()
-		{
-			bool? value = null;
-			foreach(var binding in m_bindings)
-			{
-				value = binding.GetButton();
-				if(value.HasValue)
-					break;
-			}
+                return false;
+            }
+        }
 
-			return value ?? false;
-		}
-		
-		public bool GetButtonDown()
-		{
-			bool? value = null;
-			foreach(var binding in m_bindings)
-			{
-				value = binding.GetButtonDown();
-				if(value.HasValue)
-					break;
-			}
+        public void Initialize()
+        {
+            foreach (var binding in m_bindings) binding.Initialize();
+        }
 
-			return value ?? false;
-		}
-		
-		public bool GetButtonUp()
-		{
-			bool? value = null;
-			foreach(var binding in m_bindings)
-			{
-				value = binding.GetButtonUp();
-				if(value.HasValue)
-					break;
-			}
+        public void Update(float deltaTime)
+        {
+            foreach (var binding in m_bindings) binding.Update(deltaTime);
+        }
 
-			return value ?? false;
-		}
+        public float GetAxis()
+        {
+            float? value = null;
+            foreach (var binding in m_bindings)
+            {
+                value = binding.GetAxis();
+                if (value.HasValue)
+                    break;
+            }
 
-		public InputBinding GetBinding(int index)
-		{
-			if(index >= 0 && index < m_bindings.Count)
-				return m_bindings[index];
+            return value ?? InputBinding.AXIS_NEUTRAL;
+        }
 
-			return null;
-		}
+        /// <summary>
+        ///     Returns raw input with no sensitivity or smoothing applyed.
+        /// </summary>
+        public float GetAxisRaw()
+        {
+            float? value = null;
+            foreach (var binding in m_bindings)
+            {
+                value = binding.GetAxisRaw();
+                if (value.HasValue)
+                    break;
+            }
 
-		public InputBinding CreateNewBinding()
-		{
-			if(m_bindings.Count < MAX_BINDINGS)
-			{
-				InputBinding binding = new InputBinding();
-				m_bindings.Add(binding);
+            return value ?? InputBinding.AXIS_NEUTRAL;
+        }
 
-				return binding;
-			}
+        public bool GetButton()
+        {
+            bool? value = null;
+            foreach (var binding in m_bindings)
+            {
+                value = binding.GetButton();
+                if (value.HasValue)
+                    break;
+            }
 
-			return null;
-		}
+            return value ?? false;
+        }
 
-		public InputBinding CreateNewBinding(InputBinding source)
-		{
-			if(m_bindings.Count < MAX_BINDINGS)
-			{
-				InputBinding binding = InputBinding.Duplicate(source);
-				m_bindings.Add(binding);
+        public bool GetButtonDown()
+        {
+            bool? value = null;
+            foreach (var binding in m_bindings)
+            {
+                value = binding.GetButtonDown();
+                if (value.HasValue)
+                    break;
+            }
 
-				return binding;
-			}
+            return value ?? false;
+        }
 
-			return null;
-		}
+        public bool GetButtonUp()
+        {
+            bool? value = null;
+            foreach (var binding in m_bindings)
+            {
+                value = binding.GetButtonUp();
+                if (value.HasValue)
+                    break;
+            }
 
-		public InputBinding InsertNewBinding(int index)
-		{
-			if(m_bindings.Count < MAX_BINDINGS)
-			{
-				InputBinding binding = new InputBinding();
-				m_bindings.Insert(index, binding);
+            return value ?? false;
+        }
 
-				return binding;
-			}
+        public InputBinding GetBinding(int index)
+        {
+            if (index >= 0 && index < m_bindings.Count)
+                return m_bindings[index];
 
-			return null;
-		}
+            return null;
+        }
 
-		public InputBinding InsertNewBinding(int index, InputBinding source)
-		{
-			if(m_bindings.Count < MAX_BINDINGS)
-			{
-				InputBinding binding = InputBinding.Duplicate(source);
-				m_bindings.Insert(index, binding);
+        public InputBinding CreateNewBinding()
+        {
+            if (m_bindings.Count < MAX_BINDINGS)
+            {
+                var binding = new InputBinding();
+                m_bindings.Add(binding);
 
-				return binding;
-			}
+                return binding;
+            }
 
-			return null;
-		}
+            return null;
+        }
 
-		public void DeleteBinding(int index)
-		{
-			if(index >= 0 && index < m_bindings.Count)
-				m_bindings.RemoveAt(index);
-		}
+        public InputBinding CreateNewBinding(InputBinding source)
+        {
+            if (m_bindings.Count < MAX_BINDINGS)
+            {
+                var binding = InputBinding.Duplicate(source);
+                m_bindings.Add(binding);
 
-		public void SwapBindings(int fromIndex, int toIndex)
-		{
-			if(fromIndex >= 0 && fromIndex < m_bindings.Count && toIndex >= 0 && toIndex < m_bindings.Count)
-			{
-				var temp = m_bindings[toIndex];
-				m_bindings[toIndex] = m_bindings[fromIndex];
-				m_bindings[fromIndex] = temp;
-			}
-		}
+                return binding;
+            }
 
-		public void Copy(InputAction source)
-		{
-			m_name = source.m_name;
-			m_description = source.m_description;
+            return null;
+        }
 
-			m_bindings.Clear();
-			foreach(var binding in source.m_bindings)
-			{
-				m_bindings.Add(InputBinding.Duplicate(binding));
-			}
-		}
+        public InputBinding InsertNewBinding(int index)
+        {
+            if (m_bindings.Count < MAX_BINDINGS)
+            {
+                var binding = new InputBinding();
+                m_bindings.Insert(index, binding);
 
-		public void Reset()
-		{
-			foreach(var binding in m_bindings)
-			{
-				binding.Reset();
-			}
-		}
+                return binding;
+            }
 
-		public static InputAction Duplicate(InputAction source)
-		{
-			return Duplicate(source.m_name, source);
-		}
+            return null;
+        }
 
-		public static InputAction Duplicate(string name, InputAction source)
-		{
-			InputAction duplicate = new InputAction();
-			duplicate.m_name = name;
-			duplicate.m_description = source.m_description;
-			duplicate.m_bindings = new List<InputBinding>();
-			foreach(var binding in source.m_bindings)
-			{
-				duplicate.m_bindings.Add(InputBinding.Duplicate(binding));
-			}
+        public InputBinding InsertNewBinding(int index, InputBinding source)
+        {
+            if (m_bindings.Count < MAX_BINDINGS)
+            {
+                var binding = InputBinding.Duplicate(source);
+                m_bindings.Insert(index, binding);
 
-			return duplicate;
-		}
+                return binding;
+            }
+
+            return null;
+        }
+
+        public void DeleteBinding(int index)
+        {
+            if (index >= 0 && index < m_bindings.Count)
+                m_bindings.RemoveAt(index);
+        }
+
+        public void SwapBindings(int fromIndex, int toIndex)
+        {
+            if (fromIndex >= 0 && fromIndex < m_bindings.Count && toIndex >= 0 && toIndex < m_bindings.Count)
+            {
+                var temp = m_bindings[toIndex];
+                m_bindings[toIndex] = m_bindings[fromIndex];
+                m_bindings[fromIndex] = temp;
+            }
+        }
+
+        public void Copy(InputAction source)
+        {
+            m_name = source.m_name;
+            m_description = source.m_description;
+
+            m_bindings.Clear();
+            foreach (var binding in source.m_bindings) m_bindings.Add(InputBinding.Duplicate(binding));
+        }
+
+        public void Reset()
+        {
+            foreach (var binding in m_bindings) binding.Reset();
+        }
+
+        public static InputAction Duplicate(InputAction source)
+        {
+            return Duplicate(source.m_name, source);
+        }
+
+        public static InputAction Duplicate(string name, InputAction source)
+        {
+            var duplicate = new InputAction();
+            duplicate.m_name = name;
+            duplicate.m_description = source.m_description;
+            duplicate.m_bindings = new List<InputBinding>();
+            foreach (var binding in source.m_bindings) duplicate.m_bindings.Add(InputBinding.Duplicate(binding));
+
+            return duplicate;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,7 @@ namespace ZeoFlow.Pickup
 		public Texture2D onGrab;
 		public Texture2D onPuzzle;
 		[Tooltip("On Able Show ")]
-		public Text guiText;
+		public GameObject guiHolder;
+		public GameObject guiPrefab;
 	}
 }

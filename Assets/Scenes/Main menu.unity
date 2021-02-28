@@ -5404,6 +5404,14 @@ PrefabInstance:
       propertyPath: slowSpawn
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 0de6f7c1efbe59749959636ba3d61484, type: 3}
+      propertyPath: minScale
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 0de6f7c1efbe59749959636ba3d61484, type: 3}
+      propertyPath: maxScale
+      value: 1.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0de6f7c1efbe59749959636ba3d61484, type: 3}
 --- !u!1 &1694606340
