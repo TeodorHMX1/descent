@@ -4,6 +4,7 @@
     {
         Loud,
         Normal,
-        Weak
+        Weak,
+        OnBackground
     }
 }

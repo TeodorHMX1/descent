@@ -1,18 +1,21 @@
 ﻿using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Override
 {
-	/// <summary>
-	///     <para> AudioInstance </para>
-	///     <author> @TeodorHMX1 </author>
-	/// </summary>
-	public class AudioInstance : MonoBehaviour
+    /// <summary>
+    ///     <para> AudioInstance </para>
+    ///     <author> @TeodorHMX1 </author>
+    /// </summary>
+    public class AudioInstance : MonoBehaviour
     {
         private static AudioInstance _mInstance;
         private static GameObject _audioInstances;
         private static AudioSource _audioSource;
         private static GameObject _this;
+        private string _characters= "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        private bool _isResumed;
 
         private void Awake()
         {
@@ -28,6 +31,20 @@ namespace Override
             {
                 Destroy(this);
             }
+        }
+
+        public static string ID()
+        {
+            var idGenerated = "";
+            for(var i=0; i<20; i++)
+            {
+                idGenerated += _mInstance._characters[Random.Range(0, _mInstance._characters.Length)];
+                if (i % 4 == 0 && i != 0 && i != 20)
+                {
+                    idGenerated += "_";
+                }
+            }
+            return idGenerated;
         }
 
         public static float GetSoundVolume()
@@ -51,8 +68,21 @@ namespace Override
                 case SoundVolume.Weak:
                     _audioSource.PlayOneShot(audio, GetSoundVolume() * .6f);
                     break;
+                case SoundVolume.OnBackground:
+                    _audioSource.PlayOneShot(audio, GetSoundVolume() * .1f);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(volume), volume, null);
+            }
+        }
+        
+        public static void StopSound(string name, bool destroy = false)
+        {
+            _audioSource = GetAudioSource(name);
+            _audioSource.Stop();
+            if (destroy)
+            {
+                DestroySource(name);
             }
         }
 
@@ -73,5 +103,44 @@ namespace Override
             var audioSource = newAudio.AddComponent<AudioSource>();
             return audioSource;
         }
+
+        private static void DestroySource(string name)
+        {
+            if (_audioInstances == null)
+            {
+                _audioInstances = new GameObject {name = "Audio Instances"};
+                _audioInstances.transform.SetParent(_this.transform);
+            }
+
+            var findGameObj = _audioInstances.transform.Find(name);
+
+            if (findGameObj != null) Destroy(findGameObj.gameObject);
+        }
+
+        private void Update()
+        {
+            if (Time.timeScale == 0f)
+            {
+                var audioSources = GetComponentsInChildren<AudioSource>();
+                foreach (var audioSource in audioSources)
+                {
+                    audioSource.Pause();
+                }
+                _isResumed = false;
+            }
+            else if (!_isResumed)
+            {
+                var audioSources = GetComponentsInChildren<AudioSource>();
+                foreach (var audioSource in audioSources)
+                {
+                    if (!audioSource.isPlaying)
+                    {
+                        audioSource.Play();
+                    }
+                }
+                _isResumed = true;
+            }
+        }
+
     }
 }

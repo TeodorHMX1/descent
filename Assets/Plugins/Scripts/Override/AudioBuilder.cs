@@ -72,6 +72,20 @@ namespace Override
             return this;
         }
 
+        public void Stop(bool destroy = false)
+        {
+            
+            if (AudioSource != null)
+            {
+                AudioSource.Stop();
+            }
+            else
+            {
+                if (Name == null) return;
+                AudioInstance.StopSound(Name, destroy);
+            }
+        }
+
         public void Play(bool oneAtOnce = false)
         {
             if (Clip == null)
@@ -99,6 +113,9 @@ namespace Override
                         break;
                     case SoundVolume.Weak:
                         AudioSource.PlayOneShot(Clip, AudioInstance.GetSoundVolume() * .6f);
+                        break;
+                    case SoundVolume.OnBackground:
+                        AudioSource.PlayOneShot(Clip, AudioInstance.GetSoundVolume() * .1f);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(Volume), Volume, null);

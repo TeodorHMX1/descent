@@ -24,7 +24,6 @@ namespace Items
 		public MeshRenderer objMeshRenderer;
 
 		private bool _isAttached;
-		private AudioSource _audioData;
 		private bool _isAnimatorNull;
 		private bool _isBoxColliderNotNull;
 		private BoxCollider _boxCollider;
@@ -38,7 +37,6 @@ namespace Items
 			_boxCollider = GetComponent<BoxCollider>();
 			_isBoxColliderNotNull = _boxCollider != null;
 			_isAnimatorNull = animator == null;
-			_audioData = GetComponent<AudioSource>();
 		}
 
 		private void Update()

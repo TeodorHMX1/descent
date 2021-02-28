@@ -37,25 +37,34 @@ namespace Items
 
 		[Header("Sounds")]
 		public AudioClip onGround;
+		public AudioClip onBurning;
 
-		private bool onGroundPlayed;
+		private bool _onGroundPlayed;
 		private bool _isAttached;
 		private bool _wasDropped;
 		private int _time;
+		private string _id;
 
 		private void Start()
 		{
 			_isAttached = true;
 			flareLight.SetActive(false);
 			objMeshRenderer.shadowCastingMode = ShadowCastingMode.Off;
+			_id = AudioInstance.ID();
 		}
 
 		private void Update()
 		{
-			if (Time.timeScale == 0) return;
+			if (Time.timeScale == 0f) return;
 			
 			if (_wasDropped)
 			{
+				new AudioBuilder()
+					.WithClip(onBurning)
+					.WithName("Flare_OnBurning_" + _id)
+					.WithVolume(SoundVolume.OnBackground)
+					.Play(true);
+				
 				_isAttached = false;
 				_time++;
 				if (_time >= 120)
@@ -69,6 +78,10 @@ namespace Items
 				var distance = Vector3.Distance(playerPosition, flarePos);
 				paranoiaSystem.InsideSafeArea = distance <= area * 2;
 				if (_time < seconds * 60) return;
+				
+				new AudioBuilder()
+					.WithName("Flare_OnBurning_" + _id)
+					.Stop(true);
 				
 				flareLight.SetActive(false);
 				_wasDropped = false;
@@ -90,8 +103,8 @@ namespace Items
 
 		private void OnCollisionEnter()
 		{
-			if(onGroundPlayed || !_wasDropped) return;
-			onGroundPlayed = true;
+			if(_onGroundPlayed || !_wasDropped) return;
+			_onGroundPlayed = true;
 			new AudioBuilder()
 				.WithClip(onGround)
 				.WithName("Flare_OnDrop")

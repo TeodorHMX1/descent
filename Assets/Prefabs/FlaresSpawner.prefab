@@ -133,7 +133,7 @@ MonoBehaviour:
     outline: {fileID: 2006538386692195787}
   puzzleSub:
     enabled: 0
-  Itemcollect: {fileID: 8300000, guid: 83326ed8426fdfc44969a0860091307e, type: 3}
+  Itemcollect: {fileID: 8300000, guid: eeec3dc1d530ff845a98840443d66d5a, type: 3}
 --- !u!114 &2006538386692195787
 MonoBehaviour:
   m_ObjectHideFlags: 0
