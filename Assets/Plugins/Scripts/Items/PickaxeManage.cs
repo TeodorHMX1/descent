@@ -1,6 +1,4 @@
-﻿using System;
-using Destructible;
-using Override;
+﻿using Override;
 using UnityEngine;
 using UnityEngine.Rendering;
 using Walls;
@@ -13,7 +11,6 @@ namespace Items
 	///     <para> PickaxeManage </para>
 	///     <author> @TeodorHMX1 </author>
 	/// </summary>
-	[RequireComponent(typeof(AudioSource))]
 	public class PickaxeManage : MonoBehaviour, IOnAttached
 	{
 

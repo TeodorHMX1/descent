@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-/// <summary>
+﻿/// <summary>
 ///     <para> Constants </para>
 ///     <author> @TeodorHMX1 </author>
 /// </summary>

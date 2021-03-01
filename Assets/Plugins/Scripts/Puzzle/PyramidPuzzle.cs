@@ -10,7 +10,19 @@ namespace Puzzle
 	/// </summary>
 	public class PyramidPuzzle : MonoBehaviour
 	{
+		[Header("Pyramids")]
 		public List<PyramidController> pyramids = new List<PyramidController>();
+
+		[Header("On Win")]
+		public GameObject pickableObject;
+
+		private bool _onWinCreated = false;
+		private bool _isPickableObjectNotNull;
+
+		private void Start()
+		{
+			_isPickableObjectNotNull = pickableObject != null;
+		}
 
 		/// <summary>
 		///     <para> Update </para>
@@ -18,9 +30,20 @@ namespace Puzzle
 		/// </summary>
 		private void Update()
 		{
+			if (!_onWinCreated)
+			{
+				if (_isPickableObjectNotNull)
+				{
+					
+				}
+			}
 			if (pyramids.Count(pyramid => pyramid.IsWinState()) < pyramids.Count) return;
 
-			// Debug.Log("puzzleCompleted");
+			if (_onWinCreated || !IsCompleted()) return;
+			_onWinCreated = true;
+			if (!_isPickableObjectNotNull) return;
+			if (pickableObject.GetComponent<IOnComplete>() != null)
+				pickableObject.GetComponent<IOnComplete>().ONCompleted();
 		}
 		
 		/// <summary>
