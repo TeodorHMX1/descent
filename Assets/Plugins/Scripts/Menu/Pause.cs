@@ -12,12 +12,25 @@ namespace Menu
     /// </summary>
     public class Pause : MonoBehaviour
     {
+        public static Pause instance;
         public bool isPaused;
         public GameObject pauseMenu;
         public GameObject optionsMenu;
         public MouseCursorLock mouseCursorLock;
 
         private bool _mainMenu;
+
+        /// <summary>
+        ///     <para> Start </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        private void Awake()
+        {
+            if (instance == null)
+            {
+                instance = this;
+            }
+        }
 
         /// <summary>
         ///     <para> Start </para>
@@ -64,6 +77,15 @@ namespace Menu
         {
             isPaused = false;
             pauseMenu.SetActive(false);
+        }
+
+        /// <summary>
+        ///     <para> IOnPause </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        public void IOnPause()
+        {
+            isPaused = true;
         }
 
         /// <summary>

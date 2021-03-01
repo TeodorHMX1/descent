@@ -2723,7 +2723,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 28aebaca2f123eb4ea9b2bfd2ad73750,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -29.838959
+      value: -9.370911
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 28aebaca2f123eb4ea9b2bfd2ad73750,
         type: 3}
@@ -2733,27 +2733,27 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 28aebaca2f123eb4ea9b2bfd2ad73750,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -65.1589
+      value: -79.83693
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 28aebaca2f123eb4ea9b2bfd2ad73750,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7071068
+      value: -0.6484717
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 28aebaca2f123eb4ea9b2bfd2ad73750,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.2819299
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 28aebaca2f123eb4ea9b2bfd2ad73750,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: -0.2819299
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 28aebaca2f123eb4ea9b2bfd2ad73750,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 0.6484717
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 28aebaca2f123eb4ea9b2bfd2ad73750,
         type: 3}
@@ -2773,7 +2773,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 28aebaca2f123eb4ea9b2bfd2ad73750,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: -46.995003
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 28aebaca2f123eb4ea9b2bfd2ad73750,
         type: 3}
@@ -4349,6 +4349,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6707313193940299585, guid: 77f84b7a245c2a441a4759ee48d0a8dd,
+        type: 3}
+      propertyPath: active
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8615552266525472488, guid: 77f84b7a245c2a441a4759ee48d0a8dd,
         type: 3}
       propertyPath: brightnessEffect
@@ -8892,18 +8897,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc0dfdc0b8b24006b8e629aeae6d8a91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1741619781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1741619779}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af27e1d2ec04425fb40b40d493a9fb98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1765841772
