@@ -21,11 +21,6 @@ namespace Items
 
         private void Awake()
         {
-            if (!ItemsUnlocked.Contains(Item.Map))
-            {
-                ItemsUnlocked.Add(Item.Map);
-            }
-
             if (_mInstance == null)
             {
                 _mInstance = this;

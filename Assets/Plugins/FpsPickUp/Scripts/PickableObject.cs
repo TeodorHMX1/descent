@@ -5,109 +5,117 @@ using ZeoFlow.Pickup.Interfaces;
 
 namespace ZeoFlow.Pickup
 {
-	public class PickableObject : MonoBehaviour
-	{
-		public new GameObject gameObject;
-		public Item item;
-		public ItemFlags itemFlags = ItemFlags.None;
-		public string guiText = string.Empty;
-		public PhysicsSub physicsMenu = new PhysicsSub();
-		public ThrowingSystemMenu throwingSystem = new ThrowingSystemMenu();
-		public PlayerAttachSub playerAttachMenu = new PlayerAttachSub();
-		public OutlinerSub outlinerMenu = new OutlinerSub();
-		public PuzzleSub puzzleSub = new PuzzleSub();
-		public AudioClip Itemcollect;
+    public class PickableObject : MonoBehaviour
+    {
+        public new GameObject gameObject;
+        public Item item;
+        public ItemFlags itemFlags = ItemFlags.None;
+        public string guiText = string.Empty;
+        public PhysicsSub physicsMenu = new PhysicsSub();
+        public ThrowingSystemMenu throwingSystem = new ThrowingSystemMenu();
+        public PlayerAttachSub playerAttachMenu = new PlayerAttachSub();
+        public OutlinerSub outlinerMenu = new OutlinerSub();
+        public PuzzleSub puzzleSub = new PuzzleSub();
+        public AudioClip Itemcollect;
+        public bool onPickCallback;
 
-		private bool _isAttached;
-		private SyncItem _syncItem;
+        private bool _isAttached;
+        private SyncItem _syncItem;
+        private bool _isPicked;
+        private bool _toBeDestroyed;
 
+        private void Start()
+        {
+            itemFlags = ItemFlags.OnGround;
+        }
 
-		private bool toBeDestroyed;
+        private void Update()
+        {
+            if (itemFlags == ItemFlags.OnPlayer || itemFlags == ItemFlags.OnDropped) return;
+            if (!_isAttached) return;
+            if (!ItemsManager.CanPickUp(item) && item != Item.None) return;
+            if (gameObject.GetComponent<SyncItem>() != null) return;
 
-		private void Start()
-		{
-			itemFlags = ItemFlags.OnGround;
-		}
+            if (gameObject.GetComponent<IOnAttached>() != null)
+                gameObject.GetComponent<IOnAttached>().ONUpdate(playerAttachMenu);
 
-		private void Update()
-		{
-			if (itemFlags == ItemFlags.OnPlayer || itemFlags == ItemFlags.OnDropped) return;
-			if (!_isAttached) return;
-			if (!ItemsManager.CanPickUp(item) && item != Item.None) return;
-			if (gameObject.GetComponent<SyncItem>() != null) return;
+            ItemsManager.Unlock(item);
 
-			if (gameObject.GetComponent<IOnAttached>() != null)
-				gameObject.GetComponent<IOnAttached>().ONUpdate(playerAttachMenu);
-			
-			ItemsManager.Unlock(item);
+            if (playerAttachMenu.createNewObject)
+            {
+                var objToAttach = playerAttachMenu.objectToAttach;
 
-			if (playerAttachMenu.createNewObject)
-			{
-				var objToAttach = playerAttachMenu.objectToAttach;
+                if (item == Item.Flare && !ItemsManager.CanPickFlare())
+                {
+                    _toBeDestroyed = true;
+                    return;
+                }
 
-				if (item == Item.Flare && !ItemsManager.CanPickFlare())
-				{
-					toBeDestroyed = true;
-					return;
-				}
+                var newFlare = Instantiate(objToAttach, objToAttach.transform.position,
+                    Quaternion.Euler(objToAttach.transform.eulerAngles));
+                newFlare.name = objToAttach.name;
+                newFlare.transform.parent = GameObject.Find("Items").transform;
+                _syncItem = newFlare.AddComponent<SyncItem>();
+                _syncItem.GameObject = newFlare;
+                _syncItem.AttachTo = playerAttachMenu.playerObject;
+                ItemsManager.AddItem(new ItemBean {ItemType = item, GameObject = newFlare});
+                _isAttached = false;
+                if (!_toBeDestroyed) return;
 
-				var newFlare = Instantiate(objToAttach, objToAttach.transform.position,
-					Quaternion.Euler(objToAttach.transform.eulerAngles));
-				newFlare.name = objToAttach.name;
-				newFlare.transform.parent = GameObject.Find("Items").transform;
-				_syncItem = newFlare.AddComponent<SyncItem>();
-				_syncItem.GameObject = newFlare;
-				_syncItem.AttachTo = playerAttachMenu.playerObject;
-				ItemsManager.AddItem(new ItemBean {ItemType = item, GameObject = newFlare});
-				_isAttached = false;
-				if (!toBeDestroyed) return;
+                Destroy(newFlare);
+                ItemsManager.Remove(Item.Flare);
+                _toBeDestroyed = false;
+            }
+            else
+            {
+                _syncItem = gameObject.AddComponent<SyncItem>();
+                _syncItem.GameObject = gameObject;
+                _syncItem.AttachTo = playerAttachMenu.playerObject;
+                if (item == Item.Flashlight || item == Item.None) return;
 
-				Destroy(newFlare);
-				ItemsManager.Remove(Item.Flare);
-				toBeDestroyed = false;
-			}
-			else
-			{
-				_syncItem = gameObject.AddComponent<SyncItem>();
-				_syncItem.GameObject = gameObject;
-				_syncItem.AttachTo = playerAttachMenu.playerObject;
-				if (item == Item.Flashlight || item == Item.None) return;
+                ItemsManager.AddItem(new ItemBean {ItemType = item, GameObject = gameObject});
+                itemFlags = ItemFlags.OnPlayer;
+            }
+        }
 
-				ItemsManager.AddItem(new ItemBean {ItemType = item, GameObject = gameObject});
-				itemFlags = ItemFlags.OnPlayer;
-			}
-		}
+        public void OnMovement(bool isRight)
+        {
+            if (gameObject.GetComponent<IOnPuzzle>() != null) gameObject.GetComponent<IOnPuzzle>().ONMovement(isRight);
+        }
 
-		public void OnMovement(bool isRight)
-		{
-			if (gameObject.GetComponent<IOnPuzzle>() != null) gameObject.GetComponent<IOnPuzzle>().ONMovement(isRight);
-		}
+        public bool IsPuzzleMoving()
+        {
+            return gameObject.GetComponent<IOnPuzzle>() != null && gameObject.GetComponent<IOnPuzzle>().ONIsMoving();
+        }
 
-		public bool IsPuzzleMoving()
-		{
-			return gameObject.GetComponent<IOnPuzzle>() != null && gameObject.GetComponent<IOnPuzzle>().ONIsMoving();
-		}
+        public void OnAttach()
+        {
+            if (onPickCallback)
+            {
+                if (_isPicked) return;
+                _isPicked = true; 
+                gameObject.GetComponent<IOnPicked>().ONPicked();
+                return;
+            }
 
-		public void OnAttach()
-		{
-			if (itemFlags == ItemFlags.OnPlayer || itemFlags == ItemFlags.OnDropped) return;
-			_isAttached = true;
-			new AudioBuilder()
-				.WithClip(Itemcollect)
-				.WithName("PickableObject_OnAttach")
-				.WithVolume(SoundVolume.Weak)
-				.Play(true);
-		}
+            if (itemFlags == ItemFlags.OnPlayer || itemFlags == ItemFlags.OnDropped) return;
+            _isAttached = true;
+            new AudioBuilder()
+                .WithClip(Itemcollect)
+                .WithName("PickableObject_OnAttach")
+                .WithVolume(SoundVolume.Weak)
+                .Play(true);
+        }
 
-		public void OnDrop()
-		{
-			gameObject.name = gameObject.name.Replace("(Picked)", "(Dropped)");
-			itemFlags = ItemFlags.OnDropped;
-			_isAttached = false;
-			if (_syncItem == null) return;
+        public void OnDrop()
+        {
+            gameObject.name = gameObject.name.Replace("(Picked)", "(Dropped)");
+            itemFlags = ItemFlags.OnDropped;
+            _isAttached = false;
+            if (_syncItem == null) return;
 
-			_syncItem.OnDestroy();
-			ItemsManager.Remove(item);
-		}
-	}
+            _syncItem.OnDestroy();
+            ItemsManager.Remove(item);
+        }
+    }
 }

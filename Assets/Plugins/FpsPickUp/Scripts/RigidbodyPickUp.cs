@@ -207,6 +207,13 @@ namespace ZeoFlow.Pickup
 
             if (_objectCan)
             {
+                if (_outlinerMenu != null)
+                {
+                    if (_outlinerMenu != hit.collider.GetComponent<PickableObject>().outlinerMenu)
+                    {
+                        _outlinerMenu.outline.enabled = false;
+                    }
+                }
                 _outlinerMenu = hit.collider.GetComponent<PickableObject>().outlinerMenu;
             }
 
@@ -313,8 +320,15 @@ namespace ZeoFlow.Pickup
                 if (_isPuzzleFocused && pickedObject.gameObject != _objectHeld) return;
 
                 _playerObject = hit.collider.GetComponent<PickableObject>();
-                _puzzleSub = _playerObject.puzzleSub;
 
+                if (_playerObject.onPickCallback)
+                {
+                    _playerObject.OnAttach();
+                    _outlinerMenu = null;
+                    _playerObject = null;
+                    return;
+                }
+                _puzzleSub = _playerObject.puzzleSub;
                 if (_puzzleSub.enabled)
                 {
                     if (!_playerObject.IsPuzzleMoving())

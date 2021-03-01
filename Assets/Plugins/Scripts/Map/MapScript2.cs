@@ -1,4 +1,5 @@
-﻿using Menu;
+﻿using Items;
+using Menu;
 using Override;
 using UnityEngine;
 using ZeoFlow;
@@ -61,6 +62,7 @@ namespace Map
             ColArea1 = false;
             ColArea2 = false;
             ColArea3 = false;
+            map.SetActive(false);
 
             if (!_isArea1Null)
             {
@@ -84,6 +86,7 @@ namespace Map
         private void Update()
         {
             if (Time.timeScale == 0f) return;
+            if (!ItemsManager.Unlocked(Item.Map)) return;
             if (_isArea1Null || _isArea2Null || _isArea3Null) return;
 
             area1.SetActive(ColArea1);
