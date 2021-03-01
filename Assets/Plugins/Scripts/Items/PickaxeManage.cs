@@ -1,7 +1,9 @@
-﻿using Override;
+﻿using Map;
+using Override;
 using UnityEngine;
 using UnityEngine.Rendering;
 using Walls;
+using ZeoFlow;
 using ZeoFlow.Pickup;
 using ZeoFlow.Pickup.Interfaces;
 
@@ -44,7 +46,8 @@ namespace Items
 			
 			if (_isAnimatorNull) return;
 			
-			if (!Input.GetKeyDown(swingKey)) return;
+			if (!InputManager.GetButtonDown("InteractHUD")) return;
+			if(MapScript2.IsMapOpened()) return;
 			if (animator.isPlaying) return;
 			
 			animator.Play(Constants.Animations.PickaxeSwing);

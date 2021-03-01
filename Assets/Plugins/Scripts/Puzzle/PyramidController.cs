@@ -72,10 +72,7 @@ namespace Puzzle
         /// </summary>
         private void Update()
         {
-            if (!IsWinState())
-            {
-                finishLight.enabled = false;
-            }
+            if (!IsWinState()) finishLight.enabled = false;
 
             if (!_isMoving) return;
 
@@ -99,6 +96,7 @@ namespace Puzzle
         /// <param name="toRight"></param>
         public void ONMovement(bool toRight)
         {
+            if (IsWinState()) return;
             if (_isMoving) return;
             _isMoving = true;
             new AudioBuilder()

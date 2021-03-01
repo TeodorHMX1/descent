@@ -1,4 +1,5 @@
-﻿using Override;
+﻿using Map;
+using Override;
 using TMPro;
 using UnityEngine;
 using static UnityEngine.Screen;
@@ -248,58 +249,77 @@ namespace ZeoFlow.Pickup
                 _timeStartedMovement = 0;
             }
 
-            if (togglePickUp)
+            if (MapScript2.IsMapOpened())
             {
-                if (Input.GetKeyDown(pickupButton) && !_throwingSystem.throwing && !_isObjectHeld &&
-                    !_objectIsToggled &&
-                    _toggTime > 0.009f)
-                {
-                    TryPickObject();
-                }
-
-                if (Input.GetKeyDown(pickupButton) && _isObjectHeld && _objectIsToggled && _toggTime < 0)
-                {
-                    if (_physicsMenu.placeObjectBack &&
-                        Vector3.Distance(_objectHeld.GetComponent<Placeback>().pos, _objectHeld.transform.position) <
-                        _physicsMenu.placeDistance)
-                    {
-                        _objectHeld.transform.position = _objectHeld.GetComponent<Placeback>().pos;
-                        _objectHeld.transform.rotation = _objectHeld.GetComponent<Placeback>().rot;
-                        ResetPickUp(true);
-                        _toggTime = 0.01f;
-                    }
-                    else
-                    {
-                        ResetPickUp(true);
-                        _toggTime = 0.01f;
-                    }
-                }
+                if (_outlinerMenu == null) return;
+                if (!_outlinerMenu.enabled) return;
+                _objectHeld = null;
+                _outlinerMenu.outline.enabled = false;
+                _outlinerMenu = null;
+                return;
             }
-            else if (!togglePickUp)
+            switch (togglePickUp)
             {
-                if (Input.GetKey(pickupButton) && !_throwingSystem.throwing)
+                case true:
                 {
-                    if (!_isObjectHeld)
+                    if (Input.GetKeyDown(pickupButton) && !_throwingSystem.throwing && !_isObjectHeld &&
+                        !_objectIsToggled &&
+                        _toggTime > 0.009f)
                     {
                         TryPickObject();
                     }
-                    else if (_isObjectHeld)
+
+                    if (Input.GetKeyDown(pickupButton) && _isObjectHeld && _objectIsToggled && _toggTime < 0)
                     {
-                        HoldObject();
+                        if (_physicsMenu.placeObjectBack &&
+                            Vector3.Distance(_objectHeld.GetComponent<Placeback>().pos, _objectHeld.transform.position) <
+                            _physicsMenu.placeDistance)
+                        {
+                            _objectHeld.transform.position = _objectHeld.GetComponent<Placeback>().pos;
+                            _objectHeld.transform.rotation = _objectHeld.GetComponent<Placeback>().rot;
+                            ResetPickUp(true);
+                            _toggTime = 0.01f;
+                        }
+                        else
+                        {
+                            ResetPickUp(true);
+                            _toggTime = 0.01f;
+                        }
                     }
+
+                    break;
                 }
-                else if (!Input.GetKey(pickupButton) && _isObjectHeld)
+                case false when Input.GetKey(pickupButton) && !_throwingSystem.throwing:
                 {
-                    if (_physicsMenu.placeObjectBack &&
-                        Vector3.Distance(_objectHeld.GetComponent<Placeback>().pos, _objectHeld.transform.position) <
-                        _physicsMenu.placeDistance)
+                    switch (_isObjectHeld)
                     {
-                        _objectHeld.transform.position = _objectHeld.GetComponent<Placeback>().pos;
-                        _objectHeld.transform.rotation = _objectHeld.GetComponent<Placeback>().rot;
+                        case false:
+                            TryPickObject();
+                            break;
+                        case true:
+                            HoldObject();
+                            break;
+                    }
+
+                    break;
+                }
+                case false:
+                {
+                    if (!Input.GetKey(pickupButton) && _isObjectHeld)
+                    {
+                        if (_physicsMenu.placeObjectBack &&
+                            Vector3.Distance(_objectHeld.GetComponent<Placeback>().pos, _objectHeld.transform.position) <
+                            _physicsMenu.placeDistance)
+                        {
+                            _objectHeld.transform.position = _objectHeld.GetComponent<Placeback>().pos;
+                            _objectHeld.transform.rotation = _objectHeld.GetComponent<Placeback>().rot;
+                            ResetPickUp(true);
+                        }
+
                         ResetPickUp(true);
                     }
 
-                    ResetPickUp(true);
+                    break;
                 }
             }
         }

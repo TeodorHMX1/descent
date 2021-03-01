@@ -30,13 +30,6 @@ namespace Puzzle
 		/// </summary>
 		private void Update()
 		{
-			if (!_onWinCreated)
-			{
-				if (_isPickableObjectNotNull)
-				{
-					
-				}
-			}
 			if (pyramids.Count(pyramid => pyramid.IsWinState()) < pyramids.Count) return;
 
 			if (_onWinCreated || !IsCompleted()) return;

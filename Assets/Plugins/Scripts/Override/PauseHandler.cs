@@ -25,6 +25,7 @@ namespace Override
 			Pause.instance.IOnPause();
 			Cursor.lockState = CursorLockMode.None;
 			Cursor.visible = true;
+			Time.timeScale = 0f;
 		}
 
 		/// <summary>

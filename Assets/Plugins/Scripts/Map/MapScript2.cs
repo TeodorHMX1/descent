@@ -28,6 +28,7 @@ namespace Map
         private bool _isArea3Null;
         private bool _isRigidbodyPickUpNotNull;
         private bool _isPauseNotNull;
+        private bool _mapShowed;
 
         private static MapScript2 _mInstance;
 
@@ -87,6 +88,16 @@ namespace Map
         {
             if (Time.timeScale == 0f) return;
             if (!ItemsManager.Unlocked(Item.Map)) return;
+            if (!_mapShowed)
+            {
+                mapOpen = true;
+                _mapShowed = true;
+                new AudioBuilder()
+                    .WithClip(scribble)
+                    .WithName("ToggleMap_Sound")
+                    .WithVolume(SoundVolume.Normal)
+                    .Play();
+            }
             if (_isArea1Null || _isArea2Null || _isArea3Null) return;
 
             area1.SetActive(ColArea1);

@@ -1,5 +1,6 @@
 ﻿using System;
 using Destructible;
+using Map;
 using Override;
 using Paranoia;
 using UnityEngine;
@@ -93,6 +94,7 @@ namespace Items
 			if (!_isAttached) return;
 			
 			if (!InputManager.GetButtonDown("InteractHUD") && !_wasDropped) return;
+			if(MapScript2.IsMapOpened()) return;
 			
 			flareLight.SetActive(true);
 			_wasDropped = true;
