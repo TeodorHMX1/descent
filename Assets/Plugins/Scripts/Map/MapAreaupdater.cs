@@ -1,4 +1,5 @@
-﻿using Override;
+﻿using Items;
+using Override;
 using UnityEngine;
 
 namespace Map
@@ -24,6 +25,7 @@ namespace Map
 		{
 			_isupdatetextNull = updatetext == null;
 			_currentTime = 0;
+			updatetext.SetActive(false);
 		}
 
 		/// <summary>
@@ -32,6 +34,8 @@ namespace Map
 		private void Update() //starts and finishes timer
 		{
 			if (_isupdatetextNull) return;
+			
+			if (!ItemsManager.Unlocked(Item.Map)) return;
 			
 			_currentTime -= 1 * Time.deltaTime;
 			
@@ -50,6 +54,7 @@ namespace Map
 		/// <param name="collisionInfo"></param>
 		private void OnTriggerEnter(Collider collisionInfo) //Creates popup baised on area entered
 		{
+			if (!ItemsManager.Unlocked(Item.Map)) return;
 			switch (collisionInfo.name)
 			{
 				//Debug.Log(collisionInfo.collider.name);

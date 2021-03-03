@@ -147,6 +147,11 @@ namespace Puzzle
         {
             var currentRotation = transform.rotation.eulerAngles.y;
             currentRotation = Math.Abs((int) currentRotation) - (int) _startAngle.y;
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            if (currentRotation % 90 == 89)
+            {
+                currentRotation += 1;
+            }
             switch (currentRotation)
             {
                 case 0:

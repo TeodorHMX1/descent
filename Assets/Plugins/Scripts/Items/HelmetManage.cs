@@ -187,6 +187,7 @@ namespace Items
         public void DisableParanoiaTriggered()
         {
             _flashlightState = FlashlightState.None;
+            helmetLight.intensity = _lightPattern[0].Intensity;
         }
 
         private enum FlashlightState
