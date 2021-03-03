@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Menu;
+using UnityEngine;
 
 namespace ZeoFlow.PlayerMovement
 {
@@ -24,7 +25,7 @@ namespace ZeoFlow.PlayerMovement
 			float _input = InputManager.GetAxisRaw(mouseHorizontalAxis) * 0.1f;
 
 			//Since raw mouse input is already time-based, we need to correct for this before passing the input to the camera controller;
-			if (Time.timeScale > 0f)
+			if (!Pause.IsPaused)
 			{
 				_input /= Time.deltaTime;
 				_input *= Time.timeScale;
@@ -48,7 +49,7 @@ namespace ZeoFlow.PlayerMovement
 			float _input = -InputManager.GetAxisRaw(mouseVerticalAxis) * 0.1f;
 
 			//Since raw mouse input is already time-based, we need to correct for this before passing the input to the camera controller;
-			if (Time.timeScale > 0f)
+			if (!Pause.IsPaused)
 			{
 				_input /= Time.deltaTime;
 				_input *= Time.timeScale;

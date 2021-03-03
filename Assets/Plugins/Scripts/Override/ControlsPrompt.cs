@@ -1,6 +1,7 @@
 ﻿using System;
 using Items;
 using Map;
+using Menu;
 using TMPro;
 using UnityEngine;
 using ZeoFlow;
@@ -37,8 +38,8 @@ namespace Override
         /// </summary>
         private void Update()
         {
-            minimizedControlsContent.enabled = Time.timeScale != 0f;
-            fullControlsContent.enabled = Time.timeScale != 0f;
+            minimizedControlsContent.enabled = !Pause.IsPaused;
+            fullControlsContent.enabled = !Pause.IsPaused;
 
             var controlsContent = "\"" + InputManager.GetKeyName("Run") + "\" - Run\n";
             controlsContent += "\"" + InputManager.GetKeyName("Jump") + "\" - Jump\n";
