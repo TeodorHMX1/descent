@@ -28,7 +28,7 @@ namespace Map
         private bool _isArea3Null;
         private bool _isRigidbodyPickUpNotNull;
         private bool _isPauseNotNull;
-        private bool _mapShowed;
+        private bool _mapShowed = true;
 
         private static MapScript2 _mInstance;
 
@@ -86,7 +86,7 @@ namespace Map
         /// </summary>
         private void Update()
         {
-            if (Time.timeScale == 0f) return;
+            if (Pause.IsPaused) return;
             if (!ItemsManager.Unlocked(Item.Map)) return;
             if (!_mapShowed)
             {
@@ -118,7 +118,7 @@ namespace Map
 
             if (_isPauseNotNull)
             {
-                if (pause.isPaused)
+                if (Pause.IsPaused)
                 {
                     area1.SetActive(false);
                     area2.SetActive(false);

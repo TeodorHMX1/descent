@@ -8680,7 +8680,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 0de6f7c1efbe59749959636ba3d61484, type: 3}
       propertyPath: childAmount
-      value: 100
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 0de6f7c1efbe59749959636ba3d61484, type: 3}
       propertyPath: slowSpawn

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Menu;
 using UnityEngine;
 using ZeoFlow;
 
@@ -34,7 +35,7 @@ namespace Items
 
         private void Update()
         {
-            if (Time.timeScale == 0) return;
+            if (Pause.IsPaused) return;
             if (_timeCountdown > 0) _timeCountdown--;
             if (Items.Count == 0 || Items.Count == 1) return;
 

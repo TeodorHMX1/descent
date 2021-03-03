@@ -1,4 +1,5 @@
-﻿using Override;
+﻿using Menu;
+using Override;
 using UnityEngine;
 using UnityEngine.Rendering;
 using ZeoFlow;
@@ -66,7 +67,7 @@ namespace Items
         /// </summary>
         private void Update()
         {
-            if (Time.timeScale == 0.0f || !attached) return;
+            if (Pause.IsPaused || !attached) return;
 
             if (_isBoxColliderNotNull) _boxCollider.enabled = false;
 

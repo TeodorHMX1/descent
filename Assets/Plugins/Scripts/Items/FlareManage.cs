@@ -1,6 +1,7 @@
 ﻿using System;
 using Destructible;
 using Map;
+using Menu;
 using Override;
 using Paranoia;
 using UnityEngine;
@@ -56,7 +57,7 @@ namespace Items
 
 		private void Update()
 		{
-			if (Time.timeScale == 0f) return;
+			if (Pause.IsPaused) return;
 			
 			if (_wasDropped)
 			{

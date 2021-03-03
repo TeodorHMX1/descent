@@ -1,4 +1,5 @@
 ﻿using Map;
+using Menu;
 using Override;
 using TMPro;
 using UnityEngine;
@@ -103,7 +104,7 @@ namespace ZeoFlow.Pickup
 
         private void Update()
         {
-            if (Time.timeScale == 0f)
+            if (Pause.IsPaused)
             {
                 if (_outlinerMenu != null)
                 {

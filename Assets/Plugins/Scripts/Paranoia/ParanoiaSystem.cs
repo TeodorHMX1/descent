@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Filters;
+using Menu;
 using Override;
 using UnityEngine;
 
@@ -75,7 +76,7 @@ namespace Paranoia
         private void Update()
         {
             if (player == null) return;
-            if (Time.timeScale == 0) return;
+            if (Pause.IsPaused) return;
 
             switch (numberOfEntrances)
             {

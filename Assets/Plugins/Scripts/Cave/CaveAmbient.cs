@@ -1,4 +1,5 @@
 ﻿using System;
+using Menu;
 using Override;
 using UnityEngine;
 
@@ -26,7 +27,7 @@ namespace Cave
 
         private void Update()
         {
-            if (Time.timeScale == 0f) return;
+            if (Pause.IsPaused) return;
 
             new AudioBuilder()
                 .WithClip(ambientSound)

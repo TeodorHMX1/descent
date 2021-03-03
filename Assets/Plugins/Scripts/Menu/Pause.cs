@@ -13,12 +13,18 @@ namespace Menu
     public class Pause : MonoBehaviour
     {
         public static Pause instance;
-        public bool isPaused;
+        public static bool isPaused;
         public GameObject pauseMenu;
         public GameObject optionsMenu;
         public MouseCursorLock mouseCursorLock;
 
         private bool _mainMenu;
+
+        public static bool IsPaused
+        {
+            get => isPaused;
+            set => isPaused = value;
+        }
 
         /// <summary>
         ///     <para> Start </para>
@@ -48,6 +54,7 @@ namespace Menu
         /// </summary>
         private void Update()
         {
+            IsPaused = isPaused;
             if (_mainMenu) return;
 
             var pausePressed = InputManager.GetButtonDown("PauseMenu");

@@ -1,4 +1,5 @@
 ﻿using System;
+using Menu;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -47,7 +48,7 @@ namespace Override
                 }
             }
 
-            if (Time.timeScale == 0f)
+            if (Pause.IsPaused)
             {
                 var audioSources = GetComponentsInChildren<AudioSource>();
                 foreach (var audioSource in audioSources) audioSource.Pause();
