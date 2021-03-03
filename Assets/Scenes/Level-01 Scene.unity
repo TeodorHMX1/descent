@@ -11000,7 +11000,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press "N" For controls
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 04bfa028fc213ef4cb59ecb6c5f1b38e, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 04bfa028fc213ef4cb59ecb6c5f1b38e, type: 2}
@@ -33643,7 +33643,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press "N" For controls
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 04bfa028fc213ef4cb59ecb6c5f1b38e, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 04bfa028fc213ef4cb59ecb6c5f1b38e, type: 2}
@@ -62135,7 +62135,7 @@ PrefabInstance:
     - target: {fileID: 8615552266525472501, guid: 77f84b7a245c2a441a4759ee48d0a8dd,
         type: 3}
       propertyPath: m_controlSchemes.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8615552266525472501, guid: 77f84b7a245c2a441a4759ee48d0a8dd,
         type: 3}
@@ -62900,6 +62900,16 @@ PrefabInstance:
     - target: {fileID: 8615552266525472501, guid: 77f84b7a245c2a441a4759ee48d0a8dd,
         type: 3}
       propertyPath: m_controlSchemes.Array.data[2].m_actions.Array.data[12].m_bindings.Array.data[0].m_scale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8615552266525472501, guid: 77f84b7a245c2a441a4759ee48d0a8dd,
+        type: 3}
+      propertyPath: m_controlSchemes.Array.data[2].m_isExpanded
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8615552266525472501, guid: 77f84b7a245c2a441a4759ee48d0a8dd,
+        type: 3}
+      propertyPath: m_controlSchemes.Array.data[1].m_isExpanded
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8615552267309181298, guid: 77f84b7a245c2a441a4759ee48d0a8dd,
