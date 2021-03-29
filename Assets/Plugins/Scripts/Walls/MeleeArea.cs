@@ -5,6 +5,11 @@ using UnityEngine;
 
 namespace Walls
 {
+        
+    /// <summary>
+    ///     <para> MeleeArea </para>
+    ///     <author> @TeodorHMX1 </author>
+    /// </summary>
     public class MeleeArea : MonoBehaviour
     {
         public int damageAmount = 30;
@@ -13,7 +18,11 @@ namespace Walls
         public float additionalForceRadius = 2f;
         public bool requirePuzzle = false;
         public PyramidPuzzle pyramidPuzzle;
-
+        
+        /// <summary>
+        ///     <para> OnMeleeDamage </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
         public void OnMeleeDamage()
         {
 
@@ -76,7 +85,11 @@ namespace Walls
                 }
             }
         }
-
+        
+        /// <summary>
+        ///     <para> OnDrawGizmos </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
         private void OnDrawGizmos()
         {
             Gizmos.DrawWireSphere(transform.position, meleeRadius);

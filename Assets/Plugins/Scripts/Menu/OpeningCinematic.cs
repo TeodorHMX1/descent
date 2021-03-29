@@ -1,8 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 using Override;
+using UnityEngine;
 
 public class OpeningCinematic : MonoBehaviour
 {
@@ -11,12 +9,17 @@ public class OpeningCinematic : MonoBehaviour
     public GameObject HUD;
     public GameObject Map;
     public GameObject Pause;
+
     public GameObject Skipprompt;
-    private bool Animationruntime;
     // Start is called before the first frame update
 
     public AudioClip cinematic1;
-    void Start()
+    private bool _animationruntime;
+
+    /// <summary>
+    ///     <para> Start </para>
+    /// </summary>
+    private void Start()
     {
         CinemaCam.SetActive(true);
         Player.SetActive(false);
@@ -24,16 +27,37 @@ public class OpeningCinematic : MonoBehaviour
         Map.SetActive(false);
         Pause.SetActive(false);
         Skipprompt.SetActive(true);
-        Animationruntime = true;
+        _animationruntime = true;
         StartCoroutine(EndCut());
         new AudioBuilder()
-                        .WithClip(cinematic1)
-                        .WithName("Cinematicaudio")
-                        .WithVolume(SoundVolume.Normal)
-                        .Play();
-
+            .WithClip(cinematic1)
+            .WithName("Cinematicaudio")
+            .WithVolume(SoundVolume.Normal)
+            .Play();
     }
-    IEnumerator EndCut()
+
+    /// <summary>
+    ///     <para> Update </para>
+    /// </summary>
+    private void Update()
+    {
+        if (!_animationruntime) return;
+        if (!Input.GetKeyDown(KeyCode.Space)) return;
+        StopCoroutine(EndCut());
+        Player.SetActive(true);
+        CinemaCam.SetActive(false);
+        HUD.SetActive(true);
+        Map.SetActive(true);
+        Pause.SetActive(true);
+        Skipprompt.SetActive(false);
+        _animationruntime = false;
+    }
+
+    /// <summary>
+    ///     <para> EndCut </para>
+    /// </summary>
+    /// <returns>IEnumerator</returns>
+    private IEnumerator EndCut()
     {
         yield return new WaitForSeconds(10);
         Player.SetActive(true);
@@ -42,28 +66,6 @@ public class OpeningCinematic : MonoBehaviour
         Map.SetActive(true);
         Pause.SetActive(true);
         Skipprompt.SetActive(false);
-        Animationruntime = false;
+        _animationruntime = false;
     }
-
-    private void Update()
-    {
-        if (Animationruntime == true)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                StopCoroutine(EndCut());
-                Player.SetActive(true);
-                CinemaCam.SetActive(false);
-                HUD.SetActive(true);
-                Map.SetActive(true);
-                Pause.SetActive(true);
-                Skipprompt.SetActive(false);
-                Animationruntime = false;
-            }
-        }
-    }
-
- 
-
-    
 }

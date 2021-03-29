@@ -4,12 +4,10 @@ using UnityEngine.Events;
 namespace Menu
 {
     /// <summary>
-    /// Container class for Serializable Events in UnityEditor.
+    ///     <para> Events - Container class for Serializable Events in UnityEditor </para>
+    ///     <author> @TeodorHMX1 </author>
     /// </summary>
     public static class Events {
- 
-        // Additional event-definitions...
- 
         [Serializable]
         public class Vector2 : UnityEvent<UnityEngine.Vector2> { }
     }

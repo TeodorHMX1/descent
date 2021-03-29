@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using ZeoFlow;
 
@@ -28,7 +27,6 @@ namespace Options
 		public GameObject elementToShow;
 
 		private bool _isElementToShowNotNull;
-
 
 		/// <summary>
 		///     <para> Start </para>

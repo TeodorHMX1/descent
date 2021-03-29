@@ -34,6 +34,11 @@ namespace Puzzle
 		private bool _onWinCreated;
 		private bool _isPickableObjectNotNull;
 
+        
+		/// <summary>
+		///     <para> Start </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		private void Start()
 		{
 			_isPickableObjectNotNull = pickableObject != null;
@@ -64,6 +69,11 @@ namespace Puzzle
 			return !(pyramids.Count(pyramid => pyramid.IsWinState()) < pyramids.Count);
 		}
 
+        
+		/// <summary>
+		///     <para> Reset </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		public void Reset()
 		{
 			foreach (var pyramid in pyramids)

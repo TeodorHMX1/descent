@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Override
 {
@@ -12,13 +11,21 @@ namespace Override
 
 		private static LoadScene _mInstance;
 		private static AsyncOperation _loadingOperation;
+		
+		/// <summary>
+		///     <para> LoadingOperation </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		public static AsyncOperation LoadingOperation
 		{
 			get => _loadingOperation;
 			set => _loadingOperation = value;
 		}
-		
-		
+
+		/// <summary>
+		///     <para> Awake </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		private void Awake()
 		{
 			if (_mInstance == null)

@@ -69,8 +69,6 @@ namespace Puzzle
                 case PyramidState.Side8:
                     RotatePyramid(360 / pyramidSides * 7);
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
 
             _currentState = startSide;

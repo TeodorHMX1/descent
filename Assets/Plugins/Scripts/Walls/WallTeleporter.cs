@@ -48,6 +48,10 @@ namespace Walls
 			LoadScene();
 		}
 
+        /// <summary>
+        ///     <para> LoadScene </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
 		private void LoadScene()
 		{
 			if (byName)
@@ -66,18 +70,31 @@ namespace Walls
 	
 
 #if UNITY_EDITOR
+
+	/// <summary>
+	///     <para> WallTeleporterEditor </para>
+	///     <author> @TeodorHMX1 </author>
+	/// </summary>
 	[CustomEditor(typeof(WallTeleporter))]
 	public class WallTeleporterEditor : Editor
 	{
 		WallTeleporter script;
 		string[] sceneNames;
-
+		
+		/// <summary>
+		///     <para> OnEnable </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		private void OnEnable()
 		{
 			script = (WallTeleporter)target;
 			sceneNames = bl_SceneLoaderManager.Instance.GetSceneNames();
 		}
 
+		/// <summary>
+		///     <para> OnInspectorGUI </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		public override void OnInspectorGUI()
 		{
 			EditorGUI.BeginChangeCheck();

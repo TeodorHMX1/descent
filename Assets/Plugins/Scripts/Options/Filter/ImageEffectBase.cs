@@ -2,6 +2,10 @@ using UnityEngine;
 
 namespace Options.Filter
 {
+	/// <summary>
+	///     <para> ImageEffectBase </para>
+	///     <author> @TeodorHMX1 </author>
+	/// </summary>
 	[RequireComponent(typeof(Camera))]
 	[AddComponentMenu("")]
 	public class ImageEffectBase : MonoBehaviour
@@ -12,6 +16,10 @@ namespace Options.Filter
 
 		private Material m_Material;
 		
+		/// <summary>
+		///     <para> Material </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		protected Material material
 		{
 			get
@@ -26,6 +34,10 @@ namespace Options.Filter
 			}
 		}
 
+		/// <summary>
+		///     <para> Start </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		protected virtual void Start()
 		{
 			// Disable the image effect if the shader can't
@@ -33,8 +45,11 @@ namespace Options.Filter
 			if (!shader || !shader.isSupported)
 				enabled = false;
 		}
-
-
+		
+		/// <summary>
+		///     <para> OnDisable </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
 		protected virtual void OnDisable()
 		{
 			if (m_Material) DestroyImmediate(m_Material);

@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace Override
 {
+    /// <summary>
+    ///     <para> InsideSafeArea </para>
+    ///     <author> @TeodorHMX1 </author>
+    /// </summary>
     public class AudioBuilder
     {
         private AudioClip _clip;
@@ -11,70 +15,123 @@ namespace Override
         private AudioSource _audioSource;
         private float _speed = 1f;
 
+        /// <summary>
+        ///     <para> Clip </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
         public AudioClip Clip
         {
             get => _clip;
             set => _clip = value;
         }
 
+        /// <summary>
+        ///     <para> Volume </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
         public SoundVolume Volume
         {
             get => _volume;
             set => _volume = value;
         }
 
+        /// <summary>
+        ///     <para> Name </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
         public string Name
         {
             get => _name;
             set => _name = value;
         }
 
+        /// <summary>
+        ///     <para> AudioSource </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
         public AudioSource AudioSource
         {
             get => _audioSource;
             set => _audioSource = value;
         }
 
+        /// <summary>
+        ///     <para> Speed </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
         public float Speed
         {
             get => _speed;
             set => _speed = value;
         }
 
-
+        /// <summary>
+        ///     <para> WithClip </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        /// <param name="clip"></param>
+        /// <returns></returns>
         public AudioBuilder WithClip(AudioClip clip)
         {
             Clip = clip;
             return this;
         }
 
+        /// <summary>
+        ///     <para> WithVolume </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         public AudioBuilder WithVolume(SoundVolume volume)
         {
             Volume = volume;
             return this;
         }
 
+        /// <summary>
+        ///     <para> WithName </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public AudioBuilder WithName(string name)
         {
             Name = name;
             return this;
         }
 
+        /// <summary>
+        ///     <para> WithAudioSource </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        /// <param name="audioSource"></param>
+        /// <returns></returns>
         public AudioBuilder WithAudioSource(AudioSource audioSource)
         {
             AudioSource = audioSource;
             return this;
         }
 
+        /// <summary>
+        ///     <para> WithSpeed </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        /// <param name="speed"></param>
+        /// <returns></returns>
         public AudioBuilder WithSpeed(float speed)
         {
             Speed = speed;
             return this;
         }
 
+        /// <summary>
+        ///     <para> Stop </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        /// <param name="destroy"></param>
         public void Stop(bool destroy = false)
         {
-            
             if (AudioSource != null)
             {
                 AudioSource.Stop();
@@ -86,6 +143,12 @@ namespace Override
             }
         }
 
+        /// <summary>
+        ///     <para> Play </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        /// <param name="oneAtOnce"></param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public void Play(bool oneAtOnce = false)
         {
             if (Clip == null)
@@ -93,7 +156,7 @@ namespace Override
                 Debug.LogWarning("Please set the clip for " + Name + " using the WithClip(AudioClip) on the builder");
                 return;
             }
-            
+
             if (AudioSource != null)
             {
                 if (oneAtOnce)
@@ -103,6 +166,7 @@ namespace Override
                         return;
                     }
                 }
+
                 switch (Volume)
                 {
                     case SoundVolume.Loud:

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Menu;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -15,10 +16,14 @@ namespace Override
         private static GameObject _audioInstances;
         private static AudioSource _audioSource;
         private static GameObject _this;
-        private readonly string _characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        private const string CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         private bool _isResumed;
         private float _soundVolume;
 
+        /// <summary>
+        ///     <para> Awake </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
         private void Awake()
         {
             if (_mInstance == null)
@@ -36,6 +41,10 @@ namespace Override
             }
         }
 
+        /// <summary>
+        ///     <para> Update </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
         private void Update()
         {
             if (Math.Abs(_soundVolume - GetSoundVolume()) > 0)
@@ -64,23 +73,43 @@ namespace Override
             }
         }
 
+        /// <summary>
+        ///     <para> ID </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        /// <returns>unique ID</returns>
         public static string ID()
         {
             var idGenerated = "";
             for (var i = 0; i < 20; i++)
             {
-                idGenerated += _mInstance._characters[Random.Range(0, _mInstance._characters.Length)];
+                idGenerated += CHARACTERS[Random.Range(0, CHARACTERS.Length)];
                 if (i % 4 == 0 && i != 0 && i != 20) idGenerated += "_";
             }
 
             return idGenerated;
         }
 
+        /// <summary>
+        ///     <para> ID </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        /// <returns>sound volume</returns>
         public static float GetSoundVolume()
         {
             return PlayerPrefs.GetFloat(Constants.Options.Sound, 1.0f);
         }
 
+        /// <summary>
+        ///     <para> PlaySound </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        /// <param name="audio"></param>
+        /// <param name="volume"></param>
+        /// <param name="name"></param>
+        /// <param name="speed"></param>
+        /// <param name="oneAtOnce"></param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public static void PlaySound(AudioClip audio, SoundVolume volume, string name, float speed, bool oneAtOnce)
         {
             _audioSource = GetAudioSource(name);
@@ -105,6 +134,12 @@ namespace Override
             }
         }
 
+        /// <summary>
+        ///     <para> StopSound </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="destroy"></param>
         public static void StopSound(string name, bool destroy = false)
         {
             _audioSource = GetAudioSource(name);
@@ -112,6 +147,12 @@ namespace Override
             if (destroy) DestroySource(name);
         }
 
+        /// <summary>
+        ///     <para> GetAudioSource </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns>audio source</returns>
         private static AudioSource GetAudioSource(string name)
         {
             if (_audioInstances == null)
@@ -130,6 +171,11 @@ namespace Override
             return audioSource;
         }
 
+        /// <summary>
+        ///     <para> DestroySource </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        /// <param name="name"></param>
         private static void DestroySource(string name)
         {
             if (_audioInstances == null)
@@ -143,7 +189,12 @@ namespace Override
             if (findGameObj != null) Destroy(findGameObj.gameObject);
         }
 
-        private static AudioSource[] GetAudioSources()
+        /// <summary>
+        ///     <para> DestroySource </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        /// <returns>audio sources list</returns>
+        private static IEnumerable<AudioSource> GetAudioSources()
         {
             return _audioInstances == null
                 ? new AudioSource[] { }

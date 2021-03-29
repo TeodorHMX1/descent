@@ -7,6 +7,10 @@ using UnityEngine;
 
 namespace Paranoia
 {
+    /// <summary>
+    ///     <para> HeartbeatSpeed </para>
+    ///     <author> @TeodorHMX1 </author>
+    /// </summary>
     public enum HeartbeatSpeed
     {
         Normal = 10,
@@ -269,6 +273,10 @@ namespace Paranoia
             _filterIllusions.coloredChange = 2.0f;
         }
 
+        /// <summary>
+        ///     <para> InsideSafeArea </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
         public bool InsideSafeArea
         {
             set => _insideSafeArea = value;
