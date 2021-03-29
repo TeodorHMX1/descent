@@ -1,9 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Puzzle
 {
+	/// <summary>
+	///     <para> PyramidPuzzle </para>
+	///     <author> @TeodorHMX1 </author>
+	/// </summary>
+	public enum PyramidModel
+	{
+		Default,
+		FlashNext,
+	}
+	
 	/// <summary>
 	///     <para> PyramidPuzzle </para>
 	///     <author> @TeodorHMX1 </author>
@@ -16,7 +28,10 @@ namespace Puzzle
 		[Header("On Win")]
 		public GameObject pickableObject;
 
-		private bool _onWinCreated = false;
+		[Header("Model")]
+		public PyramidModel pyramidModel = PyramidModel.Default;
+
+		private bool _onWinCreated;
 		private bool _isPickableObjectNotNull;
 
 		private void Start()
@@ -47,6 +62,14 @@ namespace Puzzle
 		public bool IsCompleted()
 		{
 			return !(pyramids.Count(pyramid => pyramid.IsWinState()) < pyramids.Count);
+		}
+
+		public void Reset()
+		{
+			foreach (var pyramid in pyramids)
+			{
+				pyramid.Reset();
+			}
 		}
 	}
 }

@@ -11,18 +11,28 @@ namespace Puzzle
     /// </summary>
     public class PyramidController : MonoBehaviour, IOnPuzzle
     {
+        [Header("States Data")]
         [Range(3, 8)] public int pyramidSides = 4;
         public PyramidState startSide = PyramidState.Side1;
         public PyramidState winState = PyramidState.Side1;
+        public int timeLimit = 4;
+        
+        [Header("Details")]
         [Range(0.5f, 10.0f)] public float rotationSpeed = 1.0f;
         public Light finishLight;
         public AudioClip puzzleNoise;
+        public int pyramidOrder = 0;
 
         private int _currentProgress;
         private PyramidState _currentState;
         private bool _isMoving;
         private float _rotateByCurrent;
         private Vector3 _startAngle;
+        private GameObject _parentGameObj;
+        private bool _isParentGameObjNotNull;
+        private PyramidPuzzle _puzzleDetails;
+        private bool _countdownStarted;
+        private int _time;
 
         /// <summary>
         ///     <para> Start </para>
@@ -64,6 +74,10 @@ namespace Puzzle
             }
 
             _currentState = startSide;
+            _parentGameObj = transform.parent.gameObject;
+            _isParentGameObjNotNull = _parentGameObj != null;
+            if (!_isParentGameObjNotNull) return;
+            _puzzleDetails = _parentGameObj.GetComponent<PyramidPuzzle>();
         }
 
         /// <summary>
@@ -73,6 +87,15 @@ namespace Puzzle
         private void Update()
         {
             if (!IsWinState()) finishLight.enabled = false;
+
+            if (_countdownStarted)
+            {
+                _time++;
+                if (_time == timeLimit * 60)
+                {
+                    _puzzleDetails.Reset();
+                }
+            }
 
             if (!_isMoving) return;
 
@@ -85,7 +108,20 @@ namespace Puzzle
                 _currentProgress = 0;
                 _isMoving = false;
                 CheckState();
-                if (IsWinState()) finishLight.enabled = true;
+                if (!IsWinState()) return;
+                switch (_puzzleDetails.pyramidModel)
+                {
+                    case PyramidModel.Default:
+                        finishLight.enabled = true;
+                        break;
+                    case PyramidModel.FlashNext:
+                        if (pyramidOrder < _puzzleDetails.pyramids.Count)
+                        {
+                            _puzzleDetails.pyramids[pyramidOrder + 1].EnableLight();
+                            _puzzleDetails.pyramids[pyramidOrder + 1].StartCountdown();
+                        }
+                        break;
+                }
             }
         }
 
@@ -98,6 +134,7 @@ namespace Puzzle
         {
             if (IsWinState()) return;
             if (_isMoving) return;
+            _countdownStarted = false;
             _isMoving = true;
             new AudioBuilder()
                 .WithClip(puzzleNoise)
@@ -178,6 +215,68 @@ namespace Puzzle
         {
             if (_isMoving) return false;
             return winState == _currentState;
+        }
+
+        /// <summary>
+        ///     <para> EnableLight </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        /// <param name="enable"></param>
+        private void EnableLight(bool enable = true)
+        {
+            finishLight.enabled = enable;
+        }
+
+        /// <summary>
+        ///     <para> StartCountdown </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        private void StartCountdown()
+        {
+            _countdownStarted = true;
+            _time = 0;
+        }
+
+        /// <summary>
+        ///     <para> Reset </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        public void Reset()
+        {
+            _countdownStarted = false;
+            _time = 0;
+            _startAngle = transform.rotation.eulerAngles;
+            finishLight.enabled = false;
+            switch (startSide)
+            {
+                case PyramidState.Side1:
+                    RotatePyramid(360 / pyramidSides * 0);
+                    break;
+                case PyramidState.Side2:
+                    RotatePyramid(360 / pyramidSides * 1);
+                    break;
+                case PyramidState.Side3:
+                    RotatePyramid(360 / pyramidSides * 2);
+                    break;
+                case PyramidState.Side4:
+                    RotatePyramid(360 / pyramidSides * 3);
+                    break;
+                case PyramidState.Side5:
+                    RotatePyramid(360 / pyramidSides * 4);
+                    break;
+                case PyramidState.Side6:
+                    RotatePyramid(360 / pyramidSides * 5);
+                    break;
+                case PyramidState.Side7:
+                    RotatePyramid(360 / pyramidSides * 6);
+                    break;
+                case PyramidState.Side8:
+                    RotatePyramid(360 / pyramidSides * 7);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            _currentState = startSide;
         }
     }
 }
