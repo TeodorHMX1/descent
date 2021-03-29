@@ -46,6 +46,7 @@ namespace Items
 		private bool _wasDropped;
 		private int _time;
 		private string _id;
+		private Rigidbody _mRigidbody;
 
 		private void Start()
 		{
@@ -53,11 +54,17 @@ namespace Items
 			flareLight.SetActive(false);
 			objMeshRenderer.shadowCastingMode = ShadowCastingMode.Off;
 			_id = AudioInstance.ID();
+			_mRigidbody = GetComponent<Rigidbody>();
 		}
 
 		private void Update()
 		{
-			if (Pause.IsPaused) return;
+			if (Pause.IsPaused)
+			{
+				_mRigidbody.freezeRotation = true;
+				return;
+			}
+			_mRigidbody.freezeRotation = false;
 			
 			if (_wasDropped)
 			{

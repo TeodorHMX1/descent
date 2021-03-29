@@ -11,10 +11,12 @@ namespace Destructible
 		private bool _isInitialized;
 		private Destructible _destructible;
 		private bool _autoDamageStarted;
+		private bool _isDestructibleNull;
 
-		void Start()
+		private void Start()
 		{
 			_destructible = gameObject.GetComponent<Destructible>();
+			_isDestructibleNull = _destructible == null;
 			if (_destructible == null)
 			{
 				Debug.LogWarning("No Destructible object found! AutoDamage removed.");
@@ -24,20 +26,18 @@ namespace Destructible
 			_isInitialized = true;
 		}
 
-		void Update()
+		private void Update()
 		{
 			if (!_isInitialized) return;
-			if (_destructible == null) return;
+			if (_isDestructibleNull) return;
 			if (_autoDamageStarted) return;
 
-			if (_destructible.currentHitPoints <= startAtHitPoints)
-			{
-				InvokeRepeating("ApplyDamage", 0f, damageIntervalSeconds);
-				_autoDamageStarted = true;
-			}
+			if (!(_destructible.currentHitPoints <= startAtHitPoints)) return;
+			InvokeRepeating(nameof(ApplyDamage), 0f, damageIntervalSeconds);
+			_autoDamageStarted = true;
 		}
 
-		void ApplyDamage()
+		private void ApplyDamage()
 		{
 			if (_destructible == null) return;
 

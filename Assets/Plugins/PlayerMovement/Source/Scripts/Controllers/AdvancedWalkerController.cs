@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Menu;
 using UnityEngine;
 
 namespace ZeoFlow.PlayerMovement
@@ -109,6 +110,7 @@ namespace ZeoFlow.PlayerMovement
 
 		private void Update()
 		{
+			if (Pause.IsPaused) return;
 			HandleJumpKeyInput();
 			HandleMovementInput();
 		}

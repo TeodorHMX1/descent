@@ -5,10 +5,12 @@ using Menu;
 using UnityEngine;
 using ZeoFlow;
 
+// ReSharper disable once CheckNamespace
 namespace Items
 {
     public class ItemsManager : MonoBehaviour
     {
+
         private static readonly List<Item> ItemsUnlocked = new List<Item>();
         private static readonly List<ItemBean> Items = new List<ItemBean>();
         private static ItemsManager _mInstance;
@@ -86,7 +88,23 @@ namespace Items
 
         public static void AddItem(ItemBean item)
         {
-            foreach (var itemS in Items) itemS.GameObject.SetActive(false);
+            var itemsToRemove = new List<ItemBean>();
+            foreach (var itemS in Items)
+            {
+                // ReSharper disable once Unity.PerformanceCriticalCodeNullComparison
+                if (itemS.GameObject == null)
+                {
+                    itemsToRemove.Add(itemS);
+                }
+                else
+                {
+                    itemS.GameObject.SetActive(false);
+                }
+            }
+            foreach (var itemS in itemsToRemove)
+            {
+                Items.Remove(itemS);
+            }
             item.GameObject.SetActive(true);
             Items.Add(item);
         }
@@ -95,6 +113,10 @@ namespace Items
         {
             var activeIndex = 0;
             var index = 0;
+            foreach (var itemS in Items.ToList().Where(itemS => itemS.GameObject == null))
+            {
+                Items.Remove(itemS);
+            }
             foreach (var item in Items)
             {
                 if (item.GameObject.activeSelf) activeIndex = index;

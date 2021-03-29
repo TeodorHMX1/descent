@@ -18,6 +18,7 @@ namespace ZeoFlow.Pickup
         public PuzzleSub puzzleSub = new PuzzleSub();
         public AudioClip Itemcollect;
         public bool onPickCallback;
+        public bool unlocked;
 
         private bool _isAttached;
         private SyncItem _syncItem;
@@ -27,6 +28,50 @@ namespace ZeoFlow.Pickup
         private void Start()
         {
             itemFlags = ItemFlags.OnGround;
+            if (!unlocked) return;
+            
+            if (gameObject.GetComponent<SyncItem>() != null) return;
+
+            if (gameObject.GetComponent<IOnAttached>() != null)
+                gameObject.GetComponent<IOnAttached>().ONUpdate(playerAttachMenu);
+
+            ItemsManager.Unlock(item);
+
+            if (playerAttachMenu.createNewObject)
+            {
+                var objToAttach = playerAttachMenu.objectToAttach;
+
+                if (item == Item.Flare && !ItemsManager.CanPickFlare())
+                {
+                    _toBeDestroyed = true;
+                    return;
+                }
+
+                var newFlare = Instantiate(objToAttach, objToAttach.transform.position,
+                    Quaternion.Euler(objToAttach.transform.eulerAngles));
+                newFlare.name = objToAttach.name;
+                newFlare.transform.parent = GameObject.Find("Items").transform;
+                _syncItem = newFlare.AddComponent<SyncItem>();
+                _syncItem.GameObject = newFlare;
+                _syncItem.AttachTo = playerAttachMenu.playerObject;
+                ItemsManager.AddItem(new ItemBean {ItemType = item, GameObject = newFlare});
+                _isAttached = false;
+                if (!_toBeDestroyed) return;
+
+                Destroy(newFlare);
+                ItemsManager.Remove(Item.Flare);
+                _toBeDestroyed = false;
+            }
+            else
+            {
+                _syncItem = gameObject.AddComponent<SyncItem>();
+                _syncItem.GameObject = gameObject;
+                _syncItem.AttachTo = playerAttachMenu.playerObject;
+                if (item == Item.Flashlight || item == Item.None) return;
+
+                ItemsManager.AddItem(new ItemBean {ItemType = item, GameObject = gameObject});
+                itemFlags = ItemFlags.OnPlayer;
+            }
         }
 
         private void Update()

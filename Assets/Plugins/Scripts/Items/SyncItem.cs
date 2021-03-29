@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using ZeoFlow.Outline;
 
 namespace Items
@@ -33,6 +32,11 @@ namespace Items
 		private void Update()
 		{
 			if (_destroy) return;
+			if (_attachTo == null)
+			{
+				Destroy(gameObject);
+				return;
+			}
 			
 			var position = _attachTo.transform.position;
 			var eulerAngles = _attachTo.transform.eulerAngles;
