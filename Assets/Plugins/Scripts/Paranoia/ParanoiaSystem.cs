@@ -39,6 +39,7 @@ namespace Paranoia
         private FilterIllusions _filterIllusions;
         private FilterParanoia _filterParanoia;
         private FilterParanoiaDark _filterParanoiaDark;
+        private Light _playerLight;
 
         private ParanoiaState _paranoiaBoxState = ParanoiaState.Outside;
         private float _saturationAlpha;
@@ -47,6 +48,7 @@ namespace Paranoia
         private bool _insideSafeArea;
         private int _heartbeatTimer;
         private HeartbeatSpeed _heartbeatSpeed = HeartbeatSpeed.Normal;
+        private bool _isPlayerLightNotNull;
 
         /// <summary>
         ///     <para> Start </para>
@@ -71,6 +73,14 @@ namespace Paranoia
 
             _filterIllusions = effectSub.camera.AddComponent<FilterIllusions>();
             _filterIllusions.fade = _fadeAlpha;
+
+            if (player == null) return;
+            _playerLight = player.transform.Find("PlayerLight").GetComponent<Light>();
+            _isPlayerLightNotNull = _playerLight != null;
+            if (_isPlayerLightNotNull)
+            {
+                _playerLight.enabled = false;
+            }
         }
 
         /// <summary>
@@ -175,6 +185,10 @@ namespace Paranoia
         /// </summary>
         private void OnCancelEffect()
         {
+            if (_isPlayerLightNotNull)
+            {
+                _playerLight.enabled = false;
+            }
             _audioSource.Stop();
             if (_darkAlpha > 0f)
             {
@@ -221,6 +235,10 @@ namespace Paranoia
         /// </summary>
         private void OnParanoiaEffect()
         {
+            if (_isPlayerLightNotNull)
+            {
+                _playerLight.enabled = true;
+            }
             if (!effectSub.enabled) return;
 
             if (_isHelmetObjNotNull && effectSub.helmetObj.attached)
