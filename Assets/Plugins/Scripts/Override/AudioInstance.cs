@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Menu;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -14,7 +16,6 @@ namespace Override
     {
         private static AudioInstance _mInstance;
         private static GameObject _audioInstances;
-        private static AudioSource _audioSource;
         private static GameObject _this;
         private const string CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         private bool _isResumed;
@@ -109,28 +110,36 @@ namespace Override
         /// <param name="name"></param>
         /// <param name="speed"></param>
         /// <param name="oneAtOnce"></param>
+        /// <param name="destroyOnFinish"></param>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public static void PlaySound(AudioClip audio, SoundVolume volume, string name, float speed, bool oneAtOnce)
+        public static async void PlaySound(AudioClip audio, SoundVolume volume, string name, float speed,
+            bool oneAtOnce, bool destroyOnFinish)
         {
-            _audioSource = GetAudioSource(name);
-            if (_audioSource.isPlaying && oneAtOnce) return;
-            _audioSource.pitch = speed;
+            var audioSource = GetAudioSource(name);
+            if (audioSource.isPlaying && oneAtOnce) return;
+            audioSource.pitch = speed;
             switch (volume)
             {
                 case SoundVolume.Loud:
-                    _audioSource.PlayOneShot(audio, GetSoundVolume() * 1f);
+                    audioSource.PlayOneShot(audio, GetSoundVolume() * 1f);
                     break;
                 case SoundVolume.Normal:
-                    _audioSource.PlayOneShot(audio, GetSoundVolume() * .8f);
+                    audioSource.PlayOneShot(audio, GetSoundVolume() * .8f);
                     break;
                 case SoundVolume.Weak:
-                    _audioSource.PlayOneShot(audio, GetSoundVolume() * .6f);
+                    audioSource.PlayOneShot(audio, GetSoundVolume() * .6f);
                     break;
                 case SoundVolume.OnBackground:
-                    _audioSource.PlayOneShot(audio, GetSoundVolume() * .1f);
+                    audioSource.PlayOneShot(audio, GetSoundVolume() * .1f);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(volume), volume, null);
+            }
+
+            if (destroyOnFinish)
+            {
+                await Task.Delay(TimeSpan.FromMilliseconds((int) audio.length * 1000));
+                DestroyAudioSource(name);
             }
         }
 
@@ -142,8 +151,8 @@ namespace Override
         /// <param name="destroy"></param>
         public static void StopSound(string name, bool destroy = false)
         {
-            _audioSource = GetAudioSource(name);
-            _audioSource.Stop();
+            var audioSource = GetAudioSource(name);
+            audioSource.Stop();
             if (destroy) DestroySource(name);
         }
 
@@ -169,6 +178,22 @@ namespace Override
             newAudio.transform.SetParent(_audioInstances.transform);
             var audioSource = newAudio.AddComponent<AudioSource>();
             return audioSource;
+        }
+
+        /// <summary>
+        ///     <para> DestroyAudioSource </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        /// <param name="name"></param>
+        private static void DestroyAudioSource(string name)
+        {
+            if (_audioInstances == null)
+            {
+                return;
+            }
+
+            var findGameObj = _audioInstances.transform.Find(name);
+            if (findGameObj != null) Destroy(findGameObj.gameObject);
         }
 
         /// <summary>
@@ -201,4 +226,6 @@ namespace Override
                 : _audioInstances.transform.GetComponentsInChildren<AudioSource>();
         }
     }
+    
+    
 }

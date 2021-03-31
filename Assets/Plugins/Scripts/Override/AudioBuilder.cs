@@ -14,6 +14,7 @@ namespace Override
         private string _name;
         private AudioSource _audioSource;
         private float _speed = 1f;
+        private bool destroyOnFinish;
 
         /// <summary>
         ///     <para> Clip </para>
@@ -144,6 +145,18 @@ namespace Override
         }
 
         /// <summary>
+        ///     <para> DestroyOnEnd </para>
+        ///     <author> @TeodorHMX1 </author>
+        /// </summary>
+        /// <param name="destroyOnFinish"></param>
+        /// <returns></returns>
+        public AudioBuilder DestroyOnEnd(bool destroyOnFinish = true)
+        {
+            this.destroyOnFinish = destroyOnFinish;
+            return this;
+        }
+
+        /// <summary>
         ///     <para> Play </para>
         ///     <author> @TeodorHMX1 </author>
         /// </summary>
@@ -188,7 +201,7 @@ namespace Override
             else
             {
                 if (Name == null) return;
-                AudioInstance.PlaySound(Clip, Volume, Name, Speed, oneAtOnce);
+                AudioInstance.PlaySound(Clip, Volume, Name, Speed, oneAtOnce, destroyOnFinish);
             }
         }
     }

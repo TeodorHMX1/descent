@@ -153,6 +153,7 @@ namespace ZeoFlow.PlayerMovement
 
 		void FixedUpdate()
 		{
+			if (Pause.IsPaused) return;
 			ControllerUpdate();
 		}
 

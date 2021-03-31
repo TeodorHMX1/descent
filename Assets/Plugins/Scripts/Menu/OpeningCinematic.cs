@@ -29,10 +29,12 @@ public class OpeningCinematic : MonoBehaviour
         Skipprompt.SetActive(true);
         _animationruntime = true;
         StartCoroutine(EndCut());
+
         new AudioBuilder()
             .WithClip(cinematic1)
-            .WithName("Cinematicaudio")
+            .WithName("CinematicAudio")
             .WithVolume(SoundVolume.Normal)
+            .DestroyOnEnd()
             .Play();
     }
 
@@ -44,6 +46,7 @@ public class OpeningCinematic : MonoBehaviour
         if (!_animationruntime) return;
         if (!Input.GetKeyDown(KeyCode.Space)) return;
         StopCoroutine(EndCut());
+        if (!_animationruntime) return;
         Player.SetActive(true);
         CinemaCam.SetActive(false);
         HUD.SetActive(true);
@@ -60,6 +63,7 @@ public class OpeningCinematic : MonoBehaviour
     private IEnumerator EndCut()
     {
         yield return new WaitForSeconds(10);
+        if (!_animationruntime) yield break;
         Player.SetActive(true);
         CinemaCam.SetActive(false);
         HUD.SetActive(true);
