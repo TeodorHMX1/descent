@@ -243,7 +243,6 @@ namespace Puzzle
         {
             _countdownStarted = false;
             _time = 0;
-            _startAngle = transform.rotation.eulerAngles;
             finishLight.enabled = false;
             switch (startSide)
             {
