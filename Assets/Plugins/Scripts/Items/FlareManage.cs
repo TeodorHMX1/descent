@@ -47,6 +47,7 @@ namespace Items
 		private int _time;
 		private string _id;
 		private Rigidbody _mRigidbody;
+		private bool _isParanoiaSystemNotNull;
 
 		private void Start()
 		{
@@ -55,6 +56,7 @@ namespace Items
 			objMeshRenderer.shadowCastingMode = ShadowCastingMode.Off;
 			_id = AudioInstance.ID();
 			_mRigidbody = GetComponent<Rigidbody>();
+			_isParanoiaSystemNotNull = paranoiaSystem != null;
 		}
 
 		private void Update()
@@ -83,9 +85,13 @@ namespace Items
 
 				var flareTransform = transform;
 				var playerPosition = player.transform.position;
-				var flarePos = new Vector3(flareTransform.position.x, playerPosition.y, flareTransform.position.z);
+				var position = flareTransform.position;
+				var flarePos = new Vector3(position.x, playerPosition.y, position.z);
 				var distance = Vector3.Distance(playerPosition, flarePos);
-				paranoiaSystem.InsideSafeArea = distance <= area * 2;
+				if (_isParanoiaSystemNotNull)
+				{
+					paranoiaSystem.InsideSafeArea = distance <= area * 2;
+				}
 				if (_time < seconds * 60) return;
 				
 				new AudioBuilder()
@@ -98,7 +104,11 @@ namespace Items
 				return;
 			}
 
-			paranoiaSystem.InsideSafeArea = false;
+			if (_isParanoiaSystemNotNull)
+			{
+				paranoiaSystem.InsideSafeArea = false;
+			}
+
 			if (!_isAttached) return;
 			
 			if (!InputManager.GetButtonDown("InteractHUD") && !_wasDropped) return;

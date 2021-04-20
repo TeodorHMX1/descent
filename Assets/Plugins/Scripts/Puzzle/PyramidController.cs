@@ -1,4 +1,5 @@
 ﻿using System;
+using Menu;
 using Override;
 using UnityEngine;
 using ZeoFlow.Pickup.Interfaces;
@@ -11,14 +12,14 @@ namespace Puzzle
     /// </summary>
     public class PyramidController : MonoBehaviour, IOnPuzzle
     {
-        [Header("States Data")]
-        [Range(3, 8)] public int pyramidSides = 4;
+        [Header("States Data")] [Range(3, 8)] public int pyramidSides = 4;
         public PyramidState startSide = PyramidState.Side1;
         public PyramidState winState = PyramidState.Side1;
         public int timeLimit = 4;
-        
-        [Header("Details")]
-        [Range(0.5f, 10.0f)] public float rotationSpeed = 1.0f;
+
+        [Header("Details")] [Range(0.5f, 10.0f)]
+        public float rotationSpeed = 1.0f;
+
         public Light finishLight;
         public AudioClip puzzleNoise;
         public int pyramidOrder = 0;
@@ -33,6 +34,7 @@ namespace Puzzle
         private PyramidPuzzle _puzzleDetails;
         private bool _countdownStarted;
         private int _time;
+        private bool _flashEnabled;
 
         /// <summary>
         ///     <para> Start </para>
@@ -84,7 +86,15 @@ namespace Puzzle
         /// </summary>
         private void Update()
         {
-            if (!IsWinState()) finishLight.enabled = false;
+            if (Pause.IsPaused)
+            {
+                return;
+            }
+
+            if (!IsWinState() && !_flashEnabled)
+            {
+                finishLight.enabled = false;
+            }
 
             if (_countdownStarted)
             {
@@ -118,6 +128,7 @@ namespace Puzzle
                             _puzzleDetails.pyramids[pyramidOrder + 1].EnableLight();
                             _puzzleDetails.pyramids[pyramidOrder + 1].StartCountdown();
                         }
+
                         break;
                 }
             }
@@ -132,6 +143,7 @@ namespace Puzzle
         {
             if (IsWinState()) return;
             if (_isMoving) return;
+            _flashEnabled = false;
             _countdownStarted = false;
             _isMoving = true;
             new AudioBuilder()
@@ -187,6 +199,7 @@ namespace Puzzle
             {
                 currentRotation += 1;
             }
+
             switch (currentRotation)
             {
                 case 0:
@@ -223,6 +236,7 @@ namespace Puzzle
         private void EnableLight(bool enable = true)
         {
             finishLight.enabled = enable;
+            _flashEnabled = enable;
         }
 
         /// <summary>
@@ -241,6 +255,7 @@ namespace Puzzle
         /// </summary>
         public void Reset()
         {
+            _flashEnabled = false;
             _countdownStarted = false;
             _time = 0;
             finishLight.enabled = false;
@@ -273,6 +288,7 @@ namespace Puzzle
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
             _currentState = startSide;
         }
     }

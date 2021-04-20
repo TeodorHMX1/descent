@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Menu;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -36,7 +37,6 @@ namespace Puzzle
         private bool _isPickableObjectNotNull;
         private bool _isLightNotNull;
 
-
         /// <summary>
         ///     <para> Start </para>
         ///     <author> @TeodorHMX1 </author>
@@ -57,6 +57,10 @@ namespace Puzzle
         /// </summary>
         private void Update()
         {
+            if (Pause.IsPaused)
+            {
+                return;
+            }
             if (pyramids.Count(pyramid => pyramid.IsWinState()) < pyramids.Count) return;
 
             if (_onWinCreated || !IsCompleted())
@@ -65,7 +69,6 @@ namespace Puzzle
                 {
                     light.enabled = false;
                 }
-
                 return;
             }
 
