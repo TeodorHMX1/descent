@@ -7,6 +7,12 @@
 	public enum ParanoiaEntrances
 	{
 		/// <summary>
+		///     <para> One </para>
+		///     <author> @TeodorHMX1 </author>
+		/// </summary>
+		One,
+		
+		/// <summary>
 		///     <para> Two </para>
 		///     <author> @TeodorHMX1 </author>
 		/// </summary>

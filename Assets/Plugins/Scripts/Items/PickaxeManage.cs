@@ -15,7 +15,6 @@ namespace Items
 	/// </summary>
 	public class PickaxeManage : MonoBehaviour, IOnAttached
 	{
-
 		public Animation animator;
 		public KeyCode swingKey = KeyCode.Mouse0;
 		public MeleeArea meleeArea;
@@ -36,7 +35,7 @@ namespace Items
 			_boxCollider = GetComponent<BoxCollider>();
 			_isBoxColliderNotNull = _boxCollider != null;
 			_isAnimatorNull = animator == null;
-		}
+	}
 
 		private void Update()
 		{

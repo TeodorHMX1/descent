@@ -19,11 +19,16 @@ namespace Puzzle
 
         [Header("Details")] [Range(0.5f, 10.0f)]
         public float rotationSpeed = 1.0f;
-
         public Light finishLight;
         public AudioClip puzzleNoise;
-        public int pyramidOrder = 0;
+        public int pyramidOrder;
 
+        [Header("Pyramid Design")]
+        public GameObject variant1;
+        public GameObject variant2;
+        public GameObject variant3;
+        public PyramidDeign pyramidDeign = PyramidDeign.Variant1;
+        
         private int _currentProgress;
         private PyramidState _currentState;
         private bool _isMoving;
@@ -70,6 +75,22 @@ namespace Puzzle
                     break;
                 case PyramidState.Side8:
                     RotatePyramid(360 / pyramidSides * 7);
+                    break;
+            }
+
+            variant1.gameObject.SetActive(false);
+            variant2.gameObject.SetActive(false);
+            variant3.gameObject.SetActive(false);
+            switch (pyramidDeign)
+            {
+                case PyramidDeign.Variant1:
+                    variant1.gameObject.SetActive(true);
+                    break;
+                case PyramidDeign.Variant2:
+                    variant2.gameObject.SetActive(true);
+                    break;
+                case PyramidDeign.Variant3:
+                    variant3.gameObject.SetActive(true);
                     break;
             }
 
@@ -125,10 +146,9 @@ namespace Puzzle
                     case PyramidModel.FlashNext:
                         if (pyramidOrder < _puzzleDetails.pyramids.Count)
                         {
-                            _puzzleDetails.pyramids[pyramidOrder + 1].EnableLight();
-                            _puzzleDetails.pyramids[pyramidOrder + 1].StartCountdown();
+                            _puzzleDetails.pyramids[pyramidOrder].EnableLight();
+                            _puzzleDetails.pyramids[pyramidOrder].StartCountdown();
                         }
-
                         break;
                 }
             }

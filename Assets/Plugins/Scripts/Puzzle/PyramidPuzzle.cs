@@ -29,6 +29,7 @@ namespace Puzzle
         [Header("On Win")]
         public GameObject pickableObject;
         public Light light;
+        public SlidingDoor slidingDoor;
 
         [Header("Model")]
         public PyramidModel pyramidModel = PyramidModel.Default;
@@ -36,6 +37,7 @@ namespace Puzzle
         private bool _onWinCreated;
         private bool _isPickableObjectNotNull;
         private bool _isLightNotNull;
+        private bool _isSlidingDoorNotNull;
 
         /// <summary>
         ///     <para> Start </para>
@@ -45,6 +47,7 @@ namespace Puzzle
         {
             _isLightNotNull = light != null;
             _isPickableObjectNotNull = pickableObject != null;
+            _isSlidingDoorNotNull = slidingDoor != null;
             if (_isLightNotNull)
             {
                 light.enabled = false;
@@ -69,6 +72,10 @@ namespace Puzzle
                 {
                     light.enabled = false;
                 }
+                if (_isSlidingDoorNotNull)
+                {
+                    slidingDoor.Closed();
+                }
                 return;
             }
 
@@ -77,7 +84,11 @@ namespace Puzzle
             {
                 light.enabled = true;
             }
-            Debug.Log("On Win");
+            if (_isSlidingDoorNotNull)
+            {
+                slidingDoor.Opened();
+            }
+            
             if (!_isPickableObjectNotNull) return;
             if (pickableObject.GetComponent<IOnComplete>() != null)
                 pickableObject.GetComponent<IOnComplete>().ONCompleted();
@@ -108,7 +119,6 @@ namespace Puzzle
             {
                 light.enabled = false;
             }
-            Debug.Log("On Reset");
         }
     }
 }

@@ -63,16 +63,28 @@ namespace Paranoia
 
             if (effectSub.camera == null) return;
 
-            _filterParanoia = effectSub.camera.AddComponent<FilterParanoia>();
-            _filterParanoia.brightness = 1.0f;
-            _filterParanoia.contrast = 1.0f;
-            _filterParanoia.saturation = 1.0f;
+            _filterParanoia = effectSub.camera.GetComponent<FilterParanoia>();
+            if (_filterParanoia == null)
+            {
+                _filterParanoia = effectSub.camera.AddComponent<FilterParanoia>();
+                _filterParanoia.brightness = 1.0f;
+                _filterParanoia.contrast = 1.0f;
+                _filterParanoia.saturation = 1.0f;
+            }
 
-            _filterParanoiaDark = effectSub.camera.AddComponent<FilterParanoiaDark>();
-            _filterParanoiaDark.alpha = 0f;
+            _filterParanoiaDark = effectSub.camera.GetComponent<FilterParanoiaDark>();
+            if (_filterParanoiaDark == null)
+            {
+                _filterParanoiaDark = effectSub.camera.AddComponent<FilterParanoiaDark>();
+                _filterParanoiaDark.alpha = 0f;
+            }
 
-            _filterIllusions = effectSub.camera.AddComponent<FilterIllusions>();
-            _filterIllusions.fade = _fadeAlpha;
+            _filterIllusions = effectSub.camera.GetComponent<FilterIllusions>();
+            if (_filterIllusions == null)
+            {
+                _filterIllusions = effectSub.camera.AddComponent<FilterIllusions>();
+                _filterIllusions.fade = _fadeAlpha;
+            }
 
             if (player == null) return;
             _playerLight = player.transform.Find("PlayerLight").GetComponent<Light>();
@@ -94,6 +106,13 @@ namespace Paranoia
 
             switch (numberOfEntrances)
             {
+                // 1 entry
+                case ParanoiaEntrances.One:
+                {
+                    var trigger = paranoiaTriggers[0];
+                    _paranoiaBoxState = trigger.GETWasCollided() ? ParanoiaState.Inside : ParanoiaState.Outside;
+                    break;
+                }
                 // 2 entries
                 case ParanoiaEntrances.Two:
                 {
