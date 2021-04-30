@@ -49,6 +49,7 @@ public class OpeningCinematic : MonoBehaviour
         if (!_animationruntime) return;
         Player.SetActive(true);
         CinemaCam.SetActive(false);
+        Destroy(CinemaCam);
         HUD.SetActive(true);
         Map.SetActive(true);
         Pause.SetActive(true);

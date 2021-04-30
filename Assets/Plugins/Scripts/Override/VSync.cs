@@ -18,8 +18,10 @@ namespace Override
 		/// </summary>
 		private void Update()
 		{
-			// Sync framerate to monitors refresh rate
-			QualitySettings.vSyncCount = 1;
+			// VSync must be disabled
+			QualitySettings.vSyncCount = 0;
+			// Set the frame rate to 45
+			Application.targetFrameRate = 45;
 		}
 	}
 }

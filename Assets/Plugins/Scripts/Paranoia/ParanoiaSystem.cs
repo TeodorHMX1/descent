@@ -101,7 +101,7 @@ namespace Paranoia
         /// </summary>
         private void Update()
         {
-            if (player == null) return;
+            if (!_isPlayerLightNotNull) return;
             if (Pause.IsPaused) return;
 
             switch (numberOfEntrances)
