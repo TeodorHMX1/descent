@@ -53,7 +53,7 @@ namespace Walls
         ///     <author> @TeodorHMX1 </author>
         /// </summary>
 		private void LoadScene()
-		{
+        {
 			if (byName)
 			{
 				if (string.IsNullOrEmpty(sceneName)) return;
