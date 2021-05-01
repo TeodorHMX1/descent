@@ -52,6 +52,10 @@ namespace Puzzle
             {
                 light.enabled = false;
             }
+            if (_isSlidingDoorNotNull)
+            {
+                slidingDoor.Closed();
+            }
         }
 
         /// <summary>
@@ -66,7 +70,7 @@ namespace Puzzle
             }
             if (pyramids.Count(pyramid => pyramid.IsWinState()) < pyramids.Count) return;
 
-            if (_onWinCreated || !IsCompleted())
+            if (!IsCompleted())
             {
                 if (_isLightNotNull)
                 {

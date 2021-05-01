@@ -13,7 +13,7 @@ public static class bl_SceneLoaderUtils
     {
         get
         {
-            bl_SceneLoader sl = GameObject.FindObjectOfType<bl_SceneLoader>();
+            var sl = GameObject.FindObjectOfType<bl_SceneLoader>();
             if(sl == null)
             {
                 Debug.LogWarning("Don't have any scene loader in this scene.");

@@ -9,32 +9,28 @@ namespace Puzzle
         public float closedY;
         public float openedY;
 
-        private Vector3 openedPos;
-        private Vector3 closedPos;
-
-        private void Start()
+        public void Opened()
         {
-            var position = transform.position;
-            openedPos = new Vector3(
+            var o = gameObject;
+            var position = o.transform.position;
+            position = new Vector3(
                 position.x,
                 openedY,
                 position.z
             );
-            closedPos = new Vector3(
-                position.x,
-                closedY,
-                position.z
-            );
-        }
-        
-        public void Opened()
-        {
-            transform.position = openedPos;
+            o.transform.position = position;
         }
 
         public void Closed()
         {
-            transform.position = closedPos;
+            var o = gameObject;
+            var position = o.transform.position;
+            position = new Vector3(
+                position.x,
+                closedY,
+                position.z
+            );
+            o.transform.position = position;
         }
         
     }

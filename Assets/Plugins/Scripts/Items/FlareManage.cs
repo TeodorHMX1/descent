@@ -32,7 +32,7 @@ namespace Items
 		[Range(1, 20)]
 		public int area = 2;
 		public GameObject player;
-		public ParanoiaSystem paranoiaSystem;
+		public ParanoiaHolder paranoiaHolder;
 		
 		[Header("Mesh Render")]
 		public MeshRenderer objMeshRenderer;
@@ -47,7 +47,7 @@ namespace Items
 		private int _time;
 		private string _id;
 		private Rigidbody _mRigidbody;
-		private bool _isParanoiaSystemNotNull;
+		private bool _isParanoiaHolderNotNull;
 
 		private void Start()
 		{
@@ -56,7 +56,7 @@ namespace Items
 			objMeshRenderer.shadowCastingMode = ShadowCastingMode.Off;
 			_id = AudioInstance.ID();
 			_mRigidbody = GetComponent<Rigidbody>();
-			_isParanoiaSystemNotNull = paranoiaSystem != null;
+			_isParanoiaHolderNotNull = paranoiaHolder != null;
 		}
 
 		private void Update()
@@ -88,9 +88,9 @@ namespace Items
 				var position = flareTransform.position;
 				var flarePos = new Vector3(position.x, playerPosition.y, position.z);
 				var distance = Vector3.Distance(playerPosition, flarePos);
-				if (_isParanoiaSystemNotNull)
+				if (_isParanoiaHolderNotNull)
 				{
-					paranoiaSystem.InsideSafeArea = distance <= area * 2;
+					paranoiaHolder.InsideSafeArea = distance <= area * 2;
 				}
 				if (_time < seconds * 60) return;
 				
@@ -104,9 +104,9 @@ namespace Items
 				return;
 			}
 
-			if (_isParanoiaSystemNotNull)
+			if (_isParanoiaHolderNotNull)
 			{
-				paranoiaSystem.InsideSafeArea = false;
+				paranoiaHolder.InsideSafeArea = false;
 			}
 
 			if (!_isAttached) return;
