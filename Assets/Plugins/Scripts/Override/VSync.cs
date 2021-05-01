@@ -20,8 +20,8 @@ namespace Override
 		{
 			// VSync must be disabled
 			QualitySettings.vSyncCount = 0;
-			// Set the frame rate to 45
-			Application.targetFrameRate = 45;
+			// Set the frame rate to 60 on all devices
+			Application.targetFrameRate = 60;
 		}
 	}
 }
